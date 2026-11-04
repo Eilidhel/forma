@@ -1,47 +1,145 @@
 # FORMA
 
-Sahadan hayata bir futbol kariyeri oyunu. Bir köy sahasından ya da büyük bir akademiden başlarsın; her seçimin kariyerinde ve hayatında iz bırakır.
+**From the pitch to life.** FORMA is a football (soccer) career and life simulation. You start as a teenager in a mountain village, a big-city academy or a futsal hall, and every choice you make on and off the pitch shapes both your career and your life. No two careers look the same.
 
-- 13 farklı başlangıç hikâyesi, bazılarında kulübünü kendin seçersin
-- Türkiye'nin 5 ligi (BAL'a kadar) ve Avrupa ligleri
-- 12 mevkili saha haritası, her takımın kendi dizilişi, hocanın mevki istekleri
-- 34 alt yetenek, XP ile gelişim, hocanın gelişim planı
-- Spikerli maç akışı ve atak kurma (kısa pas, dribling, uzun pas)
-- 420'den fazla olay, mesaj sohbetleri, basın toplantıları
-- Özel hayat rutinleri, aylık kurslar, mağaza, banka kredisi, sözleşme pazarlığı
-- Sosyal medya: kendi yazdığın paylaşım analiz edilir
-- Nesil sistemi: emekli olunca çocuğunla devam edersin
+> The game's text is currently in **Turkish**. It runs in any modern browser and is designed for phones first.
 
-## Nasıl oynanır
+---
 
-1. [Node.js](https://nodejs.org) ve [Git](https://git-scm.com) kurulu olsun.
-2. Depoyu indir:
+## What's in the game
+
+### 13 starting stories
+Each origin has its own story, starting league, strengths, burdens, family background and attribute growth bonuses.
+
+| Origin | Starts in | Flavour |
+|---|---|---|
+| Mountain village kid | Regional Amateur League | Physical, hard-working, far from everything |
+| Big-city academy | Süper Lig U19 | Technical, high expectations |
+| Diaspora kid (Germany) | German regional league | Tactical discipline, two homelands |
+| Street footballer | 3. Lig | Dribbling and flair, bad influences |
+| Son of a former pro | 2. Lig | Famous surname, constant comparison |
+| Late bloomer | Regional Amateur League | Starts at 23, grows fast |
+| Black Sea fishing town | Regional Amateur League | Pace and grit |
+| Comeback from injury | 3. Lig | Talented but fragile |
+| University team star *(you pick your club)* | 3. Lig / Regional | Game intelligence, exams vs. matches |
+| From futsal to the big pitch *(you pick your club)* | Regional Amateur League | Ball control, weak stamina |
+| Back from a European academy *(you pick your club)* | 1. Lig / 2. Lig | Tactical, an accent people mock |
+| Discovered at open trials *(you pick your club)* | 2. Lig – Regional | Raw hunger, no connections |
+| Tea house kid | Regional Amateur League | Reflexes and humility |
+
+### A living football world
+- **236 clubs** in Turkey's 5 tiers (Süper Lig down to the Regional Amateur League), named after **205 real towns and cities**, plus top flights in England, Spain, Germany and Italy.
+- Foreign clubs use PES-style fictional names with real club colours.
+- Full league tables, promotion and relegation, winter and summer transfer windows, loans, national team call-ups (U21 and senior) and **international breaks** where the league pauses.
+
+### Positions, formations and the coach
+- Pick your natural position on a **12-spot position map**: GK, CB, LB, RB, CDM, CM, CAM, LM, RM, LW, RW, ST.
+- Every club plays its own system from **12 formations** (4-4-2, 4-3-3, 4-2-3-1, 3-4-3, 3-5-2, 5-3-2, 2-4-4 and more).
+- If your position isn't in the team's system, the **coach asks you to switch**. In a 3-4-3, a left-back is offered left midfield or centre-back, and you can accept or refuse.
+- When a teammate gets injured, the coach may ask you to cover another position for a few weeks.
+- Playing out of position starts with low **familiarity**, which grows with every match.
+- Each season the coach gives you a **development plan**: three skills your position needs most, which earn +25% XP.
+- Before matches the coach may give **tactical instructions** (run in behind, press high, mark their playmaker). They only come if you're in the starting XI, and following them improves your odds.
+
+### 34 attributes, FIFA-style
+Seven groups, each shown with a card score: **Pace, Shooting, Passing, Dribbling, Defending, Physical, Goalkeeping**.
+
+Examples: acceleration, sprint speed, finishing, long shots, volleys, penalties, vision, crossing, free kicks, curve, agility, balance, composure, interceptions, sliding tackle, jumping, stamina, strength, reflexes, handling.
+
+On top of these there are six personal skills (sociability, speaking, charisma, leadership, composure, cunning) that unlock dialogue options and improve your odds in conversations.
+
+- **XP-based growth.** Fast when you're young, much harder past 70 and especially past 80.
+- Training in one skill also slightly improves the others in its group.
+- Playing matches gives XP too, and good performances give more.
+
+### Matches with a live commentator
+- A commentator narrates the whole match line by line: kick-off, both teams' goals, chances, cards, half-time and the final whistle. The scoreboard updates live.
+- When the ball comes to you, play stops and you choose.
+- Every outcome is chance-based and depends on your attributes, form, energy, the opponent and the coach's plan.
+- **Attack build-up.** Many attacks go through three stages: *build-up → final third → finish*. At each stage you choose between short passes, dribbles, long balls, through balls and crosses.
+  - Short passes are usually safest.
+  - Long balls usually risk more but can skip a stage. Sometimes, for example when the defence is high, the long ball is the better choice.
+- **47 position-specific moments** plus **15 build-up situations**, each with an easy low-risk option.
+- Defenders tackle and intercept, goalkeepers dive, and penalties and free kicks come up.
+
+### 424 story events
+Every event only happens when it makes sense: league level, age, fame, money, family, partner, nationality and recent results all matter. An unknown 17-year-old won't get magazine covers, and a Süper Lig star won't have unpaid wages.
+
+- **Origin stories** for each of the 13 backgrounds.
+- **Lower-league reality:** unpaid wages, broken team buses, muddy pitches, part-time jobs, the butcher president.
+- **Top-flight life:** VAR controversies, star signings competing for your spot, club elections, derby security.
+- **Abroad:** loneliness, language mistakes, finding a Turkish restaurant, diaspora fans, standing up to racist chants.
+- **Life stages:** driving test, first salary, graduation on match day, military service, house loans, mentoring younger rivals, coaching badges.
+- **Family, love and money:** parents' health, siblings' tuition, a cousin's loan, a restaurant partnership, investments that pay off (or don't).
+- **Inspired by real football news** and fully fictionalised (no real names):
+  - transfer strikes and deadline-day phone calls
+  - falling asleep in a team talk, or being fined for "not sweating enough"
+  - a fan who brings a lamb to the stadium, or throws a kebab at you
+  - a statue that looks nothing like you
+  - a bee swarm stopping the match
+- **Rare absurd moments:** the "body double" conspiracy theory, the club cat giving birth in your boots, your aunt throwing slippers at the referee.
+- **Chained events** that come back weeks later with different outcomes.
+- **39 press conference questions** and post-match interviews with tones (humble, bold, emotional, funny, evasive, harsh).
+
+### Phone: your life hub
+- **Social Media.** Your feed, comments and rumours. Write your own post and the game **analyses your text**: it detects the tone (humble, bold, emotional, funny, motivating, harsh), scores engagement from 0 to 100 and flags risks such as insults, criticising the referee or coach, mentioning rivals or politics. Liking other posts earns a few followers.
+- **Messages.** 27 conversation threads from your mother, father, siblings, best friend, partner, captain, coach, agent and fans, where you choose the reply.
+- **Private Life.** Six weekly routines (sleep, diet, morning runs, social life, phone use, recovery), each with visible weekly effects and costs.
+- **Shop.** 91 items in 9 categories: personal development, transport, housing, looks, pro gear, family, gifts, investments and legendary luxuries. **13 monthly courses** (English, sports psychologist, yoga, media training, personal trainer…), with occasional "3 months for the price of 2" offers.
+- **Bank.** Weekly income and expenses, and **loans** whose limit depends on your contract and interest on your credit score. Missed payments hurt your credit score.
+- **Agent.** Your agent's tasks appear on the home screen. Contract **negotiations run on tension**: every club has a hidden ceiling, and if you push too hard they walk away.
+- **28 weekly activities**, 12 personality traits that form from your choices, and 12 season goals.
+
+### Generations
+When you retire, continue as your child or a young relative. Your surname, reputation and part of your wealth carry over, and the family museum keeps your dynasty's history.
+
+### Saves and updates
+- Your career saves in the browser automatically. Use **Settings → export code** to move it to another device.
+- **Settings → Check for updates** compares your version with this repository. When you run the game with the launcher, **Update now** pulls the latest version and reloads, and your career stays intact.
+
+---
+
+## How to play
+
+1. Install [Node.js](https://nodejs.org) and [Git](https://git-scm.com).
+2. Clone the repository:
    ```
    git clone https://github.com/Eilidhel/forma.git
    ```
-3. Windows'ta `FORMA'yı başlat.bat` dosyasına çift tıkla. Ya da terminalde:
+3. On Windows, double-click **`FORMA'yı başlat.bat`**. On any system you can also run:
    ```
    node tools/serve.js
    ```
-4. Tarayıcıda http://localhost:5173 açılır.
+4. Open http://localhost:5173 in your browser (the launcher opens it for you).
 
-Kariyerin tarayıcıya kaydedilir. Ayarlar'dan kayıt kodu alıp başka cihaza taşıyabilirsin.
+No build step and no dependencies: it's plain HTML, CSS and JavaScript.
 
-## Güncelleme
+## Project structure
 
-Ayarlar > **Güncellemeyi denetle**. Yeni sürüm varsa notlarıyla gösterilir; **Şimdi güncelle** ile oyun GitHub'dan en yeni sürümü indirir ve kendini yeniler. Kariyerin kaybolmaz. Oyun açılınca günde bir kez kendiliğinden de kontrol eder.
+```
+index.html          page, styles, script order
+js/core.js          seeded RNG, helpers, name pools
+js/engine.js        world, player, weekly loop, effects, conditions, XP
+js/systems.js       matches, press, transfers, negotiation, season, generations, shop
+js/social2.js       post analysis, likes, bank loans
+js/ui.js            all screens and actions
+js/version.js       game version and update URL
+js/data/            world, origins, positions, formations, attack stages, shop, events
+tools/              local server, simulator and tests
+version.json        latest version and release notes (read by the in-game updater)
+```
 
-## Geliştirici araçları
+## Developer tools
 
-| Komut | Ne yapar |
+| Command | What it does |
 |---|---|
-| `node tools/simulate.js 100 8` | 100 kariyeri 8 sezon oynatır, hata ve denge raporu verir |
-| `node tools/acttest.js` | Ekranda yazan etki ile gerçekte gelen aynı mı |
-| `node tools/negotest.js` | Pazarlık sistemi |
-| `node tools/nattest.js` | Milli ara |
-| `node tools/featuretest.js` | Kulüp seçimi, sohbet, abonelik, atak zinciri |
-| `node tools/postest.js` | Paylaşım analizi, kredi, mevki istekleri |
-| `node tools/storylist.js > HIKAYELER.md` | Tüm olayların listesi |
-| `node tools/bump.js 1.17.0 "not"` | Yeni sürüm numarası ve notları |
+| `node tools/simulate.js 100 8` | Plays 100 careers for 8 seasons, reports errors, balance and event variety |
+| `node tools/acttest.js` | Checks that the effect shown on screen equals the effect applied |
+| `node tools/negotest.js` | Contract negotiation |
+| `node tools/nattest.js` | International breaks |
+| `node tools/featuretest.js` | Club pick, conversations, subscriptions, attack chains |
+| `node tools/postest.js` | Post analysis, loans, coach position requests |
+| `node tools/storylist.js > HIKAYELER.md` | Lists every event (in Turkish) |
+| `node tools/bump.js 1.17.0 "note"` | Sets a new version and release notes |
 
-Yeni sürüm yayınlamak için: `bump.js` ile sürümü artır, commit at, push et. Oyuncular bir sonraki kontrolde güncellemeyi görür.
+**Releasing:** bump the version with `tools/bump.js`, commit and push. Players see the update the next time they check.
