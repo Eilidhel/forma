@@ -19,7 +19,11 @@
     hoca: ['hoca anlamıyor', 'hocam yanlış', 'neden oynatmıyor', 'kulübede çürüyorum', 'teknik direktör hata'],
     hakaret: ['aptal', 'salak', 'gerizekalı', 'şerefsiz', 'lan', 'amk', 'mal ', 'ezik', 'korkak', 'rezil', 'ağlasınlar', 'ezdik', 'yerle bir'],
     siyaset: ['seçim', 'parti', 'siyaset', 'hükümet', 'muhalefet', 'oy verin'],
-    sponsor: ['#reklam', 'sponsor', 'indirim kodu', 'linke tıkla', 'iş birliği', 'işbirliği']
+    sponsor: ['#reklam', 'sponsor', 'indirim kodu', 'linke tıkla', 'iş birliği', 'işbirliği'],
+    // genel olumlu / olumsuz ifadeler ve maç kelimeleri ("çok iyi bir maçtı", "harika galibiyet")
+    olumlu: ['iyi', 'harika', 'güzel', 'muhteşem', 'süper', 'mükemmel', 'efsane maç', 'keyifli', 'mutluyum', 'gururluyum', 'kazandık', 'galibiyet', 'üç puan', '3 puan', 'zafer', 'bravo', 'helal', '👏', '🔥', '⚽'],
+    olumsuz: ['kötü', 'berbat', 'üzgün', 'üzücü', 'kaybettik', 'yenildik', 'mağlubiyet', 'olmadı', 'hayal kırıklığı', 'moralim bozuk', '😔', '😞', '💔'],
+    mac: ['maç', 'mac', 'oyun', 'galibiyet', 'deplasman', 'derbi', 'gol', 'puan', 'saha']
   };
   const EMOJI = /[\u{1F300}-\u{1FAFF}☀-➿]/gu;
 
@@ -48,7 +52,7 @@
     // ton: en çok eşleşen
     const tones = ['mutevazi', 'iddiali', 'duygusal', 'esprili', 'motive'];
     let tone = tones.slice().sort((a, b) => hits[b].length - hits[a].length)[0];
-    if (!hits[tone].length) tone = 'notr';
+    if (!hits[tone].length) tone = hits.olumlu.length > hits.olumsuz.length ? 'olumlu' : hits.olumsuz.length ? 'olumsuz' : 'notr';
     if (hits.hakaret.length || hits.hakem.length || hits.hoca.length || (rivalHit.length && hits.iddiali.length)) tone = 'sert';
 
     let eng = 40; // etkileşim puanı 0-100
@@ -91,12 +95,44 @@
       if (P.followers < 40000 || P.life.sohret < 35) notes.push(['warn', 'Reklam gibi duruyor ama seninle çalışan bir marka yok.']);
       else { add('para', Math.round(Math.min(P.followers, 2e6) * F.rf(0.1, 0.25))); add('r.taraftar', -1); notes.push(['warn', 'Sponsorlu paylaşım para getirdi, bazı taraftarlar sevmedi.']); }
     }
-    if (tone === 'notr' && len >= 8) notes.push(['warn', 'Belirgin bir duygu yok, sıradan bir paylaşım.']);
+    // olumlu / olumsuz genel ifadeler ve maç bağlamı
+    if (hits.olumlu.length) {
+      eng += 7; add('moral', 1);
+      if (hits.mac.length && won) { add('r.taraftar', 2); eng += 4; notes.push(['good', 'Galibiyetten sonra maçı övmen taraftarı sevindirdi.']); }
+      else if (hits.mac.length && lost) { add('r.taraftar', -2); notes.push(['warn', 'Kaybedilen maçı "iyi" diye anlatman bazı taraftarları şaşırttı.']); }
+      else notes.push(['good', 'Olumlu bir paylaşım, takipçilerin beğendi.']);
+    }
+    if (hits.olumsuz.length) {
+      eng += 4;
+      if (lost) { add('r.taraftar', 2); notes.push(['good', 'Yenilgiden sonra üzüntünü paylaşman samimi bulundu.']); }
+      else { add('moral', -1); notes.push(['warn', 'Olumsuz bir dil: takipçilerin seni moralsiz sanabilir.']); }
+    }
+    if (hits.mac.length && !hits.olumlu.length && !hits.olumsuz.length && tone === 'notr') { eng += 3; notes.push(['good', 'Maç hakkında bir paylaşım, takipçilerin ilgiyle okudu.']); }
+    if (tone === 'notr' && len >= 8 && !hits.mac.length) notes.push(['warn', 'Belirgin bir duygu yok, sıradan bir paylaşım.']);
     eng = F.clamp(Math.round(eng), 0, 100);
     add('takipci%', Math.round((eng - 40) / 15 * 10) / 10);
-    const label = { mutevazi: 'Mütevazı', iddiali: 'İddialı', duygusal: 'Duygusal', esprili: 'Esprili', motive: 'Motive', sert: 'Sert', notr: 'Nötr' }[tone];
-    const commentTone = { mutevazi: 'mutevazi', iddiali: 'iddiali', duygusal: 'duygusal', esprili: 'mutevazi', motive: 'mutevazi', sert: 'provokatif', notr: 'mutevazi' }[tone];
+    const label = { mutevazi: 'Mütevazı', iddiali: 'İddialı', duygusal: 'Duygusal', esprili: 'Esprili', motive: 'Motive', sert: 'Sert', olumlu: 'Olumlu', olumsuz: 'Üzgün', notr: 'Nötr' }[tone];
+    const commentTone = { mutevazi: 'mutevazi', iddiali: 'iddiali', duygusal: 'duygusal', esprili: 'mutevazi', motive: 'mutevazi', sert: 'provokatif', olumlu: 'mutevazi', olumsuz: 'duygusal', notr: 'mutevazi' }[tone];
     return { tone, label, eng, fx, notes, commentTone };
+  };
+
+  /* ---------- Gazeteciler: basın toplantısı, Kişiler'deki gazeteci, transfer kulisi ve haber paylaşımları ---------- */
+  D.journalists = [
+    { name: 'Sabun Yağız', handle: '@sabunyagiz', beat: 'transfer' },
+    { name: 'Caprizio', handle: '@caprizio', beat: 'transfer' },
+    { name: 'Roman', handle: '@roman', beat: 'kulis' },
+    { name: 'Kulisçi Ferda', handle: '@kulisferda', beat: 'kulis' },
+    { name: 'Analizci Ozan', handle: '@ozananaliz', beat: 'analiz' }
+  ];
+  F.pickJournalist = (beat) => { const list = D.journalists.filter((j) => !beat || j.beat === beat); return F.pick(list.length ? list : D.journalists); };
+  // haber ve kulis paylaşımlarının bir kısmı gazetecilerden gelir
+  const origFeed = F.addFeed;
+  F.addFeed = function (o) {
+    if (o && !o.me && (o.who === 'Spor Haber' || o.who === 'Transfer Kulisi' || o.who === 'Tribün Dedikodu' || o.who === 'Futbol Ajansı') && F.chance(o.who === 'Spor Haber' ? 0.45 : 0.8)) {
+      const j = F.pickJournalist(o.who === 'Spor Haber' ? null : 'transfer');
+      o = Object.assign({}, o, { who: j.name, handle: j.handle });
+    }
+    return origFeed.call(this, o);
   };
 
   // kendi yazdığın paylaşımı yayınla

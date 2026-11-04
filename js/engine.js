@@ -357,7 +357,7 @@
     F.addNpc('rakip', { name: nm(), type: F.pick(['kibirli', 'centilmen', 'kiskanc']), rel: -5, age: S.P.age + F.ri(-3, 5), teamId: tm, pos: S.P.pos });
     S.mates = [F.npc('kaptan').name, F.npc('kanka').name, F.npc('rakip').name, nm(), nm(), nm(), nm()];
     if (!F.npc('gazeteci') || abroad !== !!S.flags.medya_yurtdisi) {
-      F.addNpc('gazeteci', { name: F.fullName(), type: 'yerel', rel: 0, age: F.ri(28, 60) });
+      F.addNpc('gazeteci', { name: !abroad && D.journalists ? F.pickJournalist().name : F.fullName(), type: 'yerel', rel: 0, age: F.ri(28, 60) });
       F.addNpc('magazinci', { name: F.fullName(F.chance(0.5)), type: 'magazin', rel: 0, age: F.ri(25, 45) });
       if (abroad) S.flags.medya_yurtdisi = 1; else delete S.flags.medya_yurtdisi;
     }

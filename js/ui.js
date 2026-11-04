@@ -559,7 +559,10 @@
   function pressView(st) {
     const qid = st.qs[st.i];
     const q = qid ? F.pressQ(qid) : null;
-    const g = whoInfo('gazeteci');
+    const g0 = whoInfo('gazeteci');
+    // her soruyu farklı bir gazeteci sorabilir
+    const jl = D.journalists || [];
+    const g = jl.length && !st.interview ? Object.assign({}, g0, { name: jl[(st.i + (st.qs[0] || '').length) % jl.length].name }) : g0;
     const log = st.log.map((l) => `<div class="bub them">${esc(l.q)}</div><div class="bub me">${esc(l.a)}</div>${l.r ? `<div class="bub sys">${esc(l.r)}</div>` : ''}${deltaChips(l.deltas)}`).join('');
     const title = st.interview ? 'Röportaj' : 'Basın toplantısı';
     if (st.done || !q) return { main: `<div class="stack fade"><div class="row"><div class="label grow">${title}</div><span class="chip">Bitti</span></div><div class="chat">${log}</div></div>`, dock: `<button class="btn" data-a="ev-next">Devam</button>` };

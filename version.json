@@ -1,12 +1,8 @@
 {
-  "version": "1.18.0",
+  "version": "1.18.1",
   "date": "2026-11-04",
   "notes": [
-    "Kadro ekranı: ilk 11, forma rakibin ve ilk 11 şansın",
-    "Memleket seçimi, memleket kulübü seni daha çok ister",
-    "Lig istatistikleri: gol krallığı, asist, kartlar",
-    "Mesajlar kişi kişi; acil mesajlara süre",
-    "Maç seçenekleri iki yeteneğe bakar, yeni maç durumları",
-    "Hatalar: mesajda verilen para düşüyor, Alıştın uyarısı, gerçekçi transfer teklifleri"
+    "Paylaşım analizi olumlu ve maç cümlelerini anlıyor (ör. çok iyi bir maçtı)",
+    "Yeni gazeteciler: Sabun Yağız, Caprizio, Roman ve diğerleri"
   ]
 }
