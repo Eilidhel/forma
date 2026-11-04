@@ -46,6 +46,8 @@
     p += add('Form', P.life.form / 35);
     if (!m.nat) {
       p += add('Sözleşmedeki rolün', { as: 0.22, rotasyon: 0, yedek: -0.18 }[P.contract.role] || 0);
+      // pazarlıkta alınan forma garantisi: hoca sözleşmeye uyar (formun çok kötü ya da hocayla aran çok bozuk değilse)
+
       if (h && h.type === 'genc' && P.age <= 22) p += add('Hoca gençlere şans veriyor', 0.12);
       if (h && h.type === 'yildiz') p += add('Hoca yıldızları seviyor', (P.life.sohret - 40) / 200);
       if (h && h.type === 'diktator') p += add('Hoca disipline bakıyor', (P.life.disiplin - 55) / 200);
@@ -59,7 +61,14 @@
       p += add('Forma rakibin ' + r.n.split(' ')[0] + ' ile fark', F.clamp((mine - theirs) / 20, -0.2, 0.2));
     }
     if (P.life.enerji < 35) p += add('Yorgunluk', -0.2);
-    return { p: F.clamp(p, 0.04, 0.97), parts };
+    p = F.clamp(p, 0.04, 0.97);
+    // pazarlıkta alınan forma garantisi: hoca sözleşmeye uyar. Formun çok kötü ya da hocayla aran çok bozuksa garanti zayıflar.
+    if (!m.nat && P.contract.guarantee) {
+      const hr = h ? h.rel : 0;
+      const floor = P.life.form > -6 && hr > -50 && P.life.enerji >= 35 ? 0.85 : 0.55;
+      if (p < floor) { parts.push(['Forma garantisi (sözleşme)', floor - p]); p = floor; }
+    }
+    return { p, parts };
   };
   F.rollStatus = function (m) {
     const P = F.S.P;

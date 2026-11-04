@@ -1,8 +1,8 @@
 {
-  "version": "1.18.2",
+  "version": "1.18.3",
   "date": "2026-11-04",
   "notes": [
-    "Şike cezasında kulüpten kovulma artık gerçekten uygulanıyor; yeni kulübünü seçiyorsun, cezan orada da sürüyor",
-    "Eski kayıtlarda bu durumdaysan kayıt açılınca düzelir"
+    "Pazarlıkta forma garantisi alınca artık ilk 11 oyuncusu (As oyuncu) oluyorsun",
+    "Forma garantisi ilk 11 şansını en az %85'e çıkarır (form ve hocayla ilişki çok kötü değilse)"
   ]
 }

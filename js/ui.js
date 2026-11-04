@@ -517,7 +517,7 @@
             <div class="stack" style="gap:6px;min-width:0">
               <div class="row" style="gap:10px">${meFace('md')}<div class="nm">${esc(P.name)}<br>${esc(P.surname)}</div></div>
               <div class="small" style="opacity:.85">${P.age} yaş · ${esc(posName)} · ${esc(P.originName)}</div>
-              <div class="row wrap" style="gap:6px">${P.injury ? `<span class="chip bad">Sakat · ${P.injury.weeks} hafta</span>` : ''}${P.suspended ? `<span class="chip bad">Cezalı · ${P.suspended} maç</span>` : ''}${S.flags.kaptan ? '<span class="chip acc">Kaptan</span>' : ''}<span class="chip">${esc(D.roleNames[P.contract.role])}</span>${P.contract.loanFrom ? '<span class="chip warn">Kiralık</span>' : ''}</div>
+              <div class="row wrap" style="gap:6px">${P.injury ? `<span class="chip bad">Sakat · ${P.injury.weeks} hafta</span>` : ''}${P.suspended ? `<span class="chip bad">Cezalı · ${P.suspended} maç</span>` : ''}${S.flags.kaptan ? '<span class="chip acc">Kaptan</span>' : ''}<span class="chip">${esc(D.roleNames[P.contract.role])}${P.contract.guarantee ? " · forma garantili" : ""}</span>${P.contract.loanFrom ? '<span class="chip warn">Kiralık</span>' : ''}</div>
             </div>
             <div class="kit">${F.ART.jersey(t.colors[0], t.colors[1], P.number || 10, P.surname, 92)}<div class="ovrbadge num">${ovr}<span>GÜÇ</span></div></div>
           </div>

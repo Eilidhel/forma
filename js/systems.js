@@ -1009,7 +1009,7 @@
       wageMul: Math.round(F.clamp(1.06 + pw * 0.3 + F.rand() * 0.08, 1.0, 1.9) * 100) / 100,
       signing: Math.round(F.clamp(0.05 + pw * 0.22 + F.rand() * 0.05, 0, 0.8) * 100) / 100,
       maxYears: P.age >= 31 ? 2 : P.age >= 28 ? 3 : 5,
-      guarantee: o.role === 'as' || (o.role === 'rotasyon' && pw > 0.5)
+      guarantee: o.role === 'as' || (o.role === 'rotasyon' && pw > 0.3) || (o.role === 'yedek' && pw > 0.8)
     };
     if (o.tension == null) o.tension = Math.round(8 + F.rand() * 12);
     return o.limit;
@@ -1071,13 +1071,15 @@
     const out = [];
     if (o.renew) {
       P.contract.wage = wage; P.contract.years = terms.years;
-      if (terms.guarantee) P.contract.role = o.role === 'yedek' ? 'rotasyon' : 'as';
+      // forma garantisi: kulüp kabul ettiyse ilk 11 oyuncususun
+      if (terms.guarantee) { P.contract.role = 'as'; P.contract.guarantee = true; } else delete P.contract.guarantee;
       out.push(...F.fx({ 'r.baskan': 5, 'r.taraftar': 3, 't.sadik': 1 }));
       F.addFeed({ who: F.myTeam().name, t: F.tpl('{adsoyad} ile sözleşme yenilendi. Yolumuza birlikte devam ediyoruz!'), kind: 'club' });
     } else {
       const left = P.contract.years > 0;
       const oldWage = P.contract.wage;
-      F.transfer(o.team, { wage, years: terms.years, role: terms.guarantee ? (o.role === 'yedek' ? 'rotasyon' : 'as') : o.role });
+      F.transfer(o.team, { wage, years: terms.years, role: terms.guarantee ? 'as' : o.role });
+      if (terms.guarantee) P.contract.guarantee = true;
       if (left) out.push(...F.fx({ 'r.taraftar': -6 }));
       if (wage > oldWage * 2.5) out.push(...F.fx({ 't.paragoz': 1 }));
     }
