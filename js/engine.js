@@ -1516,6 +1516,8 @@
     P.subs = P.subs || [];
     S.convos = S.convos || [];
     P.roleExp = P.roleExp || {};
+    // eski sürüm hatası: şike cezasında kulüpten kovulma uygulanmamıştı. 15 maçlık cezası sürüp hâlâ kulüpteyse şimdi uygula
+    if (S.seen && S.seen.sike_ortaya != null && P.suspended > 8 && !S.flags.kovuldu && S.queue && !S.queue.some((q) => q.type === 'offers')) { S.queue = S.queue || []; S.queue.unshift({ type: 'noop' }); F.ACT && F.ACT.sacked && F.ACT.sacked(); S.queue.shift(); }
     if (P.playRole === undefined) { P.playRole = null; F.checkRoleFit(true); }
     const a = P.attrs;
     Object.keys(D.attrs).forEach((k) => { if (a[k] == null) { const base = a[D.attrAlias[k]] != null ? a[D.attrAlias[k]] : 40; a[k] = F.clamp(Math.round(base + (k.length % 5) - 2), 5, 99); } });

@@ -31,7 +31,7 @@
       t: 'Şike soruşturması genişledi. Telefon kayıtlarında senin numaran da var. Gazeteciler kapının önünde.',
       o: [
         { t: 'İtiraf et, işbirliği yap', fx: { do: 'suspend:8', 'r.medya': -10, sohret: -10, mental: 5, 't.durust': 1, para: '-w10', album: 'Şike soruşturmasında ifade verdin. Hayatının en karanlık günü.' }, r: '8 maç ceza aldın. Ama vicdanın biraz hafifledi.' },
-        { t: 'Her şeyi inkâr et', fx: {}, chk: { s: 'kurnazlik', d: 55 }, ok: { r: 'Delil yetersiz bulundu. Ama şüphe hep üstünde kalacak.', fx: { 'r.medya': -8, flag: 'sike_supheli' } }, no: { r: 'Kayıtlar netti. 15 maç ceza ve kulüpten kovulma.', fx: { do: ['suspend:15', 'role:yedek'], 'r.baskan': -40, 'r.taraftar': -30, sohret: -15, mental: -15 } } }] },
+        { t: 'Her şeyi inkâr et', fx: {}, chk: { s: 'kurnazlik', d: 55 }, ok: { r: 'Delil yetersiz bulundu. Ama şüphe hep üstünde kalacak.', fx: { 'r.medya': -8, flag: 'sike_supheli' } }, no: { r: 'Kayıtlar netti. 15 maç ceza ve kulüpten kovulma.', fx: { do: ['suspend:15', 'sacked'], 'r.taraftar': -30, sohret: -15, mental: -15 } } }] },
     { id: 'sike_tehdit', chain: true, kind: 'card', who: 'Karanlık bir araba',
       t: 'Antrenman çıkışı siyah bir araba yanında yavaşladı. Cam indi: "İhbar etmek iyi değil. Dikkatli ol." Araba hızla uzaklaştı.',
       o: [

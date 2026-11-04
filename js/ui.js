@@ -831,7 +831,7 @@
     const iv = innerVoice();
     return {
       main: `<div class="stack fade"><h2 class="display" style="font-size:30px">Transfer masası</h2>
-        <p class="small muted">${expired ? 'Sözleşmen bitti. Bir teklifi kabul etmen gerekiyor.' : `Şu anki sözleşmen: ${esc(t.name)}, ${P.contract.years} yıl kaldı, haftalık ${F.money(P.contract.wage)}.`}</p>
+        <p class="small muted">${S.queue[0] && S.queue[0].window === 'kovuldu' ? 'Kulübün seninle yollarını ayırdı. Sicilin lekeli ama bazı kulüpler sana şans vermek istiyor. Cezan yeni kulübünde de sürecek. Bir teklifi kabul etmen gerekiyor.' : expired ? 'Sözleşmen bitti. Bir teklifi kabul etmen gerekiyor.' : `Şu anki sözleşmen: ${esc(t.name)}, ${P.contract.years} yıl kaldı, haftalık ${F.money(P.contract.wage)}.`}</p>
         ${S.offers.length ? S.offers.map((o, i) => {
           const tm = F.team(o.team);
           return `<div class="card stack" style="gap:10px"><div class="row">${badge(tm, 34)}<div class="grow"><b>${esc(tm.name)}${o.renew ? ' <span class="chip acc">Mevcut kulüp</span>' : ''}</b><div class="tiny muted">${esc(o.league)} · güç ${tm.str}</div></div></div>

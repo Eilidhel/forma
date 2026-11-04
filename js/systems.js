@@ -683,6 +683,29 @@
     devplan: (kind) => { const S = F.S, P = S.P; const w = F.posW(P); if (kind === 'guclu') { S.devPlan.focus = Object.keys(w).sort((a, b) => w[b] * P.attrs[b] - w[a] * P.attrs[a]).slice(0, 3); S.devPlan.msg = 'Güçlü yanlarını daha da parlatacağız: ' + S.devPlan.focus.map((k) => D.attrs[k].toLowerCase()).join(', ') + '.'; } else F.makeDevPlan(true); },
     playrole: (i) => { const S = F.S, P = S.P; i = +i; P.playRole = i < 0 ? P.role : (S.roleOffer || [])[i] || P.role; S.roleOffer = null; },
     temprole: () => { const S = F.S; if (S.tempOffer) S.tempRole = { role: S.tempOffer, until: S.t + F.ri(1, 3) }; S.tempOffer = null; },
+    // kulüpten kovulma: sözleşme feshedilir, sicili lekeli oyuncuya alt seviyeden düşük maaşlı teklifler gelir
+    sacked: () => {
+      const S = F.S, P = S.P;
+      const old = F.myTeam();
+      S.flags.kovuldu = (S.flags.kovuldu || 0) + 1;
+      P.contract.years = 0; P.contract.role = 'yedek';
+      F.relAdd('baskan', -40);
+      let offers = F.genOffers('kis', 'down');
+      if (offers.length < 2) {
+        const low = Object.values(S.world.teams).filter((t) => t.country === 'TR' && t.id !== old.id && t.str < old.str).sort((a, b) => b.str - a.str).slice(0, 10);
+        F.shuffle(low).slice(0, 3 - offers.length).forEach((t) => offers.push(F.makeOffer(t.id)));
+      }
+      if (offers.length < 2) { // en alttaysa bile en az iki kulüp şans verir
+        const any = Object.values(S.world.teams).filter((t) => t.country === 'TR' && t.id !== old.id && !offers.some((o) => o.team === t.id) && F.tierOf(t.id).t >= 4);
+        F.shuffle(any).slice(0, 2 - offers.length).forEach((t) => offers.push(F.makeOffer(t.id)));
+      }
+      offers = offers.slice(0, 3);
+      offers.forEach((o) => { o.wage = Math.round(o.wage * 0.6 / 500) * 500; o.role = 'rotasyon'; });
+      S.offers = offers;
+      S.queue.splice(1, 0, { type: 'offers', window: 'kovuldu' });
+      F.addFeed({ who: 'Spor Haber', t: F.tpl(old.name + ', şike soruşturması sonrası {adsoyad} ile yollarını ayırdı.'), kind: 'news' });
+      F.addAlbum(old.name + ' seni kadrodan çıkardı. Kariyerinin en zor günü.', 'event');
+    },
     campaign: () => { F.S.campaign = { until: F.S.t + 2 }; },
     // hocanın maç planı: bu hafta belli yeteneklere ek şans (ör. 'tactic:hiz=6,sut=4')
     tactic: (spec) => { const b = {}; String(spec).split(',').forEach((x) => { const [k, v] = x.split('='); b[k] = (+v || 0) / 100; }); F.S.tactic = { t: F.S.t, b }; },

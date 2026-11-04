@@ -1,8 +1,8 @@
 {
-  "version": "1.18.1",
+  "version": "1.18.2",
   "date": "2026-11-04",
   "notes": [
-    "Paylaşım analizi olumlu ve maç cümlelerini anlıyor (ör. çok iyi bir maçtı)",
-    "Yeni gazeteciler: Sabun Yağız, Caprizio, Roman ve diğerleri"
+    "Şike cezasında kulüpten kovulma artık gerçekten uygulanıyor; yeni kulübünü seçiyorsun, cezan orada da sürüyor",
+    "Eski kayıtlarda bu durumdaysan kayıt açılınca düzelir"
   ]
 }
