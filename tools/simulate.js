@@ -190,3 +190,6 @@ console.log('Hiç çıkmayan olaylar (' + never.length + '):', never.join(', '))
 console.log('Çözülmemiş şablonlar:', JSON.stringify(unresolved));
 console.log('Uyarılar:', JSON.stringify(Object.entries(warns).slice(0, 20)));
 errors.slice(0, 5).forEach((e) => console.log('\nHATA #' + e.i + ': ' + e.msg + '\n' + e.stack + '\nAdım: ' + e.step));
+
+// CI: hata varsa başarısız çık
+if (errors.length) process.exit(1);

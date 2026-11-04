@@ -1017,7 +1017,7 @@
       const remote = await r.json();
       let local = false;
       try { const pr = await fetch('/__ping', { cache: 'no-store' }); local = pr.ok && (await pr.json()).git; } catch (e) { local = false; }
-      U.upd = { status: newer(remote.version, F.VERSION) ? 'new' : 'latest', remote, local };
+      U.upd = { status: newer(remote.version, F.VERSION) ? 'new' : 'latest', remote, local, web: !!window.FORMA_WEB };
       store.set('forma.updCheck', new Date().toDateString());
       if (silent && U.upd.status === 'new') toast('Yeni sürüm var: ' + remote.version + '. Ayarlar > Güncellemeyi denetle');
     } catch (e) {
@@ -1030,6 +1030,15 @@
     render(true);
     try {
       save();
+      // web uygulaması (GitHub Pages): önbelleği temizle, yeni sürümle yeniden aç
+      if (window.FORMA_WEB) {
+        if (navigator.serviceWorker) { const regs = await navigator.serviceWorker.getRegistrations(); await Promise.all(regs.map((r) => r.update().catch(() => {}))); }
+        if (window.caches) { const ks = await caches.keys(); await Promise.all(ks.map((k) => caches.delete(k))); }
+        U.upd = { status: 'done' };
+        render(true);
+        setTimeout(() => location.reload(), 700);
+        return;
+      }
       const r = await fetch('/__update', { method: 'POST' });
       const j = await r.json();
       if (!j.ok) throw new Error(j.err || 'Güncelleme başarısız');
@@ -1048,7 +1057,7 @@
     if (u.status === 'checking') body = '<p class="small muted">GitHub kontrol ediliyor…</p>';
     else if (u.status === 'latest') body = `<p class="small" style="color:var(--good)">En güncel sürümü kullanıyorsun.</p>`;
     else if (u.status === 'new') body = `<div class="flat stack" style="gap:6px"><b>Yeni sürüm: ${esc(remote.version)}</b><span class="tiny muted">${esc(remote.date || '')}</span>${(remote.notes || []).map((n) => `<div class="small">• ${esc(n)}</div>`).join('')}</div>
-      ${u.local ? '<button class="btn sm" data-a="upd-run">Şimdi güncelle</button><p class="tiny muted">Oyun yeni sürümü indirip kendini yeniler. Kariyerin kaybolmaz.</p>' : `<p class="small">Bu kopya otomatik güncellenemiyor. Bilgisayarında <b>FORMA'yı başlat</b> dosyasıyla açarsan tek tıkla güncellenir. Ya da yeni sürümü <a href="${F.REPO_URL}" target="_blank" rel="noopener">GitHub sayfasından</a> indir.</p>`}`;
+      ${u.local || u.web ? '<button class="btn sm" data-a="upd-run">Şimdi güncelle</button><p class="tiny muted">Oyun yeni sürümü indirip kendini yeniler. Kariyerin kaybolmaz.</p>' : `<p class="small">Bu kopya otomatik güncellenemiyor. Bilgisayarında <b>FORMA'yı başlat</b> dosyasıyla açarsan tek tıkla güncellenir. Ya da yeni sürümü <a href="${F.REPO_URL}" target="_blank" rel="noopener">GitHub sayfasından</a> indir.</p>`}`;
     else if (u.status === 'updating') body = '<p class="small muted">Yeni sürüm indiriliyor…</p>';
     else if (u.status === 'done') body = `<p class="small" style="color:var(--good)">Güncellendi! Oyun yeniden yükleniyor…</p>${u.serverChanged ? '<p class="tiny muted">Sunucu dosyası da güncellendi. Yüklenmezse FORMA penceresini kapatıp yeniden aç.</p>' : ''}`;
     else if (u.status === 'error') body = `<p class="small" style="color:var(--bad)">Kontrol edilemedi: ${esc(u.err || '')}</p>`;

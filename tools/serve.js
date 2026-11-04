@@ -5,20 +5,22 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { execFile } = require('child_process');
-const ROOT = path.join(__dirname, '..');
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.md': 'text/plain; charset=utf-8' };
+const REPO = path.join(__dirname, '..');
+// SERVE_DIR=dist ile derlenmiş web uygulaması da denenebilir
+const ROOT = process.env.SERVE_DIR ? path.resolve(REPO, process.env.SERVE_DIR) : REPO;
+const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.md': 'text/plain; charset=utf-8', '.webmanifest': 'application/manifest+json' };
 const PORT = +process.env.PORT || 5173;
 const json = (res, code, obj) => { res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(obj)); };
 
 http.createServer((req, res) => {
   const url = decodeURIComponent(req.url.split('?')[0]);
   // yerel sunucu mu? (oyun güncelleme düğmesini buna göre gösterir)
-  if (url === '/__ping') return json(res, 200, { local: true, git: fs.existsSync(path.join(ROOT, '.git')) });
+  if (url === '/__ping') return json(res, 200, { local: true, git: fs.existsSync(path.join(REPO, '.git')) });
   // GitHub'dan güncelle: sadece bu bilgisayardan gelen POST isteği
   if (url === '/__update') {
     if (req.method !== 'POST') return json(res, 405, { ok: false, err: 'POST gerekli' });
-    if (!fs.existsSync(path.join(ROOT, '.git'))) return json(res, 400, { ok: false, err: 'Bu klasör GitHub deposundan indirilmemiş (git yok).' });
-    return execFile('git', ['pull', '--ff-only'], { cwd: ROOT, timeout: 60000 }, (err, stdout, stderr) => {
+    if (!fs.existsSync(path.join(REPO, '.git'))) return json(res, 400, { ok: false, err: 'Bu klasör GitHub deposundan indirilmemiş (git yok).' });
+    return execFile('git', ['pull', '--ff-only'], { cwd: REPO, timeout: 60000 }, (err, stdout, stderr) => {
       if (err) return json(res, 500, { ok: false, err: (stderr || err.message).trim() });
       json(res, 200, { ok: true, out: stdout.trim(), serverChanged: /tools\/serve\.js/.test(stdout) });
     });
@@ -29,7 +31,7 @@ http.createServer((req, res) => {
     if (err) { res.writeHead(404); return res.end('Bulunamadı'); }
     let body = data;
     // index.html yayında iskeletle sarılır; yerelde de aynı başlığı ekle
-    if (file.endsWith('index.html')) body = '<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>FORMA</title></head><body>' + data + '</body></html>';
+    if (file.endsWith('index.html') && !/^\s*<!doctype/i.test(String(data))) body = '<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>FORMA</title></head><body>' + data + '</body></html>';
     res.writeHead(200, { 'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
     res.end(body);
   });
