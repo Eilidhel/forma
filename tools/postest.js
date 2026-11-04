@@ -16,9 +16,10 @@ const S = F.S;
 const r = F.makeCustomPost('mac', 'Takıma teşekkürler, hep beraber daha iyisini yapacağız 💪');
 ok(S.feed[0].me && S.feed[0].t.includes('teşekkürler'), 'Kendi yazdığın paylaşım akışta: ' + r.r);
 // beğeni
-F.addFeed({ who: 'Taraftar', t: 'Harika maçtı', kind: 'news' });
-const f0 = S.P.followers; const lr = F.likePost(S.feed[0].id);
-ok(lr && lr.gain > 0 && S.P.followers === f0 + lr.gain, 'Beğeni takipçi kazandırdı: +' + (lr && lr.gain));
+// beğeni bazen hiç takipçi getirmez; birkaç beğenide toplam artmalı
+const f0 = S.P.followers; let tot = 0;
+for (let i = 0; i < 6; i++) { F.addFeed({ who: 'Taraftar', t: 'Harika maçtı ' + i, kind: 'news' }); tot += F.likePost(S.feed[0].id).gain; }
+ok(tot > 0 && S.P.followers === f0 + tot, 'Altı beğeni toplam takipçi kazandırdı: +' + tot);
 // kredi
 const lim = F.loanLimit(); const m0 = S.P.money;
 const tk = F.takeLoan(lim, 0);

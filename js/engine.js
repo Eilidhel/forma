@@ -174,6 +174,18 @@
     };
   };
 
+  // Karakter ekranı için: aynı tohumla oyunun kuracağı temel yetenekleri önceden hesaplar (dağıtım hariç)
+  F.previewAttrs = function (o) {
+    const keep = F.S;
+    try {
+      F.S = F.newState(o.seed);
+      F.genWorld();
+      F.dealDeck();
+      const og = D.origins.find((x) => x.id === o.origin);
+      F.createPlayer(Object.assign({}, o, { alloc: null }), og);
+      return Object.assign({}, F.S.P.attrs);
+    } finally { F.S = keep; }
+  };
   F.newGame = function (o) {
     const seed = o.seed || Math.floor(Math.random() * 2147483647);
     const S = (F.S = F.newState(seed));
@@ -222,6 +234,8 @@
       if (o.pos === 'OS' && D.attrGroupOf[k] === 'pas') v += 5;
       attrs[k] = F.clamp(Math.round(v), 5, 99);
     });
+    // oyuncunun başlangıçta dağıttığı yetenek puanları
+    if (o.alloc) Object.keys(o.alloc).forEach((k) => { if (attrs[k] != null) attrs[k] = F.clamp(attrs[k] + Math.min(D.allocMax || 8, Math.max(0, o.alloc[k] | 0)), 5, 99); });
     const soft = {};
     Object.keys(D.softs).forEach((k) => (soft[k] = F.clamp(og.soft[k] + F.ri(-5, 5), 1, 99)));
     const life = Object.assign({ enerji: 85, form: 0 }, og.life);

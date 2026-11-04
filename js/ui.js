@@ -157,11 +157,13 @@
     // Giriş animasyonu yalnızca ekran değişince oynar
     const st = F.S && F.S.queue && F.S.queue[0];
     const key = U.view + '|' + (U.app || '') + '|' + (U.tab || '') + '|' + (st ? st.type + (st.id || '') + (st.node || '') + (st.i || '') : '');
-    if (key === U.lastKey) out.main = out.main.replace('stack fade', 'stack');
+    const sameScreen = key === U.lastKey;
+    if (sameScreen) out.main = out.main.replace('stack fade', 'stack');
     U.lastKey = key;
     app.innerHTML = (out.bar || '') + `<main id="main">${out.main}</main>` + (out.dock ? `<div class="dock">${out.dock}</div>` : '') + (U.toast ? `<div class="toast" role="status">${esc(U.toast)}</div>` : '');
     const m = document.getElementById('main');
-    if (keepScroll) m.scrollTop = prev;
+    // aynı ekranda kalındıysa kaydırma yeri korunur (sayfa başa atlamaz)
+    if (keepScroll || sameScreen) m.scrollTop = prev;
     // seçili diziliş kartı görünür kalsın
     document.querySelectorAll('.fmrow').forEach((row) => { const on = row.querySelector('.fmcard.on'); if (on) row.scrollLeft = on.offsetLeft - row.offsetLeft - row.clientWidth / 2 + on.clientWidth / 2; });
     if (out.after) out.after();
@@ -280,6 +282,32 @@
       <p class="tiny muted">Güçlü kulüpte forma kapmak zor, zayıf kulüpte her hafta oynarsın.</p>`;
   }
 
+  /* ---------- Yetenek puanı dağıtımı: kökenin puan verir, mevkine göre harcarsın ---------- */
+  function allocBox(c, og) {
+    if (!c.seed) c.seed = Math.floor(Math.random() * 2147483647);
+    const key = og.id + '|' + c.role + '|' + c.seed;
+    if (!c.base || c.baseKey !== key) { c.base = F.previewAttrs({ origin: og.id, role: c.role, pos: D.roles[c.role].grp, seed: c.seed, name: 'x', surname: 'y' }); c.baseKey = key; }
+    c.alloc = c.alloc || {};
+    const pool = D.originPoints[og.id] || 20;
+    const used = Object.values(c.alloc).reduce((a, b) => a + b, 0);
+    const left = pool - used;
+    const w = D.roles[c.role].w;
+    const isKL = c.role === 'KL';
+    const keys = Object.keys(D.attrs).filter((k) => isKL || !D.keeperAttrs.includes(k));
+    const main = keys.filter((k) => w[k]).sort((a, b) => w[b] - w[a]);
+    const rest = keys.filter((k) => !w[k]);
+    const row = (k) => { const a = c.alloc[k] || 0, b = c.base[k]; return `<div class="row small" style="gap:8px"><span class="grow">${esc(D.attrs[k])}${w[k] ? ' <b style="color:var(--accent)">★</b>' : ''}</span><span class="num muted">${b}</span><b class="num" style="min-width:52px;text-align:right;color:${a ? 'var(--good)' : 'var(--ink)'}">${a ? '→ ' + (b + a) : ''}</b>
+      <button class="arrow" data-a="al-sub" data-v="${k}" ${a ? '' : 'disabled'} aria-label="${esc(D.attrs[k])} azalt">−</button><button class="arrow" data-a="al-add" data-v="${k}" ${left > 0 && a < D.allocMax ? '' : 'disabled'} aria-label="${esc(D.attrs[k])} artır">+</button></div>`; };
+    return `<div class="label">3 · Yetenek puanların</div>
+      <div class="card stack" style="gap:8px"><div class="row"><span class="grow small">${esc(og.name)} sana <b>${pool}</b> puan veriyor. Mevkine göre dağıt.</span><span class="chip ${left ? 'warn' : 'good'} num">Kalan ${left}</span></div>
+        <div class="row" style="gap:8px"><button class="btn alt sm" data-a="al-auto">Mevkime göre dağıt</button><button class="btn ghost sm" data-a="al-reset" ${used ? '' : 'disabled'}>Sıfırla</button></div>
+        <div class="tiny muted">★ ${esc(D.roles[c.role].name)} için önemli yetenekler. Bir yeteneğe en fazla +${D.allocMax}.</div>
+        ${main.map(row).join('')}
+        <button class="btn ghost sm" data-a="al-more" style="align-self:flex-start">${c.allMore ? 'Diğer yetenekleri gizle' : 'Diğer yetenekler (' + rest.length + ')'}</button>
+        ${c.allMore ? rest.map(row).join('') : ''}
+        ${left ? `<p class="tiny" style="color:var(--warn)">${left} puan harcanmadı. Kariyere başlarken harcanmamış puanlar kaybolur.</p>` : ''}</div>`;
+  }
+
   /* ---------- Karakter oluşturma ---------- */
   function viewCreate() {
     const c = U.create;
@@ -296,10 +324,11 @@
         ${og && og.pickClub ? clubPicker(c, og) : ''}
         <div class="label">2 · Mevkin</div>
         ${positionMap(c, 'create')}
-        <div class="label">3 · Adın</div>
+        ${og && c.role ? allocBox(c, og) : ''}
+        <div class="label">${og && c.role ? '4' : '3'} · Adın</div>
         <div class="row"><input type="text" id="c-name" placeholder="Ad" value="${esc(c.name)}" maxlength="16" aria-label="Ad"><input type="text" id="c-sur" placeholder="Soyad" value="${esc(c.surname)}" maxlength="18" aria-label="Soyad"></div>
         <button class="btn alt sm" data-a="c-rand" style="align-self:flex-start">Rastgele isim</button>
-        <div class="label">4 · Görünüm ve forma numarası</div>
+        <div class="label">${og && c.role ? '5' : '4'} · Görünüm ve forma numarası</div>
         ${lookEditor(c.look, ['#2f6e4c', '#183a28'], c.number, 'c-numin', c.surname || 'SOYAD')}
         ${og ? `<p class="small muted">Memleketin ve ailen rastgele belirlenir. Kulübün ${og.start.big ? 'İstanbul\'un dev kulüplerinden biri' : 'kökeninin bölgesinden'} olacak.</p>` : ''}
       </div>`,
@@ -1057,12 +1086,30 @@
     'edit-look': () => { U.editLook = !U.editLook; },
     'c-num': (v) => { readNames(); U.create.number = +v; },
     continue: () => { if (loadSave()) { U.view = 'game'; U.app = null; F.dailyCheck(new Date().toDateString()); F.processAuto(); } },
-    'c-origin': (v) => { readNames(); U.create.origin = v; },
+    'c-origin': (v) => { readNames(); if (U.create.origin !== v) U.create.alloc = {}; U.create.origin = v; },
     'c-pos': (v) => { readNames(); U.create.pos = v; },
+    'al-add': (v) => { readNames(); const c = U.create; const pool = D.originPoints[c.origin] || 20; const used = Object.values(c.alloc || {}).reduce((a, b) => a + b, 0); c.alloc = c.alloc || {}; if (used < pool && (c.alloc[v] || 0) < D.allocMax) c.alloc[v] = (c.alloc[v] || 0) + 1; },
+    'al-sub': (v) => { readNames(); const c = U.create; if (c.alloc && c.alloc[v]) { c.alloc[v]--; if (!c.alloc[v]) delete c.alloc[v]; } },
+    'al-reset': () => { readNames(); U.create.alloc = {}; },
+    'al-more': () => { readNames(); U.create.allMore = !U.create.allMore; },
+    // önerilen dağıtım: mevkinin ağırlıklarına göre, en önemli yeteneklere daha çok
+    'al-auto': () => {
+      readNames();
+      const c = U.create; const pool = D.originPoints[c.origin] || 20; const w = D.roles[c.role].w;
+      const keys = Object.keys(w).sort((a, b) => w[b] - w[a]);
+      const tot = keys.reduce((a, k) => a + w[k], 0);
+      const al = {}; let left = pool;
+      keys.forEach((k) => { const n = Math.min(D.allocMax, Math.floor(pool * w[k] / tot)); al[k] = n; left -= n; });
+      for (let i = 0; left > 0 && i < 200; i++) { const k = keys[i % keys.length]; if (al[k] < D.allocMax) { al[k]++; left--; } }
+      Object.keys(al).forEach((k) => { if (!al[k]) delete al[k]; });
+      c.alloc = al;
+    },
     'pm-pick': (v, w) => {
       if (w === 'create') readNames();
       const st = fmState(w);
       st.role = v;
+      if (w === 'create' && v !== 'KL' && st.alloc) D.keeperAttrs.forEach((k) => delete st.alloc[k]);
+      if (w === 'create' && v === 'KL' && st.alloc) Object.keys(st.alloc).forEach((k) => { if (!D.keeperAttrs.includes(k) && !D.roles.KL.w[k]) delete st.alloc[k]; });
       if (w === 'create') { st.pos = D.roles[v].grp; const nums = { KL: 1, STP: 4, SLB: 3, SGB: 2, DOS: 6, MO: 8, OOS: 10, SLO: 11, SGO: 7, SLK: 11, SGK: 7, SF: 9 }; st.number = nums[v] || st.number; }
       if (w === 'heir') U.heirPos = v;
     },
@@ -1100,7 +1147,7 @@
       if (ogx && ogx.pickClub && !c.club) return;
       const S0 = { rng: Math.floor(Math.random() * 1e9) };
       F.S = S0;
-      F.newGame({ origin: c.origin, pos: D.roles[c.role].grp, role: c.role, seed: ogx && ogx.pickClub ? c.seed : undefined, club: c.club, name: c.name.trim() || F.maleName(), surname: c.surname.trim() || F.surname(), look: c.look, number: c.number });
+      F.newGame({ origin: c.origin, pos: D.roles[c.role].grp, role: c.role, seed: c.seed, club: c.club, alloc: c.alloc, name: c.name.trim() || F.maleName(), surname: c.surname.trim() || F.surname(), look: c.look, number: c.number });
       U.view = 'game'; U.app = null; U.goalSel = [];
       F.processAuto();
     },
@@ -1247,7 +1294,7 @@
     F.S = S0;
     return l;
   }
-  const KEEP = new Set(['upd-check', 'upd-run', 'pm-pick', 'like', 'loan-amt', 'loan-term', 'sub-buy', 'convo', 'c-club', 'train-cat', 'fm-pick', 'fm-spot', 'pos-edit', 'lk', 'edit-look', 'c-look', 'c-num', 'plan-train', 'plan-load', 'plan-act', 'goal-toggle', 'post-photo', 'post-tone', 'buy', 'sell', 'req', 'routine', 'tab', 'shopcat', 'chat-say', 'c-origin', 'c-pos', 'confirm', 'confirm-no', 'theme', 'export', 'heir-pos']);
+  const KEEP = new Set(['al-add', 'al-sub', 'al-reset', 'al-more', 'al-auto', 'upd-check', 'upd-run', 'pm-pick', 'like', 'loan-amt', 'loan-term', 'sub-buy', 'convo', 'c-club', 'train-cat', 'fm-pick', 'fm-spot', 'pos-edit', 'lk', 'edit-look', 'c-look', 'c-num', 'plan-train', 'plan-load', 'plan-act', 'goal-toggle', 'post-photo', 'post-tone', 'buy', 'sell', 'req', 'routine', 'tab', 'shopcat', 'chat-say', 'c-origin', 'c-pos', 'confirm', 'confirm-no', 'theme', 'export', 'heir-pos']);
   function readNames() {
     const n = document.getElementById('c-name'), s = document.getElementById('c-sur');
     if (n) U.create.name = n.value;

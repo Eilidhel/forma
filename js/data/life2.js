@@ -8,25 +8,25 @@
   D.routines = {
     uyku: { name: 'Uyku düzeni', opts: {
       erken: { name: 'Erken yat', fx: { enerji: 8, form: 0.3, 's.sosyallik': -0.3 }, desc: 'Dinç kalkarsın, sosyal hayat biraz azalır.' },
-      normal: { name: 'Normal', fx: {}, desc: 'Ne iyi ne kötü.' },
+      normal: { name: 'Normal', fx: { enerji: 3, moral: 0.5 }, desc: 'Yedi saat uyku: biraz enerji, biraz keyif.' },
       gec: { name: 'Geç yat', fx: { enerji: -8, moral: 1.5, disiplin: -0.5 }, desc: 'Gece eğlenceli, sabah antrenman zor.' } } },
     beslenme: { name: 'Beslenme', opts: {
       siki: { name: 'Sıkı diyet', fx: { saglik: 1.5, moral: -1 }, cost: 1500, injMul: 0.9, desc: 'Sakatlık riski azalır, canın tatlı çeker.' },
-      normal: { name: 'Normal', fx: {}, desc: 'Annenin yemekleri ve arada bir döner.' },
+      normal: { name: 'Normal', fx: { saglik: 0.5, moral: 0.5 }, desc: 'Annenin yemekleri ve arada bir döner: hem sağlık hem keyif biraz.' },
       serbest: { name: 'Serbest', fx: { moral: 2, saglik: -1.5 }, injMul: 1.1, desc: 'Mutlusun ama vücut hesabını sorar.' } } },
     kosu: { name: 'Sabah koşusu', opts: {
       evet: { name: 'Her sabah', fx: { 'a.dayaniklilik': 0.5, enerji: -4 }, desc: 'Dayanıklılığa her hafta ek XP.' },
-      hayir: { name: 'Yok', fx: {}, desc: 'Biraz daha uyku.' } } },
+      hayir: { name: 'Yok', fx: { enerji: 2 }, desc: 'Biraz daha uyku, biraz daha enerji.' } } },
     sosyal: { name: 'Sosyal hayat', opts: {
       ev: { name: 'Evde', fx: { mental: 1, enerji: 2, 's.sosyallik': -0.3 }, desc: 'Sakin ve dinlendirici, biraz yalnız.' },
-      dengeli: { name: 'Dengeli', fx: {}, desc: 'Arada bir dışarı çıkarsın.' },
+      dengeli: { name: 'Dengeli', fx: { moral: 1, mental: 0.5, 's.sosyallik': 0.2 }, desc: 'Arada bir dışarı çıkarsın: moral, kafa ve sosyallik birlikte biraz artar.' },
       gece: { name: 'Gece hayatı', fx: { moral: 2.5, disiplin: -1.5, enerji: -8, 's.sosyallik': 0.6, sohret: 0.2 }, desc: 'Eğlenceli, ama hoca duyar.' } } },
     telefon: { name: 'Telefon ve sosyal medya', opts: {
       sinirli: { name: 'Sınırlı', fx: { mental: 1.5, 'takipci%': -0.3 }, desc: 'Kafan rahat, takipçilerin biraz unutur.' },
-      normal: { name: 'Normal', fx: {}, desc: 'Gün içinde bakarsın.' },
+      normal: { name: 'Normal', fx: { 'takipci%': 0.2, mental: 0.3 }, desc: 'Gün içinde bakarsın: takipçin de kafan da yerinde.' },
       sinirsiz: { name: 'Sürekli açık', fx: { 'takipci%': 0.8, mental: -1.5, enerji: -2 }, desc: 'Takipçi gelir, yorumlar kafanı yer.' } } },
     toparlanma: { name: 'Toparlanma', opts: {
-      yok: { name: 'Yok', fx: {}, desc: 'Antrenmandan sonra eve.' },
+      yok: { name: 'Yok', fx: { enerji: 1 }, desc: 'Antrenmandan sonra eve, kanepeye.' },
       buz: { name: 'Buz banyosu', fx: { enerji: 4 }, cost: 800, injMul: 0.85, desc: 'Soğuk ama kaslar teşekkür eder.' },
       masaj: { name: 'Masaj ve fizyoterapi', fx: { enerji: 6, saglik: 0.5 }, cost: 2500, injMul: 0.85, desc: 'Pahalı ama en iyisi.' } } }
   };

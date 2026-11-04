@@ -1,9 +1,10 @@
 {
-  "version": "1.16.0",
+  "version": "1.17.0",
   "date": "2026-11-04",
   "notes": [
-    "Otomatik güncelleme: Ayarlar > Güncellemeyi denetle",
-    "Mevki haritası, takım dizilişleri ve hocanın mevki istekleri",
-    "Kendi yazdığın paylaşımın analizi, beğeniyle takipçi, banka kredisi"
+    "Başlangıçta kökeninden gelen yetenek puanlarını mevkine göre dağıtabilirsin",
+    "Sezon hedefleri 30'a çıktı",
+    "Özel Hayat'ta dengeli seçeneklerin de etkisi var",
+    "Dokununca sayfa artık başa atlamıyor"
   ]
 }

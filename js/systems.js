@@ -287,6 +287,12 @@
       st.apps++; P.career.apps++;
       st.goals += m.goals; st.assists += m.assists; P.career.goals += m.goals; P.career.assists += m.assists;
       st.ratingSum += m.rating;
+      // hedefler için ek sezon istatistikleri
+      if (res === 'win') st.wins = (st.wins || 0) + 1;
+      if (m.rating >= 8) st.motm = (st.motm || 0) + 1;
+      if (m.derby && m.goals) st.derbyGoals = (st.derbyGoals || 0) + m.goals;
+      if (m.goals >= 2) st.braces = (st.braces || 0) + 1;
+      st.yellows = (st.yellows || 0) + (m.yellow || 0);
       if (ga === 0 && (P.pos === 'KL' || P.pos === 'DF')) { st.clean++; P.career.clean++; }
       if (m.red) { st.reds++; P.career.reds++; P.suspended = F.ri(1, 2) + 1; }
       if (m.nat) { P.caps++; P.career.caps++; st.caps++; }
@@ -733,7 +739,7 @@
     const S = F.S, P = S.P;
     F.startLeague();
     S.week = 1;
-    S.st = { apps: 0, goals: 0, assists: 0, clean: 0, reds: 0, ratingSum: 0, caps: 0, followersStart: P.followers, moneyStart: P.money, finalPos: null };
+    S.st = { apps: 0, goals: 0, assists: 0, clean: 0, reds: 0, ratingSum: 0, caps: 0, followersStart: P.followers, moneyStart: P.money, finalPos: null, wins: 0, motm: 0, derbyGoals: 0, braces: 0, yellows: 0, ovrStart: P.attrs ? F.ovr() : null, sohretStart: P.life.sohret };
     S.scoutBonus = 0;
     S.queue.push({ type: 'goals' });
     if (first) {
@@ -752,7 +758,8 @@
   };
   F.goalOptions = function () {
     const P = F.S.P;
-    return D.goals.filter((g) => !g.pos || g.pos.includes(P.pos));
+    const S = F.S;
+    return D.goals.filter((g) => (!g.pos || g.pos.includes(P.pos)) && (!g.show || g.show(S)));
   };
 
   F.endSeason = function () {

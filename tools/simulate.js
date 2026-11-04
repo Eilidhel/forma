@@ -49,6 +49,9 @@ const results = [];
 const errors = [];
 const eventCount = {};
 const traj = [];
+const goalStats = {};
+// her hedef kaç kez seçildi ve kaç kez tutturuldu
+F.DATA.goals.forEach((g) => { const t = g.test; g.test = (st, S) => { const ok = t(st, S); if (ok && goalStats[g.id]) goalStats[g.id][1]++; return ok; }; });
 
 function botPlan() {
   const S = F.S, P = S.P;
@@ -89,7 +92,7 @@ function runCareer(i) {
     if (!S.queue.length) { botPlan(); F.beginWeek(); continue; }
     const st = S.queue[0];
     switch (st.type) {
-      case 'goals': F.chooseGoals(F.shuffle(F.goalOptions()).slice(0, 3).map((g) => g.id)); F.advance(); break;
+      case 'goals': { const opts = F.shuffle(F.goalOptions()).slice(0, 3).map((g) => g.id); F.chooseGoals(opts); opts.forEach((g) => { goalStats[g] = goalStats[g] || [0, 0]; goalStats[g][0]++; }); F.advance(); break; }
       case 'ev': {
         seen.add(st.id); eventCount[st.id] = (eventCount[st.id] || 0) + 1;
         if (st.ringing) F.answerCall(rnd() < 0.8);
@@ -172,6 +175,7 @@ console.log('Kariyer:', results.length, '| Hata:', errors.length, '| Süre:', ms
 console.log('Olay sayısı:', allIds.length, '| Ortalama benzerlik (Jaccard):', (sim / Math.max(1, pairs) * 100).toFixed(1) + '%');
 console.log('Kariyer başına görülen olay:', avg('seenSize'));
 console.log('Güç gelişimi (sezon başı ort.):', traj.map((a, i) => i + ':' + Math.round(a.reduce((x, y) => x + y, 0) / a.length)).join(' '));
+console.log('Hedef başarı (seçilme/başarı):', Object.keys(goalStats).sort().map((k) => k + ' ' + goalStats[k][1] + '/' + goalStats[k][0]).join(', '));
 console.log('Sezon ort:', avg('seasons'), '| Zirve güç ort:', avg('peak'), 'medyan:', med('peak'), '| Son güç:', avg('ovr'));
 console.log('Maç ort:', avg('apps'), '| Gol ort:', avg('goals'), '| Kupa ort:', avg('titles'), '| Kulüp ort:', avg('clubs'));
 console.log('Para medyan:', F.money(med('money')), '| Takipçi medyan:', med('followers'), '| Lüks seviye ort:', avg('lux'));
