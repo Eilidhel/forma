@@ -146,7 +146,8 @@
   F.momentProb = function (opt, m) {
     const P = F.S.P;
     const isAttr = opt.a in P.attrs;
-    const stat = isAttr ? P.attrs[opt.a] : P.soft[opt.a] != null ? P.soft[opt.a] : 50;
+    // birleşik yetenek: ana yetenek %65, ikinci yetenek %35 (ör. uzaktan şut + şut gücü)
+    const stat = isAttr ? (opt.a2 && P.attrs[opt.a2] != null ? P.attrs[opt.a] * 0.65 + P.attrs[opt.a2] * 0.35 : P.attrs[opt.a]) : P.soft[opt.a] != null ? P.soft[opt.a] : 50;
     // saha özelliklerinde zorluk ligin seviyesine göre ölçeklenir (BAL'da 45 şut iyi, Süper Lig'de vasat)
     const lvl = (m.myStr + m.oppStr) / 2;
     const effD = isAttr ? lvl + (opt.d - 50) * 0.8 - 4 : opt.d;
@@ -910,8 +911,14 @@
     const reach = 3 + bag / 25 + (S.scoutBonus || 0) + (S.agentScore || 0) * 0.3;
     const me = P.contract.team;
     let pool = Object.values(S.world.teams).filter((t) => t.id !== me && t.id !== P.contract.loanFrom);
+    // gerçekçi sıçrama: Türkiye'de en fazla iki lig yukarıdan teklif gelir (çok üstün oyuncu üç), yurt dışı ancak üst iki ligden
+    const myTi = F.tierOf(me);
+    const curT = myTi.c === 'TR' ? myTi.t : 1;
+    const jump = ovr >= F.myTeam().str + 14 ? 3 : 2;
     pool = pool.filter((t) => {
       const ti = F.tierOf(t.id);
+      if (ti.c === 'TR' && ti.t < curT - jump) return false;
+      if (ti.c !== 'TR' && myTi.c === 'TR' && curT > 2) return false;
       if (ti.c !== 'TR' && !(ti.c === 'DE' && ti.t === 2 && P.origin === 'gurbetci')) {
         if (ovr < 70) return false;
         if (P.dil < 25 && F.chance(0.6)) return false;
@@ -927,10 +934,14 @@
     count = Math.min(4, count);
     const offers = [];
     for (let i = 0; i < count && pool.length; i++) {
-      const t = F.wpick(pool, (x) => Math.pow(x.str / 50, 4) * (F.tierOf(x.id).c === 'TR' ? 1 : 0.8));
+      // memleket kulübü seni daha çok ister (memleket ilişkin iyiyse daha da çok)
+      const hc = F.homeClub();
+      const homeW = (x) => (hc && x.id === hc.id ? 4 + Math.max(0, (F.relGet('memleket') || 0) / 20) : 1);
+      const t = F.wpick(pool, (x) => Math.pow(x.str / 50, 4) * (F.tierOf(x.id).c === 'TR' ? 1 : 0.8) * homeW(x));
       if (!t) break;
       pool = pool.filter((x) => x.id !== t.id);
       offers.push(F.makeOffer(t.id));
+      if (hc && t.id === hc.id) F.addDM(t.name, F.tpl('Memleketin {memleket} seni geri istiyor. Bu formayı giymek senin için farklı olur, biliyoruz. Teklifimiz masada.'));
     }
     // Sözleşmesi biten için kendi kulübünden yenileme
     if (window === 'yaz' && P.contract.years <= 0) {

@@ -231,4 +231,7 @@
     C('c_memleket_dernek', 'Memleket derneği', { stat: { sohret: ['>', 10] } }, ['Hemşehrimiz, derneğimizin gecesi var', 'Sizi onur konuğu olarak bekliyoruz'], [O('Geleceğim', 'duygusal', { 'r.memleket': 5, enerji: -4 }, 'Gecede yöresel oyunlarda sahneye çağrıldın.'), O('Video mesaj göndereyim', 'mutevazi', { 'r.memleket': 2 }, 'Videon gecede gösterildi.')]),
     C('c_kurs_kampanya', 'Kurs merkezi', {}, ['Bu haftaya özel kampanya!', 'Kişisel gelişim kurslarında 3 ay 2 ay fiyatına. Mağaza > Kişisel gelişim'], [O('Bakacağım', 'saygili', { do: 'campaign' }, 'Kampanya bu hafta ve gelecek hafta geçerli.'), O('İlgilenmiyorum', 'sessiz', {}, 'Mesajı sildin.')])
   ];
+  // Cevap süresi (hafta). Verilmeyenler 3 hafta. Süresinde cevap vermezsen o kişiyle ilişkin biraz bozulur.
+  const WAIT = { c_kanka_borc: 1, c_anne_hasta: 1, c_hoca_gece: 1, c_kaptan_disiplin: 1, c_partner_ozlem: 2, c_menajer_reklam: 2, c_kurs_kampanya: 2, c_kanka_mac: 1, c_memleket_dernek: 2, c_takim_grup: 1, c_kardes_odev: 1 };
+  D.convos.forEach((c) => { c.wait = WAIT[c.id] || 3; });
 })(typeof window !== 'undefined' ? window : globalThis);

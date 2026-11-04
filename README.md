@@ -4,6 +4,19 @@
 
 > The game's text is currently in **Turkish**. It runs in any modern browser and is designed for phones first.
 
+## ▶ Play now
+
+**https://eilidhel.github.io/forma/**
+
+Nothing to download. It works on Windows, macOS, Linux, Android and iPhone.
+
+- **Install it like an app:**
+  - On Android (Chrome), open the menu and tap **Add to Home screen** / **Install app**.
+  - On iPhone (Safari), tap **Share → Add to Home Screen**.
+  - On desktop Chrome or Edge, click the install icon in the address bar.
+- **Works offline** after the first visit.
+- **Updates itself.** Every new version pushed to this repository goes live automatically.
+
 ---
 
 ## What's in the game
@@ -28,11 +41,14 @@ Each origin has its own story, starting league, strengths, burdens, family backg
 | Tea house kid | Regional Amateur League | Reflexes and humility |
 
 ### A living football world
+- **Choose your hometown** from 200+ towns and cities. Clubs from your region are favoured at the start, and your hometown club follows you and makes offers.
+- **Realistic offers.** Clubs come in at most two tiers above you, an exceptional player can jump three, and foreign clubs only call players from the top two tiers.
 - **236 clubs** in Turkey's 5 tiers (Süper Lig down to the Regional Amateur League), named after **205 real towns and cities**, plus top flights in England, Spain, Germany and Italy.
 - Foreign clubs use PES-style fictional names with real club colours.
 - Full league tables, promotion and relegation, winter and summer transfer windows, loans, national team call-ups (U21 and senior) and **international breaks** where the league pauses.
 
 ### Positions, formations and the coach
+- **Squad screen (FC-style).** See your team's starting XI on the pitch with every player's rating, your rival for the shirt and the bench. Your **starting XI chance** is shown as a percentage, with every factor behind it: rating, form, coach trust, position familiarity, contract role, energy and your rival.
 - Pick your natural position on a **12-spot position map**: GK, CB, LB, RB, CDM, CM, CAM, LM, RM, LW, RW, ST.
 - Every club plays its own system from **12 formations** (4-4-2, 4-3-3, 4-2-3-1, 3-4-3, 3-5-2, 5-3-2, 2-4-4 and more).
 - If your position isn't in the team's system, the **coach asks you to switch**. In a 3-4-3, a left-back is offered left midfield or centre-back, and you can accept or refuse.
@@ -43,6 +59,9 @@ Each origin has its own story, starting league, strengths, burdens, family backg
 
 ### 34 attributes, FIFA-style
 Seven groups, each shown with a card score: **Pace, Shooting, Passing, Dribbling, Defending, Physical, Goalkeeping**.
+
+- **Spend skill points at career start.** Your origin gives you 16-26 points to spend according to your position.
+- **Combined attributes in matches.** Every match decision uses two attributes, for example long shots with shot power, crossing with curve, or heading with jumping. All 34 attributes matter.
 
 Examples: acceleration, sprint speed, finishing, long shots, volleys, penalties, vision, crossing, free kicks, curve, agility, balance, composure, interceptions, sliding tackle, jumping, stamina, strength, reflexes, handling.
 
@@ -83,12 +102,13 @@ Every event only happens when it makes sense: league level, age, fame, money, fa
 
 ### Phone: your life hub
 - **Social Media.** Your feed, comments and rumours. Write your own post and the game **analyses your text**: it detects the tone (humble, bold, emotional, funny, motivating, harsh), scores engagement from 0 to 100 and flags risks such as insults, criticising the referee or coach, mentioning rivals or politics. Liking other posts earns a few followers.
-- **Messages.** 27 conversation threads from your mother, father, siblings, best friend, partner, captain, coach, agent and fans, where you choose the reply.
+- **Messages.** Each person gets their own chat thread. Some messages are urgent and must be answered within one or two weeks, or the relationship suffers. There are 27 conversation types from your mother, father, siblings, best friend, partner, captain, coach, agent and fans, where you choose the reply.
 - **Private Life.** Six weekly routines (sleep, diet, morning runs, social life, phone use, recovery), each with visible weekly effects and costs.
 - **Shop.** 91 items in 9 categories: personal development, transport, housing, looks, pro gear, family, gifts, investments and legendary luxuries. **13 monthly courses** (English, sports psychologist, yoga, media training, personal trainer…), with occasional "3 months for the price of 2" offers.
 - **Bank.** Weekly income and expenses, and **loans** whose limit depends on your contract and interest on your credit score. Missed payments hurt your credit score.
 - **Agent.** Your agent's tasks appear on the home screen. Contract **negotiations run on tension**: every club has a hidden ceiling, and if you push too hard they walk away.
-- **28 weekly activities**, 12 personality traits that form from your choices, and 12 season goals.
+- **28 weekly activities**, 12 personality traits that form from your choices, and **30 season goals**.
+- **League stats:** top scorers, top assists and cards. Finish as top scorer or top assister and it goes into your album.
 
 ### Generations
 When you retire, continue as your child or a young relative. Your surname, reputation and part of your wealth carry over, and the family museum keeps your dynasty's history.
@@ -99,7 +119,7 @@ When you retire, continue as your child or a young relative. Your surname, reput
 
 ---
 
-## How to play
+## Run it locally (optional)
 
 1. Install [Node.js](https://nodejs.org) and [Git](https://git-scm.com).
 2. Clone the repository:

@@ -81,3 +81,8 @@
     G('kaptan', 'Kaptanlık bandını tak', (st, S) => !!S.flags.kaptan, { 's.liderlik': 4, moral: 8 }, { show: (S) => !S.flags.kaptan && S.P.age >= 22 })
   );
 })(typeof window !== 'undefined' ? window : globalThis);
+(function (root) {
+  // Memleket seçiminde, yer listesinde olmayan büyük şehirler (kulüpleri özel tanımlı)
+  const D = root.F.DATA;
+  D.homePlaces = D.places.concat([{ name: 'İstanbul', region: 'MAR', size: 1, province: 'İstanbul' }, { name: 'Trabzon', region: 'KAR', size: 1, province: 'Trabzon' }].filter((x) => !D.places.some((p) => p.name === x.name)));
+})(typeof window !== 'undefined' ? window : globalThis);

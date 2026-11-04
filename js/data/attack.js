@@ -78,3 +78,42 @@
   D.attackStageNames = { build: 'Kurulum', mid: 'Son üçte bir', final: 'Bitiriş' };
   D.attackOrder = ['build', 'mid', 'final'];
 })(typeof window !== 'undefined' ? window : globalThis);
+(function (root) {
+  /* ---------- Birleşik yetenekler ve alternatif senaryolar ----------
+     Her seçenek ana yeteneğin yanında ikinci bir yeteneğe de bakar (ana %65, ikinci %35).
+     Örnek: uzaktan şut = Uzaktan şut + Şut gücü; ortalama = Orta + Falso; kafa = Kafa isabeti + Zıplama. */
+  const D = root.F.DATA;
+  const PAIR = {
+    uzakSut: 'sut', sut: 'bitiricilik', bitiricilik: 'hucumPoz', vole: 'topKontrol', penalti: 'sakinlik', hucumPoz: 'reaksiyon',
+    orta: 'falso', duranTop: 'falso', falso: 'orta', uzunPas: 'vizyon', vizyon: 'pas', pas: 'topKontrol',
+    dribling: 'ceviklik', ceviklik: 'denge', topKontrol: 'denge', reaksiyon: 'sakinlik', sakinlik: 'reaksiyon', denge: 'fizik',
+    hizlanma: 'hiz', hiz: 'hizlanma', dayaniklilik: 'hiz',
+    kafa: 'ziplama', ziplama: 'kafa', savunma: 'pozisyon', kayarak: 'savunma', topKesme: 'pozisyon', pozisyon: 'reaksiyon',
+    fizik: 'denge', agresiflik: 'fizik',
+    kalecilik: 'refleks', refleks: 'reaksiyon', kaleciPoz: 'reaksiyon', elKullanimi: 'kaleciPoz', degaj: 'uzunPas'
+  };
+  D.attrPair = PAIR;
+  // az kullanılan yetenekler için yeni maç durumları (her birinde kolay bir seçenek var)
+  const o = (t, a, d, win, lose, winT, loseT) => ({ t, a, d, win, lose, winT, loseT });
+  const add = (grp, mo) => (D.moments[grp] = D.moments[grp] || []).push(mo);
+  ['FV', 'OS'].forEach((g) => add(g, { t: 'Son dakikalar, bacakların kopuyor ama savunmanın arkasında boşluk var.', o: [
+    o('Son bir depar at', 'dayaniklilik', 56, 'chance', 'lost', 'Ciğerlerin yanıyor ama topa yetiştin, şutun kalecide!', 'Bacakların gitmedi, top auta çıktı.'),
+    o('Topu ayağında tut, zaman kazan', 'topKontrol', 28, 'keep', 'lost', 'Topu korudun, saniyeler eridi.', 'Topu kaptırdın.')] }));
+  ['FV', 'OS', 'DF'].forEach((g) => add(g, { t: 'Rakip omuz omuza çarpıştı, dengen bozuldu ama top hâlâ sende.', o: [
+    o('Dengeni koru, devam et', 'denge', 50, 'chance', 'lost', 'Düşmedin! Hakem avantaj verdi, atak sürüyor.', 'Yere düştün, top gitti.'),
+    o('Yere düş, faul iste', 'kurnazlik', 40, 'keep', 'yellow', 'Hakem faulü verdi.', 'Hakem yemedi: simülasyondan sarı kart.'),
+    o('Topu hemen arkadaşına ver', 'pas', 24, 'keep', 'lost', 'Sade bir pas, top takımda.', 'Pas kısa kaldı.')] }));
+  ['DF'].forEach((g) => add(g, { t: 'Uzun top geliyor, rakip santrforla hava topuna çıkacaksın.', o: [
+    o('Zamanlamayla yüksel', 'ziplama', 50, 'block', 'concede', 'Herkesten yükseğe çıktın, top uzaklaştı.', 'Santrfor kafayı vurdu, gol.'),
+    o('Santrforu ittir, sıçramasını boz', 'agresiflik', 42, 'block', 'foul', 'Santrfor dengesini kaybetti, top sende.', 'Hakem faul çaldı.'),
+    o('Topu sektirip kontrol et', 'pozisyon', 28, 'keep', 'lost', 'Top yere düştü, sakin kontrol.', 'Top rakibe sekti.')] }));
+  ['FV', 'OS', 'DF'].forEach((g) => add(g, { t: 'Rakip oyuncu yüzüne bağırıyor, seni kışkırtmaya çalışıyor.', o: [
+    o('Sakinliğini koru', 'sakinlik', 34, 'keep', 'yellow', 'Hiç tepki vermedin. Rakip daha çok sinirlendi.', 'Sonunda dayanamadın, sarı kart.'),
+    o('Sertliğini sahada göster', 'agresiflik', 52, 'chance', 'red', 'Sonraki ikili mücadelede topu aldın, rakip sindi.', 'Hakem sert girişini kırmızıyla cezalandırdı!')] }));
+  add('KL', { t: 'Ceza sahasında karambol, top yerde seken bir hal aldı.', o: [
+    o('Kendini topun üstüne at', 'reaksiyon', 50, 'save', 'concede', 'Kalabalığın içinden topu kucakladın!', 'Topa yetişemedin, gol.'),
+    o('Yerinde kal, açıyı kapat', 'kaleciPoz', 30, 'keep', 'concede', 'Yerini korudun, savunma topu uzaklaştırdı.', 'Top ağlara süründü.')] });
+  // tüm seçeneklere ikinci yetenek
+  const all = Object.values(D.moments).concat(Object.values(D.attackStages || {}));
+  all.forEach((list) => (list || []).forEach((mo) => mo.o.forEach((x) => { if (!x.a2 && PAIR[x.a] && D.attrs[x.a]) x.a2 = PAIR[x.a]; })));
+})(typeof window !== 'undefined' ? window : globalThis);

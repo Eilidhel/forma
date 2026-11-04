@@ -44,6 +44,7 @@
     profil: I('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
     lig: I('<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/>'),
     album: I('<rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/>'),
+    kadro: I('<circle cx="12" cy="5" r="2"/><circle cx="6" cy="11" r="2"/><circle cx="18" cy="11" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/>'),
     ozel: I('<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>'),
     muze: I('<path d="M3 21h18M5 21V10M19 21V10M9 21v-7M15 21v-7M2 10l10-6 10 6z"/>'),
     ayarlar: I('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'),
@@ -325,6 +326,10 @@
         <div class="label">2 · Mevkin</div>
         ${positionMap(c, 'create')}
         ${og && c.role ? allocBox(c, og) : ''}
+        <div class="label">Memleketin</div>
+        <input type="text" id="c-home" list="places-dl" placeholder="Şehir ya da ilçe yaz (boş bırakırsan rastgele)" value="${esc(c.home || '')}" maxlength="30" aria-label="Memleket">
+        <datalist id="places-dl">${D.homePlaces.map((pl) => `<option value="${esc(pl.name)}">${esc(pl.province !== pl.name ? pl.province : '')}</option>`).join('')}</datalist>
+        <p class="tiny muted">${c.home && !D.homePlaces.some((pl) => pl.name === c.home) ? '<span style="color:var(--warn)">Bu yer listede yok, rastgele bir memleket seçilecek.</span>' : 'Memleketinin kulübü seni daha çok takip eder ve teklif yapar. Kulübün de bu bölgeden seçilir.'}</p>
         <div class="label">${og && c.role ? '4' : '3'} · Adın</div>
         <div class="row"><input type="text" id="c-name" placeholder="Ad" value="${esc(c.name)}" maxlength="16" aria-label="Ad"><input type="text" id="c-sur" placeholder="Soyad" value="${esc(c.surname)}" maxlength="18" aria-label="Soyad"></div>
         <button class="btn alt sm" data-a="c-rand" style="align-self:flex-start">Rastgele isim</button>
@@ -356,7 +361,7 @@
     const h = F.npc('hoca');
     const order = S.order && !P.injury ? `<div class="order"><span class="yc"></span><span>Hoca ${esc(h ? h.name.split(' ')[0] : '')} bu hafta <b>${esc((D.training.find((x) => x.id === S.order.focus) || {}).name || '')}</b> çalışmanı istiyor.</span></div>` : '';
     const ch = S.challenge ? `<div class="flat small row"><span class="grow"><span class="label">Meydan okuma</span><br>${esc(S.challenge.name)}</span><span class="chip acc num">${S.challenge.prog}/${S.challenge.need}</span></div>` : '';
-    const apps = [['tribun', 'Sosyal Medya', S.unread.feed], ['mesaj', 'Mesajlar', S.unread.dm + S.requests.length + (S.convos || []).filter((c) => !c.ans).length], ['ozel', 'Özel Hayat'], ['kisiler', 'Kişiler'], ['menajer', 'Menajer', S.tasks.filter((x) => !x.done).length ? 0 : 0], ['banka', 'Banka'], ['magaza', 'Mağaza'], ['profil', 'Profil'], ['lig', 'Lig'], ['album', 'Albüm'], ['muze', 'Aile Müzesi'], ['ayarlar', 'Ayarlar']];
+    const apps = [['tribun', 'Sosyal Medya', S.unread.feed], ['mesaj', 'Mesajlar', S.unread.dm + S.requests.length + (S.convos || []).filter((c) => !c.ans).length], ['ozel', 'Özel Hayat'], ['kadro', 'Kadro'], ['kisiler', 'Kişiler'], ['menajer', 'Menajer', S.tasks.filter((x) => !x.done).length ? 0 : 0], ['banka', 'Banka'], ['magaza', 'Mağaza'], ['profil', 'Profil'], ['lig', 'Lig'], ['album', 'Albüm'], ['muze', 'Aile Müzesi'], ['ayarlar', 'Ayarlar']];
     return {
       main: `<div class="stack fade">
         <div class="hero ${light ? 'light' : ''}" style="--c1:${t.colors[0]};--c2:${t.colors[1]}">
@@ -411,7 +416,7 @@
             const on = plan.acts.includes(a.id);
             const c = F.planCost(a.id);
             const full = !on && plan.acts.length >= F.slots();
-            return `<button class="opt" data-a="plan-act" data-v="${a.id}" ${full ? 'disabled' : ''} style="${on ? 'box-shadow:inset 0 0 0 2.5px var(--accent)' : ''}"><div class="row"><b class="grow">${esc(a.name)}</b>${on ? '<span class="chip on">Seçildi</span>' : ''}</div><div class="small muted">${esc(a.desc)}</div><div class="meta">${fxPreview(F.actFx(a.id), c)}${(S.actHist || {})[a.id] >= 1 ? '<span class="chip warn">Alıştın: getiri düştü</span>' : ''}${a.risk ? '<span class="chip warn">Sürpriz olabilir</span>' : ''}</div></button>`;
+            return `<button class="opt" data-a="plan-act" data-v="${a.id}" ${full ? 'disabled' : ''} style="${on ? 'box-shadow:inset 0 0 0 2.5px var(--accent)' : ''}"><div class="row"><b class="grow">${esc(a.name)}</b>${on ? '<span class="chip on">Seçildi</span>' : ''}</div><div class="small muted">${esc(a.desc)}</div><div class="meta">${fxPreview(F.actFx(a.id), c)}${(S.actHist || {})[a.id] >= 2 ? '<span class="chip warn">Alıştın: getiri düştü</span>' : ''}${a.risk ? '<span class="chip warn">Sürpriz olabilir</span>' : ''}</div></button>`;
           }).join('')}</div>
         </div>
       </div>`,
@@ -523,7 +528,7 @@
       const def = F.momentDef(mo.ref);
       return {
         main: `<div class="stack fade">${board}${pitch}<div class="card stack moment" style="gap:6px"><div class="row"><div class="minute num grow">${mo.minute}'</div><span class="chip acc">Top sende</span></div>${mo.ref.startsWith('chain:') ? (() => { const st = mo.ref.split(':')[1]; return `<div class="row" style="gap:6px">${D.attackOrder.map((x) => `<span class="chip ${x === st ? 'on' : D.attackOrder.indexOf(x) < D.attackOrder.indexOf(st) ? 'good' : ''}">${D.attackStageNames[x]}</span>`).join('<span class="tiny muted">→</span>')}</div>`; })() : ''}<p class="ev-text">${esc(F.tpl(def.t))}</p></div>${cmt}</div>`,
-        dock: `<div class="stack" style="width:100%;gap:8px">${def.o.map((o, i) => `<button class="opt" data-a="m-opt" data-v="${i}"><div class="row"><b class="grow">${esc(o.t)}</b>${probTag(F.momentProb(o, m))}</div><div class="tiny muted" style="margin-top:3px">${esc(D.attrs[o.a] || D.softs[o.a] || o.a)}${o.easy ? ' · kolay seçenek' : ''}</div></button>`).join('')}</div>`
+        dock: `<div class="stack" style="width:100%;gap:8px">${def.o.map((o, i) => `<button class="opt" data-a="m-opt" data-v="${i}"><div class="row"><b class="grow">${esc(o.t)}</b>${probTag(F.momentProb(o, m))}</div><div class="tiny muted" style="margin-top:3px">${esc(D.attrs[o.a] || D.softs[o.a] || o.a)}${o.a2 && D.attrs[o.a2] ? ' + ' + esc(D.attrs[o.a2]) : ''}${o.easy ? ' · kolay seçenek' : ''}</div></button>`).join('')}</div>`
       };
     }
     if (nextF) {
@@ -777,6 +782,7 @@
       case 'plan': return planView();
       case 'tribun': return tribunView();
       case 'ozel': return ozelView();
+      case 'kadro': return kadroView();
       case 'mesaj': return mesajView();
       case 'kisiler': return kisilerView();
       case 'menajer': return menajerView();
@@ -789,6 +795,51 @@
       case 'ayarlar': return ayarlarView();
       default: U.app = null; return homeView();
     }
+  }
+
+  /* ---------- Kadro: FC tarzı ilk 11, forma rakibi, yedekler ve ilk 11 şansı ---------- */
+  function kadroView() {
+    const S = F.S, P = S.P;
+    const sq = F.squad();
+    const t = F.myTeam();
+    const fx = F.myFixture && S.league && S.league.round < F.seasonRounds() ? F.myFixture() : null;
+    const myStr = t.str;
+    const ch = F.startChance({ nat: false, myStr });
+    const pct = Math.round(ch.p * 100);
+    const me = P.name + ' ' + P.surname;
+    const ps = S.preStatus && S.preStatus.t === S.t ? S.preStatus.s : null;
+    const iStart = ps ? ps === 'ilk11' : ch.p >= 0.5;
+    const cr = F.curRole();
+    const ovrMe = F.ovrAs(cr);
+    const sur = (n) => n.split(' ').slice(-1)[0];
+    const col = (v) => (v >= 80 ? 'var(--good)' : v >= 65 ? 'var(--warn)' : 'var(--bad)');
+    const dots = sq.xi.map((x) => {
+      const isMe = x.i === sq.mySpot;
+      const name = isMe ? (iStart ? me : sq.rival.n) : x.n;
+      const ovr = isMe ? (iStart ? ovrMe : sq.rival.ovr) : x.ovr;
+      const cx = 14 + x.x * 2.72, cy = 14 + x.y * 3.42;
+      const hl = isMe && iStart;
+      return `<g><circle cx="${cx}" cy="${cy}" r="${hl ? 16 : 13}" fill="${hl ? 'var(--accent)' : isMe ? '#ffd76a' : '#fff'}" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+        <text x="${cx}" y="${cy + 4}" text-anchor="middle" font-size="10" font-weight="800" fill="${hl ? '#fff' : '#1d3b26'}" font-family="Figtree, sans-serif">${ovr}</text>
+        <text x="${cx}" y="${cy + 26}" text-anchor="middle" font-size="9" font-weight="700" fill="#fff" stroke="rgba(0,0,0,.55)" stroke-width="2.5" paint-order="stroke" font-family="Figtree, sans-serif">${esc(sur(name))}</text></g>`;
+    }).join('');
+    const pitch = `<svg class="fmbig" viewBox="0 0 300 370" role="img" aria-label="İlk 11">
+      <rect width="300" height="370" rx="12" fill="#2e8b3c"/>${Array.from({ length: 8 }, (_, i) => `<rect y="${8 + i * 44}" width="300" height="22" fill="#349a43" opacity=".55"/>`).join('')}
+      <g fill="none" stroke="#fff" stroke-width="1.6" opacity=".6"><rect x="8" y="8" width="284" height="354" rx="4"/><path d="M8 185H292"/><circle cx="150" cy="185" r="34"/><rect x="80" y="8" width="140" height="52"/><rect x="80" y="310" width="140" height="52"/></g>${dots}</svg>`;
+    const reasons = ch.parts.slice().sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])).map(([l, v]) => `<div class="row small"><span class="grow">${esc(l)}</span><b class="num" style="color:${v >= 0 ? 'var(--good)' : 'var(--bad)'}">${v >= 0 ? '+' : '−'}%${Math.round(Math.abs(v) * 100)}</b></div>`).join('');
+    const r = sq.rival;
+    const bench = sq.bench.concat(iStart ? [{ n: r.n, role: r.role, ovr: r.ovr, form: r.form }] : [{ n: me, role: cr, ovr: ovrMe, form: P.life.form, me: true }])
+      .sort((a, b) => b.ovr - a.ovr).map((b) => `<div class="li small"><span class="chip">${esc((D.roles[b.role] || {}).short || b.role)}</span><span class="grow">${b.me ? '<b>' + esc(b.n) + '</b> (sen)' : esc(b.n)}</span><b class="num" style="color:${col(b.ovr)}">${b.ovr}</b></div>`).join('');
+    return appShell('Kadro', `<div class="row small"><span class="grow muted">${esc(t.name)} · <b>${esc(sq.fm)}</b></span>${fx ? `<span class="muted">Sıradaki: ${esc(F.team(fx.opp).name)}</span>` : ''}</div>
+      ${pitch}
+      <p class="tiny muted" style="text-align:center">${iStart ? 'Yeşil daire sensin.' : 'Sarı dairedeki oyuncu şu an senin yerinde oynuyor.'} Dairelerde güç yazıyor.</p>
+      <div class="card stack" style="gap:8px"><div class="row"><div class="grow"><div class="label">İlk 11 şansın</div><span class="small muted">${esc(D.roles[cr].name)} · güç ${ovrMe}${ps ? ' · bu hafta: ' + ({ ilk11: 'ilk 11', yedek: 'yedek', kadrodisi: 'kadro dışı' }[ps] || ps) : ''}</span></div><div class="display num" style="font-size:40px;color:${pct >= 60 ? 'var(--good)' : pct >= 35 ? 'var(--warn)' : 'var(--bad)'}">%${pct}</div></div>
+        <div style="height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden"><i style="display:block;height:100%;width:${pct}%;background:var(--accent)"></i></div>
+        <div class="stack" style="gap:4px">${reasons}</div></div>
+      <div class="card stack" style="gap:6px"><div class="label">Forma rakibin</div><div class="row"><b class="grow">${esc(r.n)}</b><span class="small muted">${esc(D.roles[r.role].name)}</span></div>
+        <div class="row small"><span class="grow">Güç</span><b class="num">${r.ovr}</b> <span class="muted">· sen ${ovrMe}</span></div><div class="row small"><span class="grow">Form</span><b class="num">${r.form > 0 ? '+' : ''}${r.form}</b> <span class="muted">· sen ${P.life.form > 0 ? '+' : ''}${Math.round(P.life.form)}</span></div>
+        <p class="tiny muted">Hoca ilk 11'i güce, forma, mevki uyumuna ve sana olan güvenine göre seçer. Antrenmanla gücünü, iyi maçlarla formunu artırırsan forma senin olur.</p></div>
+      <div class="label">Yedek kulübesi</div><div class="card list">${bench}</div>`);
   }
 
   /* ---------- Özel Hayat: rutin (her hafta işler) ve aktif kurslar ---------- */
@@ -842,15 +893,28 @@
         <div class="meta row wrap">${rq.cost ? `<span class="chip bad">${F.money(-rq.cost)}</span>` : ''}${fxPreview(def.fx)}</div>
         <div class="row"><button class="btn alt sm grow" data-a="req" data-v="${i}" data-w="0">Reddet</button><button class="btn sm grow" data-a="req" data-v="${i}" data-w="1">Kabul et</button></div></div>`;
     }).join('');
-    const dms = S.dms.map((m) => `<div class="li">${av(m.from)}<div class="grow"><b class="small">${esc(m.from)}</b><p class="small">${esc(m.t)}</p></div></div>`).join('');
-    const convos = (S.convos || []).slice(0, 12).map((c, i) => {
+    // Kişi kişi sohbetler: düz mesajlar ve cevap bekleyen sohbetler aynı kişinin altında toplanır
+    const threads = {};
+    S.dms.forEach((m) => { (threads[m.from] = threads[m.from] || { name: m.from, items: [] }).items.push({ kind: 'dm', at: m.week || 0, m }); });
+    (S.convos || []).forEach((c, i) => { (threads[c.who] = threads[c.who] || { name: c.who, items: [] }).items.push({ kind: 'cv', at: c.at, c, i }); });
+    const list = Object.values(threads).map((th) => { th.last = Math.max(...th.items.map((x) => x.at)); th.pending = th.items.filter((x) => x.kind === 'cv' && !x.c.ans).length; return th; })
+      .sort((a, b) => b.pending - a.pending || b.last - a.last);
+    const cvCard = (c, i) => {
       const def = D.convos.find((x) => x.id === c.id);
       if (!def) return '';
-      return `<div class="card stack" style="gap:8px"><div class="row">${av(c.who)}<div class="grow"><b>${esc(c.who)}</b><div class="tiny muted">${S.t - c.at === 0 ? 'Bu hafta' : S.t - c.at + ' hafta önce'}</div></div>${c.ans ? '' : '<span class="chip warn">Cevap bekliyor</span>'}</div>
-        <div class="chat">${c.lines.map((l) => `<div class="bub them">${esc(l)}</div>`).join('')}${c.ans ? `<div class="bub me">${esc(c.ans.t)}</div>${c.ans.r ? `<div class="bub sys">${esc(c.ans.r)}</div>` : ''}${deltaChips(c.ans.deltas)}` : ''}</div>
-        ${c.ans ? '' : `<div class="stack" style="gap:6px">${def.o.map((o, j) => `<button class="opt" data-a="convo" data-v="${i}" data-w="${j}">${esc(F.tpl(o.t))}</button>`).join('')}</div>`}</div>`;
-    }).join('');
-    return appShell('Mesajlar', `${convos ? `<div class="label">Sohbetler</div>${convos}` : ''}${reqs ? `<div class="label">Bekleyen istekler</div>${reqs}` : ''}<div class="label">Gelen kutusu</div><div class="card list">${dms || '<p class="small muted">Mesaj yok.</p>'}</div>`);
+      const left = c.until != null ? c.until - S.t : null;
+      return `<div class="stack" style="gap:6px"><div class="chat">${c.lines.map((l) => `<div class="bub them">${esc(l)}</div>`).join('')}${c.ans ? `<div class="bub me">${esc(c.ans.t)}</div>${c.ans.r ? `<div class="bub sys">${esc(c.ans.r)}</div>` : ''}${deltaChips(c.ans.deltas)}` : ''}</div>
+        ${c.ans ? '' : `<span class="chip ${left != null && left <= 0 ? 'bad' : 'warn'}" style="align-self:flex-start">${left == null ? 'Cevap bekliyor' : left <= 0 ? 'Bu hafta cevap ver' : left + ' hafta içinde cevap ver'}</span><div class="stack" style="gap:6px">${def.o.map((o, j) => `<button class="opt" data-a="convo" data-v="${i}" data-w="${j}">${esc(F.tpl(o.t))}</button>`).join('')}</div>`}</div>`;
+    };
+    if (U.thread && threads[U.thread]) {
+      const th = threads[U.thread];
+      const items = th.items.slice().sort((a, b) => a.at - b.at);
+      const body = items.map((x) => `<div class="tiny muted" style="text-align:center;margin-top:6px">${S.t - x.at === 0 ? 'Bu hafta' : S.t - x.at + ' hafta önce'}</div>${x.kind === 'dm' ? `<div class="chat"><div class="bub them">${esc(x.m.t)}</div></div>` : cvCard(x.c, x.i)}`).join('');
+      return appShell('Mesajlar', `<div class="row" style="gap:10px"><button class="btn ghost sm" data-a="thread-close">← Tüm sohbetler</button></div><div class="card stack" style="gap:8px"><div class="row" style="gap:10px">${av(th.name)}<b class="grow">${esc(th.name)}</b></div>${body}</div>`);
+    }
+    const dms = list.map((th) => { const lastItem = th.items.slice().sort((a, b) => b.at - a.at)[0]; const prev = lastItem.kind === 'dm' ? lastItem.m.t : lastItem.c.lines[lastItem.c.lines.length - 1];
+      return `<button class="li thread" data-a="thread" data-v="${esc(th.name)}">${av(th.name)}<div class="grow" style="text-align:left;min-width:0"><div class="row"><b class="small grow">${esc(th.name)}</b><span class="tiny muted">${S.t - th.last === 0 ? 'bu hafta' : S.t - th.last + ' hf'}</span></div><p class="small muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(prev)}</p></div>${th.pending ? `<span class="badge" style="position:static">${th.pending}</span>` : ''}</button>`; }).join('');
+    return appShell('Mesajlar', `${reqs ? `<div class="label">Bekleyen istekler</div>${reqs}` : ''}<div class="label">Sohbetler</div><div class="card list">${dms || '<p class="small muted">Mesaj yok.</p>'}</div>`);
   }
 
   function kisilerView() {
@@ -995,7 +1059,14 @@
       return `<tr class="${cls}"><td class="num">${i + 1}</td><td><span class="row" style="gap:6px">${badge(t, 14)}<span>${esc(t.name)}</span></span></td>${r ? `<td class="num">${r.p}</td><td class="num">${r.gf - r.ga > 0 ? '+' : ''}${r.gf - r.ga}</td><td class="num"><b>${r.pts}</b></td>` : `<td class="num">${t.str}</td>`}</tr>`;
     }).join('');
     const results = key === myKey ? S.league.results.slice(-6).reverse().map((r) => `<div class="li small"><span class="grow">${esc(F.team(r.h).name)} – ${esc(F.team(r.a).name)}</span><b class="num">${r.gh}–${r.ga}</b></div>`).join('') : '';
-    return appShell('Lig', `<select id="lg-sel" aria-label="Lig seç">${comps.map((c) => `<option value="${c.key}" ${c.key === key ? 'selected' : ''}>${esc(c.name + (c.gname ? ' · ' + c.gname : ''))}${c.key === myKey ? ' (senin ligin)' : ''}</option>`).join('')}</select>
+    // istatistik sekmeleri (sadece kendi liginde)
+    const ltab = key === myKey ? (U.lgTab || 'tablo') : 'tablo';
+    const ltabs = key === myKey ? `<div class="tabs">${[['tablo', 'Puan durumu'], ['g', 'Gol krallığı'], ['a', 'Asist'], ['kart', 'Kartlar']].map(([k, n]) => `<button class="pick ${ltab === k ? 'on' : ''}" data-a="lg-tab" data-v="${k}">${n}</button>`).join('')}</div>` : '';
+    if (ltab !== 'tablo') {
+      const rowsS = F.leagueLeaders(ltab, 20).map((x, i) => { const t = F.team(x.t); const val = ltab === 'kart' ? `<b class="num" style="color:var(--warn)">${x.y}</b> <span class="tiny">sarı</span>${x.r ? ` <b class="num" style="color:var(--bad)">${x.r}</b> <span class="tiny">kırmızı</span>` : ''}` : `<b class="num">${x[ltab]}</b>`; return `<tr class="${x.me ? 'me' : ''}"><td class="num">${i + 1}</td><td><b>${esc(x.n)}</b>${x.me ? ' <span class="chip on">Sen</span>' : ''}<div class="tiny muted row" style="gap:4px">${badge(t, 12)}${esc(t.name)}</div></td><td style="text-align:right">${val}</td></tr>`; }).join('');
+      return appShell('Lig', `${ltabs}<div class="card scroll-x">${rowsS ? `<table><thead><tr><th>#</th><th>Oyuncu</th><th style="text-align:right">${{ g: 'Gol', a: 'Asist', kart: 'Kart' }[ltab]}</th></tr></thead><tbody>${rowsS}</tbody></table>` : '<p class="small muted">Sezon yeni başladı, henüz istatistik yok.</p>'}</div><p class="tiny muted">Sezon sonunda gol ya da asist kralı olursan albümüne girer ve şöhretin artar.</p>`);
+    }
+    return appShell('Lig', `${ltabs}<select id="lg-sel" aria-label="Lig seç">${comps.map((c) => `<option value="${c.key}" ${c.key === key ? 'selected' : ''}>${esc(c.name + (c.gname ? ' · ' + c.gname : ''))}${c.key === myKey ? ' (senin ligin)' : ''}</option>`).join('')}</select>
       <div class="card scroll-x"><table><thead><tr><th>#</th><th>Takım</th>${table ? '<th>O</th><th>Av</th><th>P</th>' : '<th>Güç</th>'}</tr></thead><tbody>${rows}</tbody></table>${!table ? '<p class="tiny muted" style="margin-top:6px">Bu lig sezon sonunda simüle edilir. Takımlar güce göre sıralı.</p>' : ''}</div>
       ${results ? `<div class="label">Son maçların</div><div class="card list">${results}</div>` : ''}`);
   }
@@ -1156,11 +1227,11 @@
       if (ogx && ogx.pickClub && !c.club) return;
       const S0 = { rng: Math.floor(Math.random() * 1e9) };
       F.S = S0;
-      F.newGame({ origin: c.origin, pos: D.roles[c.role].grp, role: c.role, seed: c.seed, club: c.club, alloc: c.alloc, name: c.name.trim() || F.maleName(), surname: c.surname.trim() || F.surname(), look: c.look, number: c.number });
+      F.newGame({ origin: c.origin, pos: D.roles[c.role].grp, role: c.role, seed: c.seed, club: c.club, alloc: c.alloc, home: D.homePlaces.some((pl) => pl.name === c.home) ? c.home : null, name: c.name.trim() || F.maleName(), surname: c.surname.trim() || F.surname(), look: c.look, number: c.number });
       U.view = 'game'; U.app = null; U.goalSel = [];
       F.processAuto();
     },
-    open: (v) => { U.app = v; U.tab = null; U.confirm = null; },
+    open: (v) => { U.app = v; U.tab = null; U.confirm = null; U.thread = null; },
     back: () => { U.app = null; U.confirm = null; },
     tab: (v) => { U.tab = v; },
     'plan-train': (v) => { F.S.plan.train = v; },
@@ -1170,6 +1241,9 @@
     'loan-term': (v) => { U.loanTerm = +v; },
     'loan-take': () => { const lim = F.loanLimit(); const amts = [0.25, 0.5, 1].map((x) => Math.round(lim * x / 1000) * 1000); const r = F.takeLoan(amts[U.loanAmt == null ? 1 : U.loanAmt], U.loanTerm == null ? 1 : U.loanTerm); toast(r.err || 'Kredi hesabına yattı: ' + F.money(r.q.amount)); },
     'loan-pay': () => { const r = F.payoffLoan(); toast(r.err || 'Kredi kapandı. Kredi notun yükseldi.'); },
+    thread: (v) => { U.thread = v; },
+    'lg-tab': (v) => { U.lgTab = v; },
+    'thread-close': () => { U.thread = null; },
     'sub-buy': (v, w) => { const r = F.buySub(v, +w); toast(r.err || 'Kayıt oldun: ' + r.msg); },
     convo: (v, w) => { F.convoReply(+v, +w); },
     'c-club': (v) => { readNames(); U.create.club = v; },
@@ -1303,11 +1377,13 @@
     F.S = S0;
     return l;
   }
-  const KEEP = new Set(['al-add', 'al-sub', 'al-reset', 'al-more', 'al-auto', 'upd-check', 'upd-run', 'pm-pick', 'like', 'loan-amt', 'loan-term', 'sub-buy', 'convo', 'c-club', 'train-cat', 'fm-pick', 'fm-spot', 'pos-edit', 'lk', 'edit-look', 'c-look', 'c-num', 'plan-train', 'plan-load', 'plan-act', 'goal-toggle', 'post-photo', 'post-tone', 'buy', 'sell', 'req', 'routine', 'tab', 'shopcat', 'chat-say', 'c-origin', 'c-pos', 'confirm', 'confirm-no', 'theme', 'export', 'heir-pos']);
+  const KEEP = new Set(['lg-tab', 'al-add', 'al-sub', 'al-reset', 'al-more', 'al-auto', 'upd-check', 'upd-run', 'pm-pick', 'like', 'loan-amt', 'loan-term', 'sub-buy', 'convo', 'c-club', 'train-cat', 'fm-pick', 'fm-spot', 'pos-edit', 'lk', 'edit-look', 'c-look', 'c-num', 'plan-train', 'plan-load', 'plan-act', 'goal-toggle', 'post-photo', 'post-tone', 'buy', 'sell', 'req', 'routine', 'tab', 'shopcat', 'chat-say', 'c-origin', 'c-pos', 'confirm', 'confirm-no', 'theme', 'export', 'heir-pos']);
   function readNames() {
     const n = document.getElementById('c-name'), s = document.getElementById('c-sur');
     if (n) U.create.name = n.value;
     if (s) U.create.surname = s.value;
+    const h = document.getElementById('c-home');
+    if (h) U.create.home = h.value.trim();
   }
 
   // fare tekerleği yatay şeritleri de kaydırsın (formasyon kartları, antrenman grupları, tablolar)

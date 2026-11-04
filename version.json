@@ -1,10 +1,12 @@
 {
-  "version": "1.17.0",
+  "version": "1.18.0",
   "date": "2026-11-04",
   "notes": [
-    "Başlangıçta kökeninden gelen yetenek puanlarını mevkine göre dağıtabilirsin",
-    "Sezon hedefleri 30'a çıktı",
-    "Özel Hayat'ta dengeli seçeneklerin de etkisi var",
-    "Dokununca sayfa artık başa atlamıyor"
+    "Kadro ekranı: ilk 11, forma rakibin ve ilk 11 şansın",
+    "Memleket seçimi, memleket kulübü seni daha çok ister",
+    "Lig istatistikleri: gol krallığı, asist, kartlar",
+    "Mesajlar kişi kişi; acil mesajlara süre",
+    "Maç seçenekleri iki yeteneğe bakar, yeni maç durumları",
+    "Hatalar: mesajda verilen para düşüyor, Alıştın uyarısı, gerçekçi transfer teklifleri"
   ]
 }

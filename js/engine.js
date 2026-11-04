@@ -292,12 +292,22 @@
       const regional = candidates.filter((t) => og.regions.includes(t.region));
       if (regional.length) candidates = regional;
     }
+    // oyuncunun seçtiği memleket: yakın kulüpler öne çıkar, memleket kulübü o ligdeyse büyük ihtimalle orada başlar
+    const hp = o && o.home ? (D.homePlaces || D.places).find((x) => x.name === o.home) : null;
+    if (hp && !og.start.big) {
+      const all = Object.values(S.world.comps).filter((k) => k.c === og.start.c && k.tier === og.start.t).reduce((a, k) => a.concat(k.teams.map(F.team)), []);
+      const near = all.filter((t) => t.region === hp.region);
+      if (near.length) candidates = near;
+      const own = all.find((t) => t.name === hp.name || t.province === hp.name);
+      if (own && F.chance(0.55)) candidates = [own];
+    }
     const chosen = o && o.club && S.world.teams[o.club] ? F.team(o.club) : null;
     const team = chosen || F.pick(candidates);
     // memleket: köken bölgesinden bir yer (Almanya için Duisburg)
     if (og.id === 'gurbetci') S.P.home = { name: 'Duisburg', province: 'Duisburg', region: 'DE', roots: F.pick(D.places.filter((p) => p.size <= 3)).name };
     else if (og.start.big) { const pl = F.pick(D.places.filter((p) => p.province === 'İstanbul')); S.P.home = { name: pl.name, province: 'İstanbul', region: 'MAR' }; }
     else S.P.home = { name: team.name, province: team.province, region: team.region };
+    if (hp) { if (og.id === 'gurbetci') S.P.home.roots = hp.name; else S.P.home = { name: hp.name, province: hp.province, region: hp.region }; }
     if (og.id === 'koy') { S.P.home.village = F.pick(['Yukarıkonak', 'Taşlıçay', 'Karapınar', 'Dereboyu', 'Ortaköy', 'Kaleiçi', 'Yayladüzü']) + ' köyü'; }
     const tier = F.tierOf(team.id);
     const wage = F.wageFor(tier.c, tier.t, team.str, F.ovr()) * (og.start.big ? 0.25 : 0.8);
@@ -524,6 +534,8 @@
         case 'req': F.addRequest(v); return;
         case 'do': [].concat(v).forEach((a) => { const [name, arg] = String(a).split(':'); if (F.ACT[name]) { const r = F.ACT[name](arg); if (r) out.push(...r); } else if (F.DEBUG) console.warn('Bilinmeyen eylem', a); }); return;
       }
+      // para metinle de verilebilir: 'w2' = iki haftalık maaş, '-w0.3' = maaşın %30'u kadar harcama
+      if (k === 'para' && typeof v === 'string') v = v.startsWith('-w') ? -F.scaleMoney(parseFloat(v.slice(2))) : v.startsWith('w') ? F.scaleMoney(parseFloat(v.slice(1))) : +v || 0;
       if (typeof v !== 'number') return;
       v *= mult;
       if (k === 'para') {
@@ -608,8 +620,9 @@
   };
   // Etkinliğin bu hafta uygulayacağı etki: tekrar ettikçe getiri azalır ama sıfırlanmaz
   F.actGainMul = function (id) {
+    // ilk tekrar haftası cezasız; üst üste ikinci haftadan sonra getiri düşmeye başlar
     const habit = Math.min(3, (F.S.actHist || {})[id] || 0);
-    return 0.8 / (1 + 0.3 * habit);
+    return 0.8 / (1 + 0.3 * Math.max(0, habit - 1));
   };
   F.actFx = function (id) {
     const a = D.activities.find((x) => x.id === id);
@@ -1431,7 +1444,7 @@
     const who = F.convoWho(c);
     if (!who) return false;
     S.convos = S.convos || [];
-    S.convos.unshift({ id, who, lines: c.lines.map((l) => F.tpl(l)), at: S.t, ans: null });
+    S.convos.unshift({ id, who, role: D.relLabels[c.who] ? c.who : null, lines: c.lines.map((l) => F.tpl(l)), at: S.t, until: S.t + (c.wait || 3), ans: null });
     if (S.convos.length > 30) S.convos.length = 30;
     S.seen['cv_' + id] = S.t;
     S.unread.dm++;
@@ -1441,7 +1454,13 @@
     const S = F.S;
     S.convos = S.convos || [];
     // cevaplanmamış sohbetler 4 hafta sonra düşer
-    S.convos.forEach((c) => { if (!c.ans && S.t - c.at > 4) c.ans = { t: '(Cevap vermedin)', r: '', deltas: [], missed: true }; });
+    S.convos.forEach((c) => {
+      const until = c.until != null ? c.until : c.at + 4;
+      if (!c.ans && S.t > until) {
+        const deltas = c.role && F.relGet(c.role) != null ? F.fx({ ['r.' + c.role]: -2 }) : [];
+        c.ans = { t: '(Cevap vermedin)', r: c.role ? 'Mesajına geç kaldın, biraz kırıldı.' : '', deltas, missed: true };
+      }
+    });
     const n = (F.chance(0.6) ? 1 : 0) + (F.chance(0.2) ? 1 : 0);
     for (let i = 0; i < n; i++) {
       const pool = D.convos.filter((c) => c.id !== 'c_kurs_kampanya' && (S.seen['cv_' + c.id] == null || S.t - S.seen['cv_' + c.id] > 14) && F.cond(c.if) && F.convoWho(c));

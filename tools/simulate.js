@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const ROOT = path.join(__dirname, '..');
-const FILES = ['js/core.js', 'js/data/world.js', 'js/data/life.js', 'js/data/social.js', 'js/data/roles.js', 'js/data/positions.js', 'js/data/attack.js', 'js/data/life2.js', 'js/data/events_origin.js', 'js/data/events_club.js', 'js/data/events_life.js', 'js/data/events_match.js', 'js/data/events_extra.js', 'js/data/events_story.js', 'js/data/events_news.js', 'js/art.js', 'js/engine.js', 'js/systems.js', 'js/social2.js'];
+const FILES = ['js/core.js', 'js/data/world.js', 'js/data/life.js', 'js/data/social.js', 'js/data/roles.js', 'js/data/positions.js', 'js/data/attack.js', 'js/data/life2.js', 'js/data/events_origin.js', 'js/data/events_club.js', 'js/data/events_life.js', 'js/data/events_match.js', 'js/data/events_extra.js', 'js/data/events_story.js', 'js/data/events_news.js', 'js/art.js', 'js/engine.js', 'js/systems.js', 'js/social2.js', 'js/stats.js', 'js/squad.js'];
 FILES.forEach((f) => vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f }));
 const F = globalThis.F;
 F.DEBUG = true;
