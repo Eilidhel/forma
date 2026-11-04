@@ -284,6 +284,20 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .moment { box-shadow: inset 0 0 0 2px var(--accent); }
 @keyframes clin { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .cl { animation: none; } }
+/* Anahtarla giriş */
+.keycard { display: flex; align-items: center; gap: 12px; width: 100%; border: 0; background: var(--surface); color: var(--ink); border-radius: var(--r); padding: 12px 14px; box-shadow: inset 0 0 0 1.5px var(--line); }
+.keycard:hover { box-shadow: inset 0 0 0 2px var(--accent); }
+.keyic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); flex: none; }
+.keyic svg { width: 20px; height: 20px; }
+/* Geliştirici konsolu */
+.devbtn { border: 0; width: 28px; height: 24px; border-radius: 7px; display: grid; place-items: center; background: var(--ink); color: var(--bg); padding: 0; }
+.devbtn svg { width: 16px; height: 16px; }
+.devf { display: grid; grid-template-columns: minmax(0, 1fr) 132px; align-items: center; gap: 10px; font-size: 13.5px; }
+.devf > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.devf input, .devf select, select { width: 100%; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 9px; padding: 8px 10px; font-variant-numeric: tabular-nums; }
+.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+.devlog { margin: 0; padding: 10px; border-radius: 10px; background: var(--surface-2); font: 11.5px/1.45 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-word; max-height: 240px; overflow: auto; }
+.devlog .err { color: var(--bad); }
 </style>
 
 <div id="app"><main id="main"><p class="muted">Yükleniyor…</p></main></div>
@@ -311,3 +325,4 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 <script src="js/stats.js"></script>
 <script src="js/squad.js"></script>
 <script src="js/ui.js"></script>
+

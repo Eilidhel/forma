@@ -10,8 +10,10 @@
   const U = {
     view: 'start', app: null, tab: null, create: { origin: null, pos: null, name: '', surname: '' }, toast: null,
     nego: null, post: { photo: null, tone: null }, confirm: null, renameQ: '', leagueKey: null, shopCat: 'gelisim',
-    heirPos: 'FV', goalSel: [], code: '', importMsg: '', howto: false
+    heirPos: 'FV', goalSel: [], code: '', importMsg: '', howto: false,
+    keyUi: { stage: 'enter', input: '', msg: '', busy: false, remote: null }, devTab: 'oyuncu', devQ: '', devLog: [], devCmd: '', devScope: 'P', devJson: null
   };
+  const devOn = () => store.get('forma.dev') === '1';
   let pressTimer = null, toastTimer = null;
 
   /* ---------- Kayıt ---------- */
@@ -20,9 +22,110 @@
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* depolama kapalı */ } },
     del(k) { try { localStorage.removeItem(k); } catch (e) { /* yok */ } }
   };
-  function save() { if (F.S && F.S.P) store.set(KEY, F.serialize()); }
+  let lastLocal = null;
+  function save() {
+    if (!(F.S && F.S.P)) return;
+    const s = F.serialize();
+    if (s === lastLocal) return;
+    lastLocal = s;
+    store.set(KEY, s);
+    store.set('forma.savedAt', String(Date.now()));
+    cloudSchedule();
+  }
   function hasSave() { return !!store.get(KEY); }
-  function loadSave() { const s = store.get(KEY); if (!s) return false; try { F.load(s); F.S.edits && Object.keys(F.S.edits).forEach((id) => { if (F.S.world.teams[id]) F.S.world.teams[id].name = F.S.edits[id]; }); return true; } catch (e) { return false; } }
+  function applyEdits() { F.S.edits && Object.keys(F.S.edits).forEach((id) => { if (F.S.world.teams[id]) F.S.world.teams[id].name = F.S.edits[id]; }); }
+  function loadSave() { const s = store.get(KEY); if (!s) return false; try { F.load(s); applyEdits(); lastLocal = s; return true; } catch (e) { return false; } }
+
+  /* ---------- Bulut kaydı: anahtar ile cihazlar arası devam ----------
+     claude.ai'da açıldığında kayıt, oturum açan kişinin özel alanında (data/users/<id>/) anahtara bağlı bir belgede tutulur.
+     Yerel sunucuda ya da oturum yokken bulut kullanılamaz; o zaman kayıt kodu ile taşınır. */
+  const cloud = { db: null, uid: null, ready: false, checked: false, key: store.get('forma.key') || null, status: '', pushing: false, again: false, lastPushed: null, timer: null };
+  async function keyId(k) {
+    k = String(k).trim();
+    try {
+      const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('forma:' + k));
+      return 'k_' + Array.from(new Uint8Array(b)).slice(0, 20).map((x) => x.toString(16).padStart(2, '0')).join('');
+    } catch (e) {
+      let h = 5381;
+      for (const c of k) h = ((h * 33) ^ c.charCodeAt(0)) >>> 0;
+      return 'k_' + h.toString(16) + '_' + k.length;
+    }
+  }
+  async function pack(s) {
+    if (typeof CompressionStream === 'undefined') return { z: 'raw', data: s };
+    const st = new Blob([s]).stream().pipeThrough(new CompressionStream('gzip'));
+    const buf = new Uint8Array(await new Response(st).arrayBuffer());
+    let bin = '';
+    for (let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode.apply(null, buf.subarray(i, i + 0x8000));
+    return { z: 'gzip', data: btoa(bin) };
+  }
+  async function unpack(d) {
+    if (d.z !== 'gzip') return d.data;
+    const bin = atob(d.data);
+    const u = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+    const st = new Blob([u]).stream().pipeThrough(new DecompressionStream('gzip'));
+    return await new Response(st).text();
+  }
+  async function cloudRef(key) { return cloud.db.collection('data/users/' + cloud.uid).doc(await keyId(key)); }
+  function cloudStatus(t) { cloud.status = t; const el = document.getElementById('cloudst'); if (el) el.textContent = t; }
+  async function cloudInit() {
+    try {
+      let tries = 0;
+      while (!(window.claude && typeof window.claude.use === 'function') && tries++ < 15) await new Promise((r) => setTimeout(r, 200));
+      if (!(window.claude && typeof window.claude.use === 'function')) return;
+      const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+      const uid = user ? await user.id() : null;
+      if (db && uid) {
+        // linkle gelen dış ziyaretçiler veri yazamaz (kendi özel alanları dahil): bulutu baştan kapat
+        let canWrite = null;
+        try { canWrite = await user.can('data.write'); } catch (e) { canWrite = null; }
+        if (canWrite === false) cloud.denied = true;
+        else { cloud.db = db; cloud.uid = uid; cloud.ready = true; }
+      }
+    } catch (e) { /* bulut yok */ } finally { cloud.checked = true; }
+  }
+  // anahtardaki kaydı okur: { exists, at, name, season, json }
+  async function cloudFetch(key) {
+    const snap = await (await cloudRef(key)).get();
+    if (!snap.exists) return { exists: false };
+    const d = snap.data();
+    return { exists: true, at: d.at || 0, name: d.name || '', season: d.season || 0, club: d.club || '', ver: d.ver || '', json: await unpack(d) };
+  }
+  function cloudSchedule() {
+    if (!cloud.ready || !cloud.key) return;
+    clearTimeout(cloud.timer);
+    cloud.timer = setTimeout(cloudPush, 3000);
+  }
+  async function cloudPush() {
+    clearTimeout(cloud.timer);
+    if (!cloud.ready || !cloud.key || !(F.S && F.S.P)) return;
+    if (cloud.pushing) { cloud.again = true; return; }
+    const s = F.serialize();
+    if (s === cloud.lastPushed) return;
+    cloud.pushing = true;
+    cloudStatus('Buluta kaydediliyor…');
+    try {
+      const p = await pack(s);
+      if (p.data.length > 250000) throw { code: 'too_big' };
+      const P = F.S.P;
+      await (await cloudRef(cloud.key)).set({ v: 1, z: p.z, data: p.data, at: Date.now(), ver: F.VERSION, name: P.name + ' ' + P.surname, season: F.S.season, club: F.myTeam().name });
+      cloud.lastPushed = s;
+      cloudStatus('Bulutta kayıtlı · ' + new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }));
+    } catch (e) {
+      cloudStatus(e && e.code === 'too_big' ? 'Kayıt buluta sığmayacak kadar büyük.' : e && e.code === 'quota_exceeded' ? 'Bulut depolama dolu.' : 'Buluta kaydedilemedi, tekrar denenecek.');
+      if (e && (e.code === 'invalid_argument' || e.code === 'not_granted' || e.code === 'revoked')) {
+        // bu hesap bu sayfada veri yazamıyor: bulutu kapat ve açıkça söyle
+        cloud.ready = false; cloud.denied = true;
+        cloudStatus('Bu hesapla buluta kayıt yapılamıyor. Kayıt bu cihazda duruyor.');
+        toast('Buluta kaydedilemedi: bu hesabın bu sayfada yazma izni yok. Kayıt bu cihazda duruyor; taşımak için Ayarlar > Kayıt kodu.');
+      } else if (!(e && (e.code === 'too_big' || e.code === 'quota_exceeded'))) cloud.timer = setTimeout(cloudPush, 15000);
+    } finally {
+      cloud.pushing = false;
+      if (cloud.again) { cloud.again = false; cloudSchedule(); }
+    }
+  }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') cloudPush(); });
 
   /* ---------- Tema ---------- */
   function applyTheme() {
@@ -50,7 +153,9 @@
     ayarlar: I('<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'),
     back: I('<path d="m15 18-6-6 6-6"/>'),
     phone: I('<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>'),
-    heart: I('<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/>')
+    heart: I('<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/>'),
+    key: I('<circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.8-9.8M17 6l3 3M15 8l2 2"/>'),
+    dev: I('<path d="m8 9-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/>')
   };
 
   /* ---------- Küçük yardımcılar ---------- */
@@ -153,6 +258,7 @@
     const prev = mainEl ? mainEl.scrollTop : 0;
     let out;
     if (U.view === 'start') out = viewStart();
+    else if (U.view === 'key') out = viewKey();
     else if (U.view === 'create') out = viewCreate();
     else out = viewGame();
     // Giriş animasyonu yalnızca ekran değişince oynar
@@ -175,7 +281,7 @@
     const S = F.S, P = S.P;
     const t = F.myTeam();
     const off = S.league.round >= F.seasonRounds() || (S.queue[0] && ['seasonSummary', 'offers', 'retire', 'heir', 'gameover'].includes(S.queue[0].type) && S.queue[0].window !== 'kis');
-    return `<div class="bar"><span class="num">${off ? 'Sezon arası' : `S${S.season} · H${S.week} · ${esc(F.monthName())}`}</span><span class="club">${badge(t, 16)}<span><b>${esc(t.name)}</b></span></span><span class="num"><b>${F.money(P.money)}</b></span></div>`;
+    return `<div class="bar"><span class="num">${off ? 'Sezon arası' : `S${S.season} · H${S.week} · ${esc(F.monthName())}`}</span><span class="club">${badge(t, 16)}<span><b>${esc(t.name)}</b></span></span><span class="row" style="gap:6px"><span class="num"><b>${F.money(P.money)}</b></span>${devOn() ? `<button class="devbtn" data-a="open" data-v="dev" aria-label="Geliştirici konsolu">${ICON.dev}</button>` : ''}</span></div>`;
   }
 
   /* ---------- Başlangıç ---------- */
@@ -195,8 +301,47 @@
           <div class="flat"><div class="display" style="font-size:26px">∞</div><span class="muted">nesil: çocuğunla devam et</span></div>
         </div>
         ${U.howto ? howtoHtml() : ''}
+        <button class="keycard" data-a="key-open">
+          <span class="keyic">${ICON.key}</span>
+          <span class="grow" style="text-align:left"><b>${cloud.key ? 'Anahtarın: ' + esc(maskKey(cloud.key)) : 'Anahtarla giriş'}</b><span class="tiny muted" style="display:block">${cloud.key ? (cloud.ready ? 'İlerlemen bu anahtarla buluta kaydediliyor' : cloud.denied ? 'Bu hesapla bulut kaydı yok, kayıt bu cihazda' : 'Bulut bu ortamda kapalı, kayıt bu cihazda') : 'Başka bir cihazda kaldığın yerden devam et'}</span></span>
+          <span class="muted">›</span>
+        </button>
       </div>`,
       dock: `<div class="stack" style="width:100%;gap:8px">${sv ? `<button class="btn" data-a="continue">Kariyerine devam et</button>` : ''}<button class="btn ${sv ? 'alt' : ''}" data-a="start-new">Yeni kariyer</button><button class="btn ghost" data-a="howto">${U.howto ? 'Kapat' : 'Nasıl oynanır?'}</button></div>`
+    };
+  }
+  function maskKey(k) { k = String(k); return k.length <= 4 ? k : k.slice(0, 2) + '•'.repeat(Math.min(6, k.length - 4)) + k.slice(-2); }
+  function fmtAt(t) { if (!t) return ''; const d = new Date(t); return d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' }) + ' ' + d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }); }
+
+  /* ---------- Anahtar ekranı ---------- */
+  function viewKey() {
+    const K = U.keyUi;
+    const local = hasSave() ? (() => { try { const s = JSON.parse(store.get(KEY)); return { name: s.P.name + ' ' + s.P.surname, season: s.season, club: s.world.teams[s.P.contract.team].name, at: +store.get('forma.savedAt') || 0 }; } catch (e) { return null; } })() : null;
+    const saveCard = (t, s, extra) => `<div class="flat stack" style="gap:4px"><span class="label">${t}</span><b>${esc(s.name)}</b><span class="small muted">${esc(s.club || '')}${s.season ? ' · ' + s.season + '. sezon' : ''}${s.at ? ' · ' + esc(fmtAt(s.at)) : ''}</span>${extra || ''}</div>`;
+    let body = '', dock = '';
+    if (!cloud.checked) {
+      body = '<div class="card small muted">Bulut bağlantısı kontrol ediliyor…</div>';
+    } else if (!cloud.ready) {
+      body = `<div class="card stack small"><b>${cloud.denied ? 'Bu hesapla bulut kaydı yapılamıyor' : 'Bulut kaydı bu ortamda kullanılamıyor'}</b><p class="muted">${cloud.denied ? 'Bu oyunu paylaşılan bir linkle açtın; bu hesap sayfaya veri yazamıyor. Merak etme: oyun her adımda <b>bu cihaza</b> otomatik kaydediliyor, aynı tarayıcıda açınca kaldığın yerden devam edersin. Başka cihaza geçmek için <b>kayıt kodunu</b> kullan.' : 'Anahtarla kayıt, oyunu claude.ai linkinden ve hesabına giriş yapmış olarak açınca çalışır. Bilgisayardaki yerel sürümde ya da oturum kapalıyken ilerlemeni <b>kayıt kodu</b> ile taşıyabilirsin.'}</p>${F.S && F.S.P ? '<p class="small">Kodu almak için: Ayarlar > Kayıt kodu > Kodu oluştur > Kopyala. Kodu kendine mesaj olarak gönder, diğer cihazda buraya yapıştır.</p>' : ''}</div>
+        <div class="card stack"><div class="label">Kayıt kodu</div><p class="small muted">Diğer cihazda Ayarlar > Kayıt kodu > Kodu oluştur ile aldığın kodu buraya yapıştır.</p><textarea id="code" aria-label="Kayıt kodu" placeholder="Kayıt kodunu yapıştır">${esc(U.code)}</textarea><button class="btn sm" data-a="import">Koddan yükle</button>${U.importMsg ? `<p class="small">${esc(U.importMsg)}</p>` : ''}</div>`;
+    } else if (K.stage === 'found') {
+      const r = K.remote;
+      body = `<div class="card stack"><p>Bu anahtarda bir kariyer var.</p>${saveCard('Buluttaki kayıt', r)}${local ? saveCard('Bu cihazdaki kayıt', local, local.name === r.name && local.at > r.at ? '<span class="chip warn" style="align-self:flex-start;margin-top:4px">Bu cihazdaki daha yeni</span>' : '') : ''}</div>
+        <p class="tiny muted">Buluttaki kaydı yüklersen bu cihazdaki kayıt onunla değişir.</p>`;
+      dock = `<div class="stack" style="width:100%;gap:8px"><button class="btn" data-a="key-load">Buluttaki kaydı yükle</button>${local ? `<button class="btn alt" data-a="key-bind">Bu cihazdakini bu anahtara yaz</button>` : ''}<button class="btn ghost" data-a="key-reset">Başka anahtar</button></div>`;
+    } else if (K.stage === 'empty') {
+      body = `<div class="card stack"><p><b>Bu anahtarda henüz kayıt yok.</b> Anahtarı kullanmaya başladığında ilerlemen her adımda buluta kaydedilir; başka bir cihazda aynı anahtarı girip devam edersin.</p>${local ? saveCard('Bu cihazdaki kayıt', local) : ''}</div>
+        <p class="tiny muted">Anahtarını unutma: büyük-küçük harf fark eder. Kayıtlar Claude hesabına özel tutulur, diğer cihazda da aynı hesapla giriş yap.</p>`;
+      dock = `<div class="stack" style="width:100%;gap:8px">${local ? `<button class="btn" data-a="key-bind">Mevcut kariyerimi bu anahtara bağla</button>` : ''}<button class="btn ${local ? 'alt' : ''}" data-a="key-new">Bu anahtarla yeni kariyer</button><button class="btn ghost" data-a="key-reset">Başka anahtar</button></div>`;
+    } else {
+      body = `<div class="card stack"><label class="stack" style="gap:6px" for="key-in"><span class="label">Anahtar</span><input type="text" id="key-in" placeholder="ör. batu-kariyer-7" value="${esc(K.input || '')}" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="64"></label>
+        <p class="small muted">Kendine bir anahtar seç (en az 4 karakter). Aynı anahtarı telefonda, tablette ya da bilgisayarda girersen kaldığın yerden devam edersin.</p>${K.msg ? `<p class="small" style="color:var(--bad)">${esc(K.msg)}</p>` : ''}</div>
+        ${cloud.key ? `<div class="flat row small"><span class="grow">Şu anki anahtar: <b>${esc(maskKey(cloud.key))}</b><span id="cloudst" class="tiny muted" style="display:block">${esc(cloud.status || '')}</span></span><button class="btn alt sm" data-a="key-logout">Anahtardan çık</button></div>` : ''}`;
+      dock = `<button class="btn" data-a="key-login" ${K.busy ? 'disabled' : ''}>${K.busy ? 'Bakılıyor…' : 'Giriş yap'}</button>`;
+    }
+    return {
+      main: `<div class="stack fade"><div class="topbar"><button class="back" data-a="key-back" aria-label="Geri">${ICON.back}</button><h2 class="display" style="font-size:28px">Anahtarla giriş</h2></div>${body}</div>`,
+      dock
     };
   }
   function howtoHtml() {
@@ -216,8 +361,11 @@
     const S = F.S, P = S.P;
     const groups = D.attrGroups.filter((g) => g.id !== 'kl' || P.pos === 'KL');
     const dp = (S.devPlan && S.devPlan.focus) || [];
+    // mevki değişince (ör. kaleciden forvete) eski antrenman bu mevkide olmayabilir: geçerli birine çek
+    const allowed = (id) => ['taktik', 'dinlenme'].includes(id) || groups.some((x) => x.keys.includes(id));
+    if (!allowed(plan.train)) plan.train = dp.find(allowed) || groups[0].keys[0];
     const cur = D.attrGroupOf[plan.train];
-    const tab = U.trainCat && groups.some((g) => g.id === U.trainCat) ? U.trainCat : cur || D.attrGroupOf[dp[0]] || groups[0].id;
+    const tab = [U.trainCat, cur, D.attrGroupOf[dp[0]]].find((x) => x && groups.some((g) => g.id === x)) || groups[0].id;
     const g = groups.find((x) => x.id === tab);
     const chip = (k) => `<button class="pick ${plan.train === k ? 'on' : ''}" data-a="plan-train" data-v="${k}" ${P.injury ? 'disabled' : ''}>${dp.includes(k) ? '<b style="color:var(--warn)">▲</b> ' : rw[k] ? '<b style="color:var(--accent)">•</b> ' : ''}${esc(D.attrs[k])}${ordered === k ? ' ★' : ''} <span class="num" style="opacity:.6">${Math.round(P.attrs[k])}</span></button>`;
     return `${dp.length ? `<div class="flat stack" style="gap:6px"><div class="row small"><b class="grow">Hocanın gelişim planı</b><span class="tiny muted">+%25 XP</span></div><div class="row wrap">${dp.map(chip).join('')}</div>${S.devPlan.msg ? `<p class="tiny muted">"${esc(S.devPlan.msg)}"</p>` : ''}</div>` : ''}
@@ -796,6 +944,7 @@
       case 'album': return albumView();
       case 'muze': return appShell('Aile Müzesi', `<div class="card"><div class="label">Hanedanlık skoru</div><div class="display num" style="font-size:44px">${F.num(F.dynastyScore())}</div><div class="small muted">${F.S.gen}. nesil oynanıyor</div></div>${dynastyList()}`);
       case 'ayarlar': return ayarlarView();
+      case 'dev': return devOn() ? devView() : (U.app = null, homeView());
       default: U.app = null; return homeView();
     }
   }
@@ -1143,7 +1292,9 @@
     const theme = store.get('forma.theme') || 'system';
     const q = U.renameQ.toLocaleLowerCase('tr');
     const teams = q.length >= 2 ? Object.values(S.world.teams).filter((t) => t.name.toLocaleLowerCase('tr').includes(q)).slice(0, 12) : [];
-    return appShell('Ayarlar', `${updateCard()}<div class="card stack"><div class="label">Tema</div><div class="seg">${[['system', 'Sistem'], ['light', 'Açık'], ['dark', 'Koyu']].map(([k, n]) => `<button class="${theme === k ? 'on' : ''}" data-a="theme" data-v="${k}">${n}</button>`).join('')}</div></div>
+    const keyCard = `<div class="card stack" style="gap:8px"><div class="row"><div class="grow"><div class="label">Anahtar ve bulut kaydı</div><span class="small">${cloud.key ? 'Anahtar: <b>' + esc(maskKey(cloud.key)) + '</b>' : 'Anahtar bağlı değil'}</span><span id="cloudst" class="tiny muted" style="display:block">${esc(cloud.key ? (cloud.ready ? cloud.status || 'Bulut hazır' : 'Bulut bu ortamda kapalı') : 'Cihazlar arası devam için bir anahtar bağla')}</span></div><button class="btn alt sm" data-a="key-open">${cloud.key ? 'Yönet' : 'Anahtar bağla'}</button></div>${cloud.key && cloud.ready ? '<button class="btn alt sm" data-a="cloud-now" style="align-self:flex-start">Şimdi buluta kaydet</button>' : ''}</div>`;
+    const devCard = `<div class="card stack" style="gap:8px"><div class="row"><div class="grow"><div class="label">Geliştirici modu</div><span class="small muted">Para, mevki, yetenekler, ilişkiler ve oyunun tüm durumu için konsol.</span></div><button class="btn ${devOn() ? '' : 'alt'} sm" data-a="dev-toggle">${devOn() ? 'Açık' : 'Kapalı'}</button></div>${devOn() ? '<button class="btn sm" data-a="open" data-v="dev" style="align-self:flex-start">Konsolu aç</button><p class="tiny muted">Konsola üst çubuktaki &lt;/&gt; düğmesinden de ulaşırsın.</p>' : ''}</div>`;
+    return appShell('Ayarlar', `${keyCard}${devCard}${updateCard()}<div class="card stack"><div class="label">Tema</div><div class="seg">${[['system', 'Sistem'], ['light', 'Açık'], ['dark', 'Koyu']].map(([k, n]) => `<button class="${theme === k ? 'on' : ''}" data-a="theme" data-v="${k}">${n}</button>`).join('')}</div></div>
       <div class="card stack"><div class="label">Takım isimlerini düzenle (PES usulü)</div><input type="text" id="rn-q" placeholder="Takım ara (en az 2 harf)" value="${esc(U.renameQ)}" aria-label="Takım ara">
         ${teams.map((t) => `<div class="row">${badge(t, 18)}<input type="text" data-team="${t.id}" value="${esc(t.name)}" maxlength="32" aria-label="${esc(t.name)} yeni adı"></div>`).join('')}<p class="tiny muted">Değişiklik yazmayı bitirince kaydedilir ve kayıt koduyla birlikte taşınır.</p></div>
       <div class="card stack"><div class="label">Kayıt kodu</div><p class="small muted">Oyun bu cihazda otomatik kaydedilir. Başka cihaza taşımak için kodu kopyala, orada yapıştır.</p>
@@ -1152,6 +1303,82 @@
       ${U.confirm === 'new' ? `<div class="card stack"><p>Mevcut kariyer silinecek. Emin misin?</p><div class="row"><button class="btn alt sm grow" data-a="confirm-no">Vazgeç</button><button class="btn danger sm grow" data-a="new-career-now">Sil ve yeniden başla</button></div></div>` : `<button class="btn ghost" data-a="confirm" data-v="new">Yeni kariyere başla</button>`}
       <div class="card small muted">FORMA prototip · Kulüp ve kişi isimleri kurgusaldır.</div>`);
   }
+
+  /* =========================================================
+     GELİŞTİRİCİ KONSOLU
+     data-dev="<yol>" olan alanlar F.S içindeki o yolu doğrudan yazar (ör. P.money, P.attrs.hiz, rel.takim).
+     ========================================================= */
+  function getPath(o, p) { return p.split('.').reduce((x, k) => (x == null ? x : x[k]), o); }
+  function setPath(o, p, v) { const ks = p.split('.'); const last = ks.pop(); const t = ks.reduce((x, k) => (x[k] == null ? (x[k] = {}) : x[k]), o); t[last] = v; }
+  const r2 = (v) => Math.round((+v || 0) * 100) / 100;
+  function devNum(label, path, opt) {
+    opt = opt || {};
+    let v = getPath(F.S, path);
+    if (v == null && opt.def != null) v = opt.def;
+    return `<label class="devf"><span>${esc(label)}</span><input type="number" inputmode="decimal" data-dev="${path}" value="${r2(v)}"${opt.min != null ? ` min="${opt.min}"` : ''}${opt.max != null ? ` max="${opt.max}"` : ''} step="${opt.step || 1}"></label>`;
+  }
+  function devText(label, path) { return `<label class="devf"><span>${esc(label)}</span><input type="text" data-devt="${path}" value="${esc(getPath(F.S, path) || '')}"></label>`; }
+  function devSel(id, opts, cur, extra) { return `<select id="${id}" ${extra || ''}>${opts.map(([v, n]) => `<option value="${esc(v)}" ${String(v) === String(cur) ? 'selected' : ''}>${esc(n)}</option>`).join('')}</select>`; }
+  function devView() {
+    const S = F.S, P = S.P;
+    const tab = U.devTab;
+    const tabs = [['oyuncu', 'Oyuncu'], ['yetenek', 'Yetenekler'], ['kariyer', 'Kariyer'], ['iliski', 'İlişkiler'], ['olay', 'Olaylar'], ['konsol', 'Konsol']];
+    let body = '';
+    if (tab === 'oyuncu') {
+      const fm = F.teamFormation();
+      body = `<div class="card stack" style="gap:8px"><div class="label">Para · ${F.money(P.money)}</div>${devNum('Bakiye (₺)', 'P.money', { step: 1000 })}
+          <div class="row wrap">${[[1e4, '+10 B'], [1e6, '+1 Mn'], [1e8, '+100 Mn'], [1e9, '+1 Mr'], [-1e6, '−1 Mn']].map(([v, n]) => `<button class="pick" data-a="dev-money" data-v="${v}">${n}</button>`).join('')}<button class="pick" data-a="dev-money" data-v="zero">Sıfırla</button></div></div>
+        <div class="card stack" style="gap:8px"><div class="label">Mevki</div>
+          <label class="devf"><span>Ana mevki</span>${devSel('dev-role', Object.keys(D.roles).map((k) => [k, D.roles[k].name + ' (' + D.roles[k].short + ')']), P.role)}</label>
+          <label class="devf"><span>Sahadaki mevki</span>${devSel('dev-playrole', [['', 'Ana mevkiyle aynı']].concat(Object.keys(D.roles).map((k) => [k, D.roles[k].name])), P.playRole || '')}</label>
+          <label class="devf"><span>Takım dizilişi</span>${devSel('dev-formation', D.formations.map((f) => [f.id, f.id]), fm.id)}</label>
+          <p class="tiny muted">Sahada: ${esc(D.roles[F.curRole()].name)} · uyum %${Math.round(F.roleFit(F.curRole()) * 100)} · güç ${F.ovr()}</p></div>
+        <div class="card stack" style="gap:8px"><div class="label">Kimlik</div>${devText('Ad', 'P.name')}${devText('Soyad', 'P.surname')}${devNum('Yaş', 'P.age', { min: 14, max: 45 })}${devNum('Forma no', 'P.number', { min: 1, max: 99 })}${devNum('Potansiyel', 'P.pot', { min: 30, max: 99 })}${devNum('Takipçi', 'P.followers', { min: 0, step: 100 })}${devNum('Yabancı dil', 'P.dil', { min: 0, max: 100 })}${devNum('Kredi notu', 'P.credit', { min: 0, max: 100, def: 60 })}</div>
+        <div class="card stack" style="gap:8px"><div class="label">Hayat</div>${['enerji', 'moral', 'mental', 'disiplin', 'sohret', 'saglik'].map((k) => devNum(D.lifeLabels[k], 'P.life.' + k, { min: 0, max: 100 })).join('')}${devNum('Form (−10…10)', 'P.life.form', { min: -10, max: 10, step: 0.5 })}
+          <div class="row wrap"><button class="pick" data-a="dev-fill">Hepsini 100 yap</button><button class="pick" data-a="dev-heal" ${P.injury ? '' : 'disabled'}>Sakatlığı iyileştir${P.injury ? ' (' + P.injury.weeks + ' hf)' : ''}</button><button class="pick" data-a="dev-unsuspend" ${P.suspended ? '' : 'disabled'}>Cezayı kaldır${P.suspended ? ' (' + P.suspended + ')' : ''}</button></div></div>`;
+    } else if (tab === 'yetenek') {
+      body = `<div class="card stack" style="gap:8px"><div class="label">Toplu</div><div class="row wrap">${[['99', 'Hepsi 99'], ['+5', 'Hepsi +5'], ['+10', 'Hepsi +10'], ['-5', 'Hepsi −5'], ['50', 'Hepsi 50']].map(([v, n]) => `<button class="pick" data-a="dev-attrs" data-v="${v}">${n}</button>`).join('')}</div><p class="tiny muted">Güç: <b>${F.ovr()}</b> · ${esc(F.role().name)}</p></div>
+        ${D.attrGroups.map((g) => `<div class="card stack" style="gap:6px"><div class="label">${esc(g.name)} · ${F.groupScore(g.id)}</div>${g.keys.map((k) => devNum(D.attrs[k], 'P.attrs.' + k, { min: 1, max: 99 })).join('')}</div>`).join('')}
+        <div class="card stack" style="gap:6px"><div class="label">Kişisel yetenekler</div>${Object.keys(D.softs).map((k) => devNum(D.softs[k], 'P.soft.' + k, { min: 0, max: 99 })).join('')}</div>
+        <div class="card stack" style="gap:6px"><div class="label">Kişilik puanları (3 ve üstü aktif)</div>${Object.keys(D.traits).map((k) => devNum(D.traits[k], 'P.traits.' + k, { min: 0, max: 10, step: 0.5 })).join('')}</div>`;
+    } else if (tab === 'kariyer') {
+      const comps = Object.values(S.world.comps).sort((a, b) => (a.c === 'TR' ? 0 : 1) - (b.c === 'TR' ? 0 : 1) || a.c.localeCompare(b.c) || a.tier - b.tier || a.g - b.g);
+      const teamSel = `<select id="dev-team">${comps.map((c) => `<optgroup label="${esc(c.name + (c.gname ? ' · ' + c.gname : ''))}">${c.teams.map((id) => `<option value="${id}" ${id === P.contract.team ? 'selected' : ''}>${esc(F.team(id).name)} (${F.team(id).str})</option>`).join('')}</optgroup>`).join('')}</select>`;
+      const flags = Object.keys(S.flags);
+      body = `<div class="card stack" style="gap:8px"><div class="label">Sözleşme · ${esc(F.myTeam().name)}</div>${devNum('Haftalık maaş', 'P.contract.wage', { min: 0, step: 500 })}${devNum('Kalan yıl', 'P.contract.years', { min: 0, max: 10 })}
+          <label class="devf"><span>Rol</span>${devSel('dev-crole', Object.keys(D.roleNames).map((k) => [k, D.roleNames[k]]), P.contract.role)}</label>
+          <label class="devf"><span>Takım gücü</span><input type="number" data-dev="world.teams.${P.contract.team}.str" value="${F.myTeam().str}" min="1" max="99"></label></div>
+        <div class="card stack" style="gap:8px"><div class="label">Transfer</div>${teamSel}<div class="row"><button class="btn sm grow" data-a="dev-transfer">Bu kulübe geç</button></div>
+          <div class="row wrap"><span class="tiny muted grow">Teklif getir:</span><button class="pick" data-a="dev-offers" data-v="">Rastgele</button><button class="pick" data-a="dev-offers" data-v="up">Üst lig</button><button class="pick" data-a="dev-offers" data-v="abroad">Yurt dışı</button></div></div>
+        <div class="card stack" style="gap:8px"><div class="label">Zaman · Sezon ${S.season}, hafta ${S.week}, tur ${S.league.round}/${F.seasonRounds()}</div>${devNum('Yıl', 'year', { min: 1950, max: 2200 })}
+          <div class="row wrap"><button class="pick" data-a="dev-endseason">Sezonu bitir (kalan maçlar simüle)</button><button class="pick" data-a="dev-clearq" ${S.queue.length ? '' : 'disabled'}>Bekleyen adımları temizle (${S.queue.length})</button></div>
+          <div class="row wrap"><button class="pick" data-a="dev-flagtog" data-v="kaptan">${S.flags.kaptan ? 'Kaptanlığı al' : 'Kaptan yap'}</button><button class="pick" data-a="dev-retire">Emekliliğe geç</button></div></div>
+        <div class="card stack" style="gap:8px"><div class="label">Bayraklar (hikâye durumu)</div><div class="row wrap">${flags.length ? flags.map((f) => `<button class="pick" data-a="dev-flagtog" data-v="${esc(f)}" title="Kaldır">${esc(f)} ✕</button>`).join('') : '<span class="tiny muted">Bayrak yok</span>'}</div>
+          <div class="row"><input type="text" id="dev-flag" placeholder="bayrak adı"><button class="btn alt sm" data-a="dev-flagadd">Ekle</button></div></div>`;
+    } else if (tab === 'iliski') {
+      const people = Object.keys(S.roles).filter((r) => S.npcs[S.roles[r]]);
+      body = `<div class="card stack" style="gap:6px"><div class="label">Genel ilişkiler (−100…100)</div>${['takim', 'medya', 'aile', 'taraftar', 'memleket'].map((k) => devNum(D.relLabels[k], 'rel.' + k, { min: -100, max: 100 })).join('')}</div>
+        <div class="card stack" style="gap:6px"><div class="label">Kişiler</div>${people.map((r) => { const n = S.npcs[S.roles[r]]; return devNum((D.relLabels[r] || r) + ' · ' + n.name, 'npcs.' + n.id + '.rel', { min: -100, max: 100 }); }).join('')}</div>
+        <div class="card stack" style="gap:8px"><div class="label">Partner ve aile</div><label class="devf"><span>Partner</span>${devSel('dev-pstage', [[0, 'Yok'], [1, 'Flört'], [2, 'Sevgili'], [3, 'Nişanlı'], [4, 'Evli']], S.partner ? S.partner.stage : 0)}</label>
+          <div class="row wrap"><button class="pick" data-a="dev-kid">Çocuk ekle (${S.kids.length})</button>${S.agent ? '' : '<button class="pick" data-a="dev-agent">Menajer tut</button>'}</div></div>`;
+    } else if (tab === 'olay') {
+      const q = U.devQ.toLocaleLowerCase('tr');
+      const list = D.events.filter((e) => !q || e.id.toLowerCase().includes(q) || String(e.t || (e.nodes && e.nodes.start && e.nodes.start.t) || '').toLocaleLowerCase('tr').includes(q)).slice(0, 40);
+      body = `<div class="card stack" style="gap:8px"><input type="text" id="dev-evq" placeholder="Olay ara (id ya da metin)" value="${esc(U.devQ)}"><p class="tiny muted">${D.events.length} olay. Tetiklediğin olay koşullarına bakılmadan hemen açılır.</p></div>
+        <div class="card list">${list.map((e) => { const t = e.t || (e.nodes && e.nodes.start && e.nodes.start.t) || ''; return `<div class="li"><div class="grow"><b class="small">${esc(e.id)}</b><div class="tiny muted">${esc(F.tpl(t).slice(0, 110))}</div></div><button class="btn alt sm" data-a="dev-event" data-v="${esc(e.id)}">Tetikle</button></div>`; }).join('') || '<p class="small muted">Eşleşen olay yok.</p>'}</div>`;
+    } else {
+      if (U.devJson == null) U.devJson = JSON.stringify(U.devScope === 'S' ? S : P, null, 1);
+      body = `<div class="card stack" style="gap:8px"><div class="label">Komut</div><p class="tiny muted"><code>F</code> motor, <code>S</code> durum, <code>P</code> oyuncu, <code>D</code> veri. Ör: <code>P.money = 5e8</code> · <code>F.setRole('SF')</code> · <code>F.injure(3)</code></p>
+          <div class="row"><input type="text" id="dev-cmd" class="mono" placeholder="P.attrs.hiz = 99" value="${esc(U.devCmd)}" autocapitalize="off" spellcheck="false"><button class="btn sm" data-a="dev-eval">Çalıştır</button></div>
+          ${U.devLog.length ? `<pre class="devlog">${U.devLog.slice(-8).map((l) => `<span class="${l.err ? 'err' : ''}">› ${esc(l.c)}\n${esc(l.r)}</span>`).join('\n')}</pre>` : ''}</div>
+        <div class="card stack" style="gap:8px"><div class="row"><div class="label grow">Ham durum (JSON)</div><div class="seg" style="min-width:170px">${[['P', 'Oyuncu'], ['S', 'Tüm oyun']].map(([k, n]) => `<button class="${U.devScope === k ? 'on' : ''}" data-a="dev-scope" data-v="${k}">${n}</button>`).join('')}</div></div>
+          <textarea id="dev-json" class="mono" spellcheck="false" style="min-height:300px;font-size:11px">${esc(U.devJson)}</textarea>
+          <div class="row"><button class="btn alt sm grow" data-a="dev-jsonreload">Yeniden oku</button><button class="btn sm grow" data-a="dev-jsonapply">Uygula</button></div>
+          <p class="tiny muted">Uygula, ${U.devScope === 'S' ? 'oyunun tüm durumunu' : 'oyuncu nesnesini'} bu JSON ile değiştirir. Bozuk JSON uygulanmaz.</p></div>`;
+    }
+    return appShell('Geliştirici', `<div class="tabs">${tabs.map(([k, n]) => `<button class="pick ${tab === k ? 'on' : ''}" data-a="dev-tab" data-v="${k}">${n}</button>`).join('')}</div>${body}`);
+  }
+  function devAfter() { const P = F.S.P; P.peak = Math.max(P.peak || 0, F.ovr()); }
 
   /* =========================================================
      EYLEMLER
@@ -1210,7 +1437,7 @@
       const S = F.S, st = U.prof;
       if (!st || !st.role || S.roleChange === S.season) return;
       const oldGrp = S.P.pos;
-      F.setRole(st.role); S.roleChange = S.season;
+      F.setRole(st.role); S.roleChange = S.season; S.order = F.makeOrder();
       F.fx({ form: -1, 'r.hoca': oldGrp === S.P.pos ? 1 : -3 });
       F.addAlbum('Mevki değişikliği: artık ' + F.role().name.toLowerCase() + ' oynuyorsun.', 'event');
       U.posEdit = false; toast('Yeni mevkin: ' + F.role().name);
@@ -1329,8 +1556,110 @@
     },
     import: () => {
       const v = document.getElementById('code').value;
-      try { F.importCode(v); U.importMsg = 'Kayıt yüklendi.'; U.app = null; U.view = 'game'; F.processAuto(); }
+      try { F.importCode(v); applyEdits(); U.importMsg = 'Kayıt yüklendi.'; U.app = null; U.view = 'game'; F.processAuto(); }
       catch (e) { U.importMsg = 'Kod okunamadı. Kodun tamamını yapıştırdığından emin ol.'; }
+    },
+
+    /* ---------- Anahtar ---------- */
+    'key-open': () => { U.keyFrom = U.view === 'game' ? 'game' : 'start'; U.view = 'key'; U.keyUi = { stage: 'enter', input: '', msg: '', busy: false, remote: null }; U.importMsg = ''; },
+    'key-back': () => { U.view = U.keyFrom === 'game' && F.S && F.S.P ? 'game' : 'start'; },
+    'key-reset': () => { U.keyUi = { stage: 'enter', input: U.keyUi.input, msg: '', busy: false, remote: null }; },
+    'key-login': () => {
+      const K = U.keyUi;
+      const el = document.getElementById('key-in');
+      const k = (el ? el.value : K.input).trim();
+      K.input = k;
+      if (k.length < 4) { K.msg = 'Anahtar en az 4 karakter olmalı.'; return; }
+      K.busy = true; K.msg = '';
+      cloudFetch(k).then((r) => { K.remote = r; K.stage = r.exists ? 'found' : 'empty'; })
+        .catch(() => { K.msg = 'Buluta ulaşılamadı. Bağlantını kontrol edip tekrar dene.'; })
+        .finally(() => { K.busy = false; if (U.view === 'key') render(); });
+    },
+    'key-load': () => {
+      const K = U.keyUi;
+      try {
+        F.load(K.remote.json); applyEdits();
+        cloud.key = K.input; store.set('forma.key', K.input); cloud.lastPushed = K.remote.json;
+        lastLocal = null;
+        U.view = 'game'; U.app = null; F.processAuto();
+        toast('Kariyer yüklendi: ' + K.remote.name);
+      } catch (e) { K.msg = 'Buluttaki kayıt okunamadı.'; K.stage = 'enter'; }
+    },
+    'key-bind': () => {
+      const K = U.keyUi;
+      cloud.key = K.input; store.set('forma.key', K.input); cloud.lastPushed = null;
+      if (!(F.S && F.S.P)) loadSave();
+      if (F.S && F.S.P) { cloudPush(); U.view = 'game'; U.app = null; F.processAuto(); toast('Kariyerin bu anahtara bağlandı.'); }
+      else U.view = 'start';
+    },
+    'key-new': () => {
+      const K = U.keyUi;
+      cloud.key = K.input; store.set('forma.key', K.input); cloud.lastPushed = null;
+      store.del(KEY); lastLocal = null; F.S = null;
+      U.view = 'create'; U.app = null; U.create = { origin: null, pos: null, role: null, spot: null, name: '', surname: '', look: newLook(), number: 10 };
+    },
+    'key-logout': () => { cloudPush(); cloud.key = null; store.del('forma.key'); cloud.status = ''; toast('Anahtardan çıktın. Kayıt bu cihazda kalmaya devam ediyor.'); },
+    'cloud-now': () => { cloud.lastPushed = null; cloudPush(); },
+
+    /* ---------- Geliştirici ---------- */
+    'dev-toggle': () => { store.set('forma.dev', devOn() ? '0' : '1'); toast(devOn() ? 'Geliştirici modu açıldı.' : 'Geliştirici modu kapandı.'); },
+    'dev-tab': (v) => { U.devTab = v; if (v === 'konsol') U.devJson = null; },
+    'dev-money': (v) => { const P = F.S.P; if (v === 'zero') P.money = 0; else { P.money += +v; F.bankLog('Geliştirici', +v); } },
+    'dev-fill': () => { const L = F.S.P.life; ['enerji', 'moral', 'mental', 'disiplin', 'saglik'].forEach((k) => (L[k] = 100)); L.form = 10; },
+    'dev-heal': () => { F.S.P.injury = null; },
+    'dev-unsuspend': () => { F.S.P.suspended = 0; },
+    'dev-attrs': (v) => { const a = F.S.P.attrs; Object.keys(a).forEach((k) => { a[k] = F.clamp(v[0] === '+' || v[0] === '-' ? a[k] + +v : +v, 1, 99); }); devAfter(); },
+    'dev-transfer': () => {
+      const id = document.getElementById('dev-team').value;
+      const S = F.S, P = S.P;
+      if (!id || id === P.contract.team) return;
+      const ti = F.tierOf(id);
+      F.transfer(id, { wage: F.wageFor(ti.c, ti.t, F.team(id).str, F.ovr()), years: 3, role: F.ovr() >= F.team(id).str - 2 ? 'as' : 'rotasyon' });
+      P.playRole = null; S.tempRole = null; F.checkRoleFit(true);
+      toast('Yeni kulüp: ' + F.myTeam().name);
+    },
+    'dev-offers': (v) => { const S = F.S; S.offers = F.genOffers('ozel', v || undefined); if (!S.offers.length) { toast('Uygun teklif çıkmadı.'); return; } S.queue.unshift({ type: 'offers', window: 'ozel' }); U.app = null; },
+    'dev-endseason': () => {
+      const S = F.S, L = S.league;
+      while (L.round < F.seasonRounds()) { L.fixtures[L.round].forEach(([h, a]) => { const [x, y] = F.simScore(h, a); F.addResult(L.table, h, a, x, y); }); L.round++; }
+      S.queue = [{ type: 'seasonEndAuto' }]; S.wk = null; F.processAuto(); U.app = null;
+    },
+    'dev-clearq': () => { F.S.queue = []; F.S.wk = null; },
+    'dev-retire': () => { F.S.queue.unshift({ type: 'retire', forced: false }); U.app = null; },
+    'dev-flagtog': (v) => { const f = F.S.flags; if (f[v]) delete f[v]; else f[v] = 1; },
+    'dev-flagadd': () => { const el = document.getElementById('dev-flag'); const v = el && el.value.trim(); if (v) F.S.flags[v] = 1; },
+    'dev-kid': () => { F.haveKid(); },
+    'dev-agent': () => { F.hireAgent(3); },
+    'dev-event': (v) => { const st = F.makeEventStep(v); st.forced = true; F.S.queue.unshift(st); U.app = null; },
+    'dev-scope': (v) => { U.devScope = v; U.devJson = null; },
+    'dev-jsonreload': () => { U.devJson = null; },
+    'dev-jsonapply': () => {
+      const txt = document.getElementById('dev-json').value;
+      let o;
+      try { o = JSON.parse(txt); } catch (e) { toast('JSON bozuk: ' + e.message); U.devJson = txt; return; }
+      try {
+        if (U.devScope === 'S') F.load(o); else { const keep = F.S.P; F.S.P = o; try { F.ovr(); } catch (e2) { F.S.P = keep; throw e2; } }
+        devAfter(); U.devJson = null; toast('Uygulandı.');
+      } catch (e) { toast('Uygulanamadı: ' + e.message); U.devJson = txt; }
+    },
+    'dev-eval': () => {
+      const el = document.getElementById('dev-cmd');
+      const code = (el ? el.value : U.devCmd).trim();
+      U.devCmd = code;
+      if (!code) return;
+      const S = F.S;
+      let res, err = false;
+      try {
+        let fn;
+        try { fn = new Function('F', 'S', 'P', 'D', 'return (' + code + '\n)'); } catch (e) { fn = new Function('F', 'S', 'P', 'D', code); }
+        res = fn(F, S, S && S.P, D);
+        try { res = res === undefined ? 'undefined' : typeof res === 'string' ? res : JSON.stringify(res, null, 1); } catch (e) { res = String(res); }
+        if (res && res.length > 1500) res = res.slice(0, 1500) + '…';
+        if (F.S && F.S.P) devAfter();
+      } catch (e) { res = e.message; err = true; }
+      U.devLog.push({ c: code, r: res, err });
+      if (U.devLog.length > 30) U.devLog.shift();
+      if (!err) U.devCmd = '';
     }
   };
   /* ---------- Karakter düzenleyici (Stardew usulü) ---------- */
@@ -1380,7 +1709,7 @@
     F.S = S0;
     return l;
   }
-  const KEEP = new Set(['lg-tab', 'al-add', 'al-sub', 'al-reset', 'al-more', 'al-auto', 'upd-check', 'upd-run', 'pm-pick', 'like', 'loan-amt', 'loan-term', 'sub-buy', 'convo', 'c-club', 'train-cat', 'fm-pick', 'fm-spot', 'pos-edit', 'lk', 'edit-look', 'c-look', 'c-num', 'plan-train', 'plan-load', 'plan-act', 'goal-toggle', 'post-photo', 'post-tone', 'buy', 'sell', 'req', 'routine', 'tab', 'shopcat', 'chat-say', 'c-origin', 'c-pos', 'confirm', 'confirm-no', 'theme', 'export', 'heir-pos']);
+  const KEEP = new Set(['lg-tab', 'al-add', 'al-sub', 'al-reset', 'al-more', 'al-auto', 'upd-check', 'upd-run', 'pm-pick', 'like', 'loan-amt', 'loan-term', 'sub-buy', 'convo', 'c-club', 'train-cat', 'fm-pick', 'fm-spot', 'pos-edit', 'lk', 'edit-look', 'c-look', 'c-num', 'plan-train', 'plan-load', 'plan-act', 'goal-toggle', 'post-photo', 'post-tone', 'buy', 'sell', 'req', 'routine', 'tab', 'shopcat', 'chat-say', 'c-origin', 'c-pos', 'confirm', 'confirm-no', 'theme', 'export', 'heir-pos', 'cloud-now', 'dev-toggle', 'dev-money', 'dev-fill', 'dev-heal', 'dev-unsuspend', 'dev-attrs', 'dev-transfer', 'dev-clearq', 'dev-flagtog', 'dev-flagadd', 'dev-kid', 'dev-agent', 'dev-scope', 'dev-jsonreload', 'dev-jsonapply', 'dev-eval']);
   function readNames() {
     const n = document.getElementById('c-name'), s = document.getElementById('c-sur');
     if (n) U.create.name = n.value;
@@ -1411,6 +1740,28 @@
     const t = e.target;
     if (t.dataset && t.dataset.team) { F.renameTeam(t.dataset.team, t.value); save(); toast('Takım adı kaydedildi.'); }
     if (t.id === 'lg-sel') { U.leagueKey = t.value; render(); }
+    // geliştirici konsolu alanları
+    if (!(F.S && F.S.P)) return;
+    let devChanged = true;
+    try {
+      if (t.dataset && t.dataset.dev) { if (t.value === '' || isNaN(+t.value)) { render(true); return; } setPath(F.S, t.dataset.dev, +t.value); }
+      else if (t.dataset && t.dataset.devt) setPath(F.S, t.dataset.devt, t.value);
+      else if (t.id === 'dev-role') { F.setRole(t.value); F.S.order = F.makeOrder(); }
+      else if (t.id === 'dev-playrole') { F.S.P.playRole = t.value || null; F.S.tempRole = null; }
+      else if (t.id === 'dev-formation') { F.myTeam().formation = t.value; F.S.P.playRole = null; F.checkRoleFit(true); }
+      else if (t.id === 'dev-crole') F.S.P.contract.role = t.value;
+      else if (t.id === 'dev-pstage') {
+        const st = +t.value, S = F.S;
+        if (!st) { if (S.partner) F.breakup(); }
+        else { if (!S.partner) F.startPartner('arkadas'); S.partner.stage = st; S.partner.since = S.t; }
+      } else devChanged = false;
+    } catch (err) { toast('Değiştirilemedi: ' + err.message); }
+    if (devChanged) { devAfter(); render(true); }
+  });
+  app.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (e.target.id === 'dev-cmd') { e.preventDefault(); A['dev-eval'](); render(true); }
+    else if (e.target.id === 'key-in') { e.preventDefault(); A['key-login'](); render(true); }
   });
   app.addEventListener('input', (e) => {
     const t = e.target;
@@ -1421,6 +1772,16 @@
       if (t.id === 'c-numin') U.create.number = n; else { F.S.P.number = n; save(); }
       const txt = app.querySelector('.editor svg text:last-of-type');
       if (txt) txt.textContent = n;
+      return;
+    }
+    if (t.id === 'key-in') { U.keyUi.input = t.value; return; }
+    if (t.id === 'dev-cmd') { U.devCmd = t.value; return; }
+    if (t.id === 'dev-evq') {
+      U.devQ = t.value;
+      const pos = t.selectionStart;
+      render(true);
+      const n = document.getElementById('dev-evq');
+      if (n) { n.focus(); n.setSelectionRange(pos, pos); }
       return;
     }
     if (t.id === 'rn-q') {
@@ -1438,6 +1799,22 @@
     if (data && data.save) { try { F.load(data.save); U.view = 'game'; } catch (e) { /* yoksay */ } }
     else if (hasSave() && loadSave()) { U.view = 'start'; }
     render();
+    // bulut: anahtar bağlıysa ve buluttaki kayıt bu cihazdakinden yeniyse onu al
+    cloudInit().then(async () => {
+      if (cloud.ready && cloud.key) {
+        try {
+          const r = await cloudFetch(cloud.key);
+          const localAt = +store.get('forma.savedAt') || 0;
+          if (r.exists && r.at > localAt + 2000 && (U.view === 'start' || U.view === 'key')) {
+            F.load(r.json); applyEdits(); lastLocal = null; cloud.lastPushed = r.json;
+            store.set(KEY, r.json); store.set('forma.savedAt', String(r.at));
+            toast('Buluttaki daha yeni kayıt alındı: ' + r.name);
+          } else if (!r.exists || r.at < localAt) cloudSchedule();
+          cloudStatus(r.exists ? 'Bulutta kayıtlı · ' + fmtAt(Math.max(r.at, 0)) : 'Bulut hazır');
+        } catch (e) { cloudStatus('Buluta ulaşılamadı'); }
+      }
+      if (['start', 'key'].includes(U.view) || (U.view === 'game' && U.app === 'ayarlar')) render(true);
+    });
   }
   if (window.claude && window.claude.hot) {
     try { window.claude.hot.snapshot(() => ({ save: F.S && F.S.P ? F.serialize() : null })); } catch (e) { /* yok */ }
