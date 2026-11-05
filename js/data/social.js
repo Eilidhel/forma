@@ -228,9 +228,9 @@
         { t: 'Karşılık ver', a: 'fizik', d: 55, win: 'keep', lose: 'red', winT: 'Geri adım atmadın, rakipler sindi.', loseT: 'Kavga çıktı, kırmızı kart gördün!' }] },
       { pos: ['FV', 'OS', 'DF'], t: 'Derbinin son dakikası, top önüne düştü!', o: [
         { t: 'Vur!', a: 'sut', d: 52, win: 'goal', lose: 'miss', winT: 'DERBİ GOLÜ! Stadyum yıkılıyor!', loseT: 'Top auta gitti, tribün eller başında.' },
-        { t: 'Boştaki arkadaşa ver', a: 'pas', d: 45, win: 'assist', lose: 'lost', winT: 'Pasın gol oldu, derbi sizin!', loseT: 'Pas kesildi.' }] },
+        { t: 'Boştaki arkadaşa ver', a: 'pas', d: 45, win: 'assist', lose: 'lost', winT: 'Pasın gol oldu! Derbinin son dakikasında stadyum yıkılıyor!', loseT: 'Pas kesildi.' }] },
       { pos: ['KL'], t: 'Derbinin son dakikası, rakip forvet kale önünde!', o: [
-        { t: 'Kendini at', a: 'kalecilik', d: 56, win: 'save', lose: 'concede', winT: 'Derbiyi kurtaran kurtarış!', loseT: 'Son dakikada gol yediniz.' },
+        { t: 'Kendini at', a: 'kalecilik', d: 56, win: 'save', lose: 'concede', winT: 'Son dakikada inanılmaz bir kurtarış!', loseT: 'Son dakikada top ağlarda.' },
         { t: 'Bağır, savunmayı yönet', a: 'liderlik', d: 50, win: 'save', lose: 'concede', winT: 'Savunma son anda topu uzaklaştırdı.', loseT: 'Kimse seni duymadı.' }] }
     ]
   };

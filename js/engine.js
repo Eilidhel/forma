@@ -1151,14 +1151,21 @@
       const cands = F.formRoles().filter((r) => r !== cur && r !== 'KL' && (fit[r] || 0) >= 0.5);
       if (cands.length) { S.tempOffer = F.pick(cands); F.queueEvent('hoca_acil_mevki', true); }
     }
+    // Devre arası: sezonun yarısında iki hafta lig oynanmaz, oyuncular dinlenir
+    const winterBreak = F.isWinterBreak();
+    if (winterBreak) {
+      S.wb.left--;
+      S.wk.notes.push('Devre arası: lig tatilde. Dinlendin ve toparlandın.');
+      S.wk.deltas.push(...F.fx({ enerji: 15, moral: 3, saglik: 2 }));
+    }
     // Milli ara: o hafta lig oynanmaz, çağrıldıysan sadece milli maç vardır
-    const natBreak = F.isNatBreak();
+    const natBreak = !winterBreak && F.isNatBreak();
     if (natBreak) {
       S.natBreakDone = S.season + ':' + S.league.round;
       if (F.calledUp()) S.queue.push({ type: 'match', nat: true, pre: true });
       else S.wk.notes.push('Milli ara: lig bu hafta oynanmıyor. Kulüpte antrenmana devam ettin.');
     }
-    const fxt = !natBreak && S.league.round < F.seasonRounds() ? F.myFixture() : null;
+    const fxt = !natBreak && !winterBreak && S.league.round < F.seasonRounds() ? F.myFixture() : null;
     if (fxt) {
       S.preStatus = { t: S.t, s: F.rollStatus({ nat: false, myStr: F.myTeam().str }) };
       // maç öncesi gerginlik: rakipten mesaj, tünelde bakışma, hocanın taktik notu…
@@ -1305,7 +1312,7 @@
       if (it.upkeep) fin.upkeep += it.upkeep;
       if (it.income) fin.income += Math.round(F.rf(it.income[0], it.income[1]));
       if (it.incomeFollowers) fin.income += Math.round(P.followers * it.incomeFollowers);
-      if (it.weekly) F.fx(it.weekly);
+      if (it.weekly) wk.deltas.push(...F.fx(it.weekly)); // haftalık bonus özette görünür
     });
     if (S.flags.aile_destek) fin.other -= F.scaleMoney(0.15);
     if (S.flags.is_var) fin.income += 2500;
@@ -1417,6 +1424,15 @@
   // milli ara 8., 16. ve 25. haftalardan önce bir kez gelir
   F.isNatBreak = () => { const S = F.S; return !!S.league && [8, 16, 25].includes(S.league.round) && S.league.round < F.seasonRounds() && S.natBreakDone !== S.season + ':' + S.league.round; };
   F.isNatWeek = F.isNatBreak;
+  // devre arası: sezonun ortasında iki hafta
+  F.isWinterBreak = () => {
+    const S = F.S;
+    if (!S.league) return false;
+    const half = Math.floor(F.seasonRounds() / 2);
+    if (S.league.round !== half) return false;
+    if (!S.wb || S.wb.season !== S.season) S.wb = { season: S.season, left: 2 };
+    return S.wb.left > 0;
+  };
   F.calledUp = function () {
     const S = F.S, P = S.P;
     if (P.injury || !P.natTeam) return false;
@@ -1447,7 +1463,6 @@
     S.convos.unshift({ id, who, role: D.relLabels[c.who] ? c.who : null, lines: c.lines.map((l) => F.tpl(l)), at: S.t, until: S.t + (c.wait || 3), ans: null });
     if (S.convos.length > 30) S.convos.length = 30;
     S.seen['cv_' + id] = S.t;
-    S.unread.dm++;
     return true;
   };
   F.maybeConvo = function () {
@@ -1463,7 +1478,7 @@
     });
     const n = (F.chance(0.6) ? 1 : 0) + (F.chance(0.2) ? 1 : 0);
     for (let i = 0; i < n; i++) {
-      const pool = D.convos.filter((c) => c.id !== 'c_kurs_kampanya' && (S.seen['cv_' + c.id] == null || S.t - S.seen['cv_' + c.id] > 14) && F.cond(c.if) && F.convoWho(c));
+      const pool = D.convos.filter((c) => c.id !== 'c_kurs_kampanya' && (S.seen['cv_' + c.id] == null || S.t - S.seen['cv_' + c.id] > (c.rep || 40)) && F.cond(c.if) && F.convoWho(c));
       const c = F.pick(pool);
       if (c) F.queueConvo(c.id);
     }

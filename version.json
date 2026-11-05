@@ -1,8 +1,13 @@
 {
-  "version": "1.18.3",
-  "date": "2026-11-04",
+  "version": "1.19.0",
+  "date": "2026-11-05",
   "notes": [
-    "Pazarlıkta forma garantisi alınca artık ilk 11 oyuncusu (As oyuncu) oluyorsun",
-    "Forma garantisi ilk 11 şansını en az %85'e çıkarır (form ve hocayla ilişki çok kötü değilse)"
+    "Pazarlıkta maaştan feragat ederek forma garantisi alabilirsin",
+    "Sözleşme primleri: maç başı, gol başı, asist başı",
+    "Sezon ortasında iki haftalık devre arası",
+    "Memleket seçimi bölgelere ayrılmış listeden",
+    "Mesajlar: daha az tekrar, doğru sayaç, sohbete girince son mesaja kayar",
+    "Mağazada haftalık bonusun ne olduğu yazıyor; çift ürünler kaldırıldı",
+    "Düzeltmeler: berabere maçta 'derbi sizin' yazmıyor, yurt dışındayken memleket derneği çağırmıyor"
   ]
 }

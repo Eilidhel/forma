@@ -349,6 +349,8 @@
   const byId = (id) => E.find((e) => e.id === id);
   const gate = (id, extra) => { const e = byId(id); if (e) e.if = Object.assign({}, e.if, extra); };
   gate('eski_ogretmen', { stat: { sohret: ['>', 15] } });
+  // memlekete gidilmesi gereken olaylar yurt dışındayken çıkmaz
+  ['memleket_okul', 'memleket_dugun', 'alt_dugun_davet'].forEach((id) => gate(id, { abroad: false }));
   gate('nadir_yagmur', { stat: { sohret: ['>', 8] } });
   gate('gun_podcast', { stat: { sohret: ['>', 12] } });
   gate('abs_maskot_kavgasi', { tier: [1, 2], orAbroad: true });

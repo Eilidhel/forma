@@ -475,9 +475,8 @@
         ${positionMap(c, 'create')}
         ${og && c.role ? allocBox(c, og) : ''}
         <div class="label">Memleketin</div>
-        <input type="text" id="c-home" list="places-dl" placeholder="Şehir ya da ilçe yaz (boş bırakırsan rastgele)" value="${esc(c.home || '')}" maxlength="30" aria-label="Memleket">
-        <datalist id="places-dl">${D.homePlaces.map((pl) => `<option value="${esc(pl.name)}">${esc(pl.province !== pl.name ? pl.province : '')}</option>`).join('')}</datalist>
-        <p class="tiny muted">${c.home && !D.homePlaces.some((pl) => pl.name === c.home) ? '<span style="color:var(--warn)">Bu yer listede yok, rastgele bir memleket seçilecek.</span>' : 'Memleketinin kulübü seni daha çok takip eder ve teklif yapar. Kulübün de bu bölgeden seçilir.'}</p>
+        <select id="c-home" aria-label="Memleket">${(() => { const RN = { MAR: 'Marmara', EGE: 'Ege', AKD: 'Akdeniz', ICA: 'İç Anadolu', KAR: 'Karadeniz', DOG: 'Doğu Anadolu', GDA: 'Güneydoğu Anadolu' }; return '<option value="">Rastgele</option>' + Object.keys(RN).map((r) => '<optgroup label="' + RN[r] + '">' + D.homePlaces.filter((pl) => pl.region === r).sort((x, y) => x.name.localeCompare(y.name, 'tr')).map((pl) => '<option value="' + esc(pl.name) + '"' + (c.home === pl.name ? ' selected' : '') + '>' + esc(pl.name) + (pl.province !== pl.name ? ' (' + esc(pl.province) + ')' : '') + '</option>').join('') + '</optgroup>').join(''); })()}</select>
+        <p class="tiny muted">Memleketinin kulübü seni daha çok takip eder ve teklif yapar. Başlangıç kulübün de bu bölgeden seçilir.</p>
         <div class="label">${og && c.role ? '4' : '3'} · Adın</div>
         <div class="row"><input type="text" id="c-name" placeholder="Ad" value="${esc(c.name)}" maxlength="16" aria-label="Ad"><input type="text" id="c-sur" placeholder="Soyad" value="${esc(c.surname)}" maxlength="18" aria-label="Soyad"></div>
         <button class="btn alt sm" data-a="c-rand" style="align-self:flex-start">Rastgele isim</button>
@@ -509,7 +508,7 @@
     const h = F.npc('hoca');
     const order = S.order && !P.injury ? `<div class="order"><span class="yc"></span><span>Hoca ${esc(h ? h.name.split(' ')[0] : '')} bu hafta <b>${esc((D.training.find((x) => x.id === S.order.focus) || {}).name || '')}</b> çalışmanı istiyor.</span></div>` : '';
     const ch = S.challenge ? `<div class="flat small row"><span class="grow"><span class="label">Meydan okuma</span><br>${esc(S.challenge.name)}</span><span class="chip acc num">${S.challenge.prog}/${S.challenge.need}</span></div>` : '';
-    const apps = [['tribun', 'Sosyal Medya', S.unread.feed], ['mesaj', 'Mesajlar', S.unread.dm + S.requests.length + (S.convos || []).filter((c) => !c.ans).length], ['ozel', 'Özel Hayat'], ['kadro', 'Kadro'], ['kisiler', 'Kişiler'], ['menajer', 'Menajer', S.tasks.filter((x) => !x.done).length ? 0 : 0], ['banka', 'Banka'], ['magaza', 'Mağaza'], ['profil', 'Profil'], ['lig', 'Lig'], ['album', 'Albüm'], ['muze', 'Aile Müzesi'], ['ayarlar', 'Ayarlar']];
+    const apps = [['tribun', 'Sosyal Medya', S.unread.feed], ['mesaj', 'Mesajlar', S.dms.filter((m) => !m.read).length + S.requests.length + (S.convos || []).filter((c) => !c.ans).length], ['ozel', 'Özel Hayat'], ['kadro', 'Kadro'], ['kisiler', 'Kişiler'], ['menajer', 'Menajer', S.tasks.filter((x) => !x.done).length ? 0 : 0], ['banka', 'Banka'], ['magaza', 'Mağaza'], ['profil', 'Profil'], ['lig', 'Lig'], ['album', 'Albüm'], ['muze', 'Aile Müzesi'], ['ayarlar', 'Ayarlar']];
     return {
       main: `<div class="stack fade">
         <div class="hero ${light ? 'light' : ''}" style="--c1:${t.colors[0]};--c2:${t.colors[1]}">
@@ -559,7 +558,7 @@
           <div class="seg">${Object.keys(D.loads).map((k) => `<button class="${plan.load === k ? 'on' : ''}" data-a="plan-load" data-v="${k}">${D.loads[k].name} <span class="tiny">−${D.loads[k].e}</span></button>`).join('')}</div>
         </div>
         <div class="card stack">
-          <div class="row"><div class="label grow">Boş zaman · ${plan.acts.length}/${F.slots()} slot</div><span class="tiny muted">${F.isNatBreak() ? 'Milli ara' : F.myFixture() ? 'Maç haftası' : 'Maçsız hafta'}</span></div>
+          <div class="row"><div class="label grow">Boş zaman · ${plan.acts.length}/${F.slots()} slot</div><span class="tiny muted">${S.league && S.league.round === Math.floor(F.seasonRounds() / 2) && (!S.wb || S.wb.season !== S.season || S.wb.left > 0) ? 'Devre arası' : F.isNatBreak() ? 'Milli ara' : F.myFixture() ? 'Maç haftası' : 'Maçsız hafta'}</span></div>
           <div class="stack" style="gap:8px">${acts.map((a) => {
             const on = plan.acts.includes(a.id);
             const c = F.planCost(a.id);
@@ -853,11 +852,14 @@
       main: `<div class="stack fade"><div class="topbar"><button class="back" data-a="nego-close" aria-label="Geri">${ICON.back}</button><div class="row grow">${badge(tm, 30)}<h2 class="display" style="font-size:24px">${esc(tm.name)}</h2></div></div>
         <div class="card stack">
           ${(() => { F.negLimit(o); const tn = o.tension; const [lbl, col] = tn < 35 ? ['Sakin', 'var(--good)'] : tn < 60 ? ['Gergin', 'var(--warn)'] : tn < 80 ? ['Çok gergin', 'var(--bad)'] : ['Masadan kalkmak üzere', 'var(--bad)']; return `<div class="stack" style="gap:4px"><div class="row small"><span class="grow label">Masadaki gerginlik</span><b style="color:${col}">${lbl}</b></div><div class="bar-meter" style="height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden"><i style="display:block;height:100%;width:${tn}%;background:${col};transition:width .3s"></i></div></div>`; })()}
-          ${o.counter ? `<p class="small">Kulübün son teklifi: <b>${F.money(Math.round(o.wage * o.counter.wageMul))}/hafta</b> · ${o.counter.years} yıl · imza ${F.money(Math.round(o.wage * o.counter.wageMul * 12 * o.counter.signing))}${o.counter.guarantee ? ' · forma garantisi' : ''}. Bunu gönderirsen kabul ederler.</p>` : ''}
-          <label class="stack" style="gap:4px" for="n-wage"><span class="row small"><span class="grow">Haftalık maaş</span><b class="num" id="n-wage-v">${F.money(wage)}</b></span><input type="range" id="n-wage" min="0.9" max="2" step="0.05" value="${n.wageMul}"></label>
+          ${o.counter ? `<p class="small">Kulübün son teklifi: <b>${F.money(Math.round(o.wage * o.counter.wageMul))}/hafta</b> · ${o.counter.years} yıl · imza ${F.money(Math.round(o.wage * o.counter.wageMul * 12 * o.counter.signing))}${o.counter.guarantee ? ' · forma garantisi' : ''}${F.bonusCost(o.counter) > 0 ? ' · primli' : ''}. Bunu gönderirsen kabul ederler.</p>` : ''}
+          <label class="stack" style="gap:4px" for="n-wage"><span class="row small"><span class="grow">Haftalık maaş</span><b class="num" id="n-wage-v">${F.money(wage)}</b></span><input type="range" id="n-wage" min="0.6" max="2" step="0.05" value="${n.wageMul}"></label>
           <label class="stack" style="gap:4px" for="n-years"><span class="row small"><span class="grow">Süre</span><b class="num" id="n-years-v">${n.years} yıl</b></span><input type="range" id="n-years" min="1" max="5" step="1" value="${n.years}"></label>
           <label class="stack" style="gap:4px" for="n-sign"><span class="row small"><span class="grow">İmza parası</span><b class="num" id="n-sign-v">${F.money(Math.round(wage * 12 * n.signing))}</b></span><input type="range" id="n-sign" min="0" max="1" step="0.05" value="${n.signing}"></label>
+          <div class="label" style="margin-top:4px">Primler (sözleşme maddeleri)</div>
+          ${[['appB', 'Maç başı prim', 'n-pb-app'], ['goalB', 'Gol başı prim', 'n-pb-goal'], ['assistB', 'Asist başı prim', 'n-pb-ast']].map(([k, l, id]) => `<label class="stack" style="gap:4px" for="${id}"><span class="row small"><span class="grow">${l}</span><b class="num" id="${id}-v">${F.money(Math.round(wage * (n[k] || 0)))}</b></span><input type="range" id="${id}" min="0" max="0.5" step="0.05" value="${n[k] || 0}"></label>`).join('')}
           <label class="row small" for="n-g"><input type="checkbox" id="n-g" ${n.guarantee ? 'checked' : ''}> <span class="grow">Forma garantisi iste</span><span class="chip">${esc(D.roleNames[o.role])}</span></label>
+          ${(() => { const L = F.negLimit(o); if (L.guarantee) return '<p class="tiny muted">Kulüp bu rol için forma garantisi vermeye açık.</p>'; const gw = F.negGuaranteeWage(o); return gw != null ? `<p class="tiny muted">Kulüp garantiyi kolay vermez. Haftalık maaşı <b>${F.money(Math.round(o.wage * gw))}</b> ya da altına çekersen ve imza parasından feragat edersen garantiyi kabul ederler.</p>` : '<p class="tiny muted">Şu an hiçbir maaşla forma garantisi vermiyorlar. Önce gücünü artırman lazım.</p>'; })()}
           <p class="tiny muted">Kulübün bir tavanı var; aştıkça gerginlik artar. Konuşma yeteneğin ve menajerin gerginliği yumuşatır, güç farkın ve şöhretin tavanı yükseltir.</p>
         </div>
         ${n.msg ? `<div class="result small">${esc(n.msg)}</div>` : ''}</div>`,
@@ -868,12 +870,14 @@
           n.years = +document.getElementById('n-years').value;
           n.signing = +document.getElementById('n-sign').value;
           n.guarantee = document.getElementById('n-g').checked;
+          n.appB = +document.getElementById('n-pb-app').value; n.goalB = +document.getElementById('n-pb-goal').value; n.assistB = +document.getElementById('n-pb-ast').value;
           const w = Math.round(o.wage * n.wageMul);
+          [['n-pb-app', n.appB], ['n-pb-goal', n.goalB], ['n-pb-ast', n.assistB]].forEach(([id, v]) => { const e = document.getElementById(id + '-v'); if (e) e.textContent = F.money(Math.round(w * v)); });
           document.getElementById('n-wage-v').textContent = F.money(w);
           document.getElementById('n-years-v').textContent = n.years + ' yıl';
           document.getElementById('n-sign-v').textContent = F.money(Math.round(w * 12 * n.signing));
         };
-        ['n-wage', 'n-years', 'n-sign', 'n-g'].forEach((id) => document.getElementById(id).addEventListener('input', upd));
+        ['n-wage', 'n-years', 'n-sign', 'n-g', 'n-pb-app', 'n-pb-goal', 'n-pb-ast'].forEach((id) => { const e = document.getElementById(id); if (e) e.addEventListener('input', upd); });
       }
     };
   }
@@ -1062,7 +1066,10 @@
       const th = threads[U.thread];
       const items = th.items.slice().sort((a, b) => a.at - b.at);
       const body = items.map((x) => `<div class="tiny muted" style="text-align:center;margin-top:6px">${S.t - x.at === 0 ? 'Bu hafta' : S.t - x.at + ' hafta önce'}</div>${x.kind === 'dm' ? `<div class="chat"><div class="bub them">${esc(x.m.t)}</div></div>` : cvCard(x.c, x.i)}`).join('');
-      return appShell('Mesajlar', `<div class="row" style="gap:10px"><button class="btn ghost sm" data-a="thread-close">← Tüm sohbetler</button></div><div class="card stack" style="gap:8px"><div class="row" style="gap:10px">${av(th.name)}<b class="grow">${esc(th.name)}</b></div>${body}</div>`);
+      const tv = appShell('Mesajlar', `<div class="row" style="gap:10px"><button class="btn ghost sm" data-a="thread-close">← Tüm sohbetler</button></div><div class="card stack" style="gap:8px"><div class="row" style="gap:10px">${av(th.name)}<b class="grow">${esc(th.name)}</b></div>${body}</div>`);
+      // sohbete girince en son mesaja kaydır (bir kez)
+      tv.after = () => { if (U.threadScrolled !== U.thread) { const mm = document.getElementById('main'); if (mm) mm.scrollTop = mm.scrollHeight; U.threadScrolled = U.thread; } };
+      return tv;
     }
     const dms = list.map((th) => { const lastItem = th.items.slice().sort((a, b) => b.at - a.at)[0]; const prev = lastItem.kind === 'dm' ? lastItem.m.t : lastItem.c.lines[lastItem.c.lines.length - 1];
       return `<button class="li thread" data-a="thread" data-v="${esc(th.name)}">${av(th.name)}<div class="grow" style="text-align:left;min-width:0"><div class="row"><b class="small grow">${esc(th.name)}</b><span class="tiny muted">${S.t - th.last === 0 ? 'bu hafta' : S.t - th.last + ' hf'}</span></div><p class="small muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(prev)}</p></div>${th.pending ? `<span class="badge" style="position:static">${th.pending}</span>` : ''}</button>`; }).join('');
@@ -1128,7 +1135,7 @@
     const ls = S.lastSummary;
     const upkeep = P.owned.reduce((a, id) => a + ((F.item(id) || {}).upkeep || 0), 0);
     return appShell('Banka', `<div class="card"><div class="label">Bakiye</div><div class="display num" style="font-size:44px;color:${P.money < 0 ? 'var(--bad)' : 'var(--ink)'}">${F.money(P.money)}</div>${S.owed ? `<div class="small" style="color:var(--bad)">Kulüpten alacağın: ${F.money(S.owed)}</div>` : ''}</div>
-      <div class="card stack" style="gap:6px"><div class="label">Haftalık</div><div class="row small"><span class="grow">Maaş</span><b class="num">${F.money(P.contract.wage)}</b></div>${S.agent ? `<div class="row small"><span class="grow">Menajer komisyonu</span><b class="num">%${S.agent.komisyon}</b></div>` : ''}<div class="row small"><span class="grow">Sahip olduklarının bakımı</span><b class="num">${F.money(-upkeep)}</b></div>${ls ? `<div class="row small"><span class="grow">Geçen hafta net</span><b class="num">${F.money(ls.net)}</b></div>` : ''}</div>
+      <div class="card stack" style="gap:6px"><div class="label">Haftalık</div>${P.contract.bonus && (P.contract.bonus.app || P.contract.bonus.goal || P.contract.bonus.assist) ? `<div class="row small"><span class="grow">Sözleşme primleri</span><b class="num">maç ${F.money(P.contract.bonus.app)} · gol ${F.money(P.contract.bonus.goal)} · asist ${F.money(P.contract.bonus.assist)}</b></div>` : ""}<div class="row small"><span class="grow">Maaş</span><b class="num">${F.money(P.contract.wage)}</b></div>${S.agent ? `<div class="row small"><span class="grow">Menajer komisyonu</span><b class="num">%${S.agent.komisyon}</b></div>` : ''}<div class="row small"><span class="grow">Sahip olduklarının bakımı</span><b class="num">${F.money(-upkeep)}</b></div>${ls ? `<div class="row small"><span class="grow">Geçen hafta net</span><b class="num">${F.money(ls.net)}</b></div>` : ''}</div>
       ${loanCard()}
       <div class="label">Hesap hareketleri</div><div class="card list">${S.bank.length ? S.bank.slice(0, 25).map((b) => `<div class="li small"><span class="grow">${esc(b.t)}<div class="tiny muted">${esc(b.label)}</div></span><b class="num" style="color:${b.v >= 0 ? 'var(--good)' : 'var(--bad)'}">${b.v > 0 ? '+' : ''}${F.money(b.v)}</b></div>`).join('') : '<p class="small muted">Hareket yok.</p>'}</div>`);
   }
@@ -1153,7 +1160,7 @@
       const can = price != null && P.money >= price;
       const fx = Object.assign({}, it.fx || {});
       return `<div class="card stack" style="gap:8px"><div class="row"><b class="grow">${esc(it.name)}</b>${owned ? '<span class="chip on">Sende</span>' : ''}</div><p class="small muted">${esc(it.desc)}${it.special === 'kulup' && F.homeClub() ? ' (' + esc(F.homeClub().name) + ', ' + esc(F.leagueName(F.homeClub().id)) + ')' : ''}</p>
-        <div class="meta row wrap">${fxPreview(fx)}${it.weekly ? `<span class="chip good">Haftalık bonus</span>` : ''}${it.trainMul ? `<span class="chip good">Gelişim +%${Math.round((it.trainMul - 1) * 100)}</span>` : ''}${it.injMul ? `<span class="chip good">Sakatlık riski −%${Math.round((1 - it.injMul) * 100)}</span>` : ''}${it.income ? `<span class="chip ${it.income[0] < 0 ? 'warn' : 'good'}">Gelir ${F.money(it.income[0])}…${F.money(it.income[1])}/hafta</span>` : ''}${it.upkeep ? `<span class="chip bad">Bakım ${F.money(-it.upkeep)}/hafta</span>` : ''}${it.lux >= 4 ? '<span class="chip warn">Taraftar tepkisi</span>' : ''}</div>
+        <div class="meta row wrap">${fxPreview(fx)}${it.weekly ? `<span class="tiny muted" style="align-self:center">Her hafta:</span>${fxPreview(it.weekly)}` : ''}${it.house ? `<span class="chip good">Ev: haftalık toparlanma +${it.house} enerji</span>` : ''}${it.trainMul ? `<span class="chip good">Gelişim +%${Math.round((it.trainMul - 1) * 100)}</span>` : ''}${it.injMul ? `<span class="chip good">Sakatlık riski −%${Math.round((1 - it.injMul) * 100)}</span>` : ''}${it.income ? `<span class="chip ${it.income[0] < 0 ? 'warn' : 'good'}">Gelir ${F.money(it.income[0])}…${F.money(it.income[1])}/hafta</span>` : ''}${it.upkeep ? `<span class="chip bad">Bakım ${F.money(-it.upkeep)}/hafta</span>` : ''}${it.lux >= 4 ? '<span class="chip warn">Taraftar tepkisi</span>' : ''}</div>
         <div class="row"><b class="num grow">${price == null ? '—' : F.money(price)}</b>${owned ? (it.special === 'kulup' ? '' : `<button class="btn alt sm" data-a="sell" data-v="${it.id}">Sat (${F.money(Math.round(it.price * 0.5))})</button>`) : `<button class="btn sm" data-a="buy" data-v="${it.id}" ${can ? '' : 'disabled'}>${can ? 'Satın al' : 'Para yetmiyor'}</button>`}</div></div>`;
     }).join('');
     return appShell('Mağaza', `<div class="row small"><span class="grow muted">Bakiye</span><b class="num">${F.money(P.money)}</b></div>${tabs}<div class="stack" style="gap:10px">${body}</div>`);
@@ -1473,7 +1480,7 @@
     'loan-pay': () => { const r = F.payoffLoan(); toast(r.err || 'Kredi kapandı. Kredi notun yükseldi.'); },
     thread: (v) => { U.thread = v; },
     'lg-tab': (v) => { U.lgTab = v; },
-    'thread-close': () => { U.thread = null; },
+    'thread-close': () => { U.thread = null; U.threadScrolled = null; },
     'sub-buy': (v, w) => { const r = F.buySub(v, +w); toast(r.err || 'Kayıt oldun: ' + r.msg); },
     convo: (v, w) => { F.convoReply(+v, +w); },
     'c-club': (v) => { readNames(); U.create.club = v; },
@@ -1512,11 +1519,11 @@
       F.addChat(S.P.name + ' ' + S.P.surname, t); S.unread.chat = 0; S.chatSaid = S.t; F.fx({ 'r.takim': 1, 's.sosyallik': 0.3 });
       if (F.chance(0.6)) F.addChat(F.npc('kanka').name, F.pick(['😂😂', 'Varım kanka!', 'Aynen', 'Kaptan izliyor haberiniz olsun']));
     },
-    'off-nego': (v) => { const o = F.S.offers[+v]; U.nego = { i: +v, wageMul: 1.15, years: o.years, signing: 0.1, guarantee: false, msg: null }; },
+    'off-nego': (v) => { const o = F.S.offers[+v]; U.nego = { i: +v, wageMul: 1.15, years: o.years, signing: 0.1, guarantee: false, appB: 0, goalB: 0, assistB: 0, msg: null }; },
     'nego-close': () => { U.nego = null; },
     'nego-send': () => {
       const n = U.nego;
-      const r = F.negotiate(n.i, { wageMul: n.wageMul, years: n.years, guarantee: n.guarantee, signing: n.signing });
+      const r = F.negotiate(n.i, { wageMul: n.wageMul, years: n.years, guarantee: n.guarantee, signing: n.signing, appB: n.appB || 0, goalB: n.goalB || 0, assistB: n.assistB || 0 });
       if (!r) return;
       if (r.status === 'walk') { U.nego = null; toast(r.msg); return; }
       if (r.status === 'counter') { Object.assign(n, r.counter); }

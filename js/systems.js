@@ -300,6 +300,12 @@
       const formD = (m.rating - 6.6) * 1.6;
       deltas.push(...F.fx({ form: formD, moral: (m.rating - 6.5) * 3 + (res === 'win' ? 3 : res === 'loss' ? -3 : 0), enerji: -18, 'r.taraftar': (m.rating - 6.5) * 2 + m.goals * 2, sohret: m.goals * 0.8 + (m.rating >= 8 ? 1 : 0) + (m.nat ? 1 : 0), 'takipci%': m.goals * 1 + (m.rating >= 8 ? 1 : 0) + (m.nat ? 3 : 0) }));
       F.matchXp(m);
+      // sözleşme primleri: maç başı, gol ve asist başı
+      const B = P.contract.bonus;
+      if (B && !m.nat) {
+        const pay = (B.app || 0) + (B.goal || 0) * m.goals + (B.assist || 0) * m.assists;
+        if (pay > 0) { P.money += pay; F.bankLog('Sözleşme primi (maç' + (m.goals ? ', gol' : '') + (m.assists ? ', asist' : '') + ')', pay); m.bonusPay = pay; deltas.push({ k: 'para', label: 'Sözleşme primi', v: pay, money: true }); }
+      }
       if (!m.nat) {
         const cr = F.curRole();
         P.roleExp = P.roleExp || {};
@@ -1014,10 +1020,26 @@
     if (o.tension == null) o.tension = Math.round(8 + F.rand() * 12);
     return o.limit;
   };
+  // Kulüp garantiyi normalde vermiyorsa: maaştan feragat edersen verir (yedek teklifte %25, rotasyonda %15 daha az)
+  F.negGuaranteeWage = function (o) {
+    const L = F.negLimit(o);
+    if (L.guarantee) return L.wageMul;
+    const pw = F.negPower(o);
+    if (pw < -1.3) return null; // takımın çok altındaysa hiçbir maaşla garanti yok
+    // zayıfsan daha çok feragat etmen gerekir
+    const cut = (o.role === 'yedek' ? 0.25 : 0.15) + (pw < -0.6 ? 0.12 : 0);
+    const w = Math.round((L.wageMul - cut) * 100) / 100;
+    return w >= 0.6 ? w : null;
+  };
+  // primler maaşın katı olarak: maç başı, gol başı, asist başı
+  F.bonusCost = (t) => (t.appB || 0) * 3 + (t.goalB || 0) * 1.5 + (t.assistB || 0) * 1;
+  F.bonusFree = (o) => F.clamp(0.3 + F.negPower(o) * 0.5, 0, 1.2);
   F.negGap = function (o, terms) {
     const L = F.negLimit(o);
+    const gw = terms.guarantee && !L.guarantee ? F.negGuaranteeWage(o) : null;
+    const gOk = !terms.guarantee || L.guarantee || (gw != null && terms.wageMul <= gw + 1e-9 && terms.signing <= L.signing * 0.5 + 1e-9);
     return Math.max(0, terms.wageMul - L.wageMul) / 0.1 + Math.max(0, terms.signing - L.signing) / 0.1 * 0.6 +
-      (terms.guarantee && !L.guarantee ? 1.6 : 0) + Math.max(0, terms.years - L.maxYears) * 0.6;
+      (gOk ? 0 : 1.6) + Math.max(0, terms.years - L.maxYears) * 0.6 + Math.max(0, F.bonusCost(terms) - F.bonusFree(o));
   };
   F.negotiate = function (idx, terms) {
     const S = F.S, P = S.P;
@@ -1025,7 +1047,7 @@
     if (!o) return null;
     const L = F.negLimit(o);
     const c = o.counter;
-    const sameAsCounter = c && terms.wageMul <= c.wageMul + 1e-9 && terms.signing <= c.signing + 1e-9 && terms.years <= c.years && (!terms.guarantee || c.guarantee);
+    const sameAsCounter = c && terms.wageMul <= c.wageMul + 1e-9 && terms.signing <= c.signing + 1e-9 && terms.years <= c.years && (!terms.guarantee || c.guarantee) && F.bonusCost(terms) <= F.bonusCost(c) + 1e-9;
     let gap = F.negGap(o, terms);
     // gerginlik düşükken küçük farklar için kulüp son bir jest yapabilir
     if (gap > 0 && gap < 0.8 && o.tension < 40 && F.chance(0.35)) gap = 0;
@@ -1051,12 +1073,23 @@
       guarantee: !!terms.guarantee && L.guarantee,
       signing: Math.round(Math.max(prev.signing, Math.min(terms.signing, L.signing * k)) * 100) / 100
     };
+    // primler: kulübün serbest bütçesine sığacak kadar
+    const bc = F.bonusCost(terms), bf = F.bonusFree(o) * k;
+    const bs = bc > 0 ? Math.min(1, bf / bc) : 0;
+    ['appB', 'goalB', 'assistB'].forEach((x) => (counter[x] = Math.floor((terms[x] || 0) * bs * 20) / 20));
+    // garanti istendiyse ama kulüp vermiyorsa: maaştan feragat karşılığında garanti teklif eder
+    let gNote = '';
+    if (terms.guarantee && !L.guarantee) {
+      const gw = F.negGuaranteeWage(o);
+      if (gw != null) { counter.guarantee = true; counter.wageMul = Math.min(counter.wageMul, gw); counter.signing = Math.min(counter.signing, Math.round(L.signing * 0.5 * 100) / 100); gNote = ' Forma garantisi verebiliriz ama haftalık maaş ' + F.money(Math.round(o.wage * counter.wageMul)) + ' olur.'; }
+      else gNote = ' Bu aşamada sana forma garantisi veremeyiz.';
+    }
     o.counter = counter;
     const mood = o.tension < 35 ? 'Sportif direktör not aldı ve karşı teklif yaptı.'
       : o.tension < 60 ? 'Başkan kaşlarını çattı. "Bu rakamlar bizi zorlar" dedi ve karşı teklif uzattı.'
       : o.tension < 80 ? 'Masada gerginlik büyüyor. Başkan kalemi masaya bıraktı: "Son teklifimize yakınız."'
       : 'Başkan ayağa kalktı, pencereye yürüdü. "Bir daha zorlarsanız kalkarız." Bu son şansın olabilir.';
-    return { status: 'counter', msg: mood, counter };
+    return { status: 'counter', msg: mood + gNote, counter };
   };
 
   F.acceptOffer = function (idx) {
@@ -1064,6 +1097,7 @@
     const o = S.offers[idx];
     if (!o) return null;
     const terms = o.agreed || { wageMul: 1, years: o.years, guarantee: false, signing: 0 };
+    const bonusOf = (w) => ({ app: Math.round(w * (terms.appB || 0) / 100) * 100, goal: Math.round(w * (terms.goalB || 0) / 100) * 100, assist: Math.round(w * (terms.assistB || 0) / 100) * 100 });
     // gergin geçen bir pazarlık ilişkide iz bırakır
     if (o.tension >= 60) F.fx(o.renew ? { 'r.baskan': -4 } : { 'r.hoca': -1 });
     const wage = Math.round(o.wage * terms.wageMul);
@@ -1073,6 +1107,7 @@
       P.contract.wage = wage; P.contract.years = terms.years;
       // forma garantisi: kulüp kabul ettiyse ilk 11 oyuncususun
       if (terms.guarantee) { P.contract.role = 'as'; P.contract.guarantee = true; } else delete P.contract.guarantee;
+      P.contract.bonus = bonusOf(wage);
       out.push(...F.fx({ 'r.baskan': 5, 'r.taraftar': 3, 't.sadik': 1 }));
       F.addFeed({ who: F.myTeam().name, t: F.tpl('{adsoyad} ile sözleşme yenilendi. Yolumuza birlikte devam ediyoruz!'), kind: 'club' });
     } else {
@@ -1080,6 +1115,7 @@
       const oldWage = P.contract.wage;
       F.transfer(o.team, { wage, years: terms.years, role: terms.guarantee ? 'as' : o.role });
       if (terms.guarantee) P.contract.guarantee = true;
+      P.contract.bonus = bonusOf(wage);
       if (left) out.push(...F.fx({ 'r.taraftar': -6 }));
       if (wage > oldWage * 2.5) out.push(...F.fx({ 't.paragoz': 1 }));
     }

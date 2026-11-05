@@ -78,11 +78,10 @@
     { id: 'koy_evi', cat: 'konut', name: 'Memlekette taş ev', price: 1.2e6, upkeep: 1500, lux: 1, fx: { 'r.memleket': 8, mental: 2 }, desc: 'Dedenin evini yeniledin.' },
     { id: 'akilli_ev', cat: 'konut', name: 'Akıllı ev sistemi', price: 350000, upkeep: 800, lux: 1, fx: { moral: 2 }, weekly: { enerji: 1 }, desc: 'Işıklar kendiliğinden kapanır, uyku kalitesi artar.' },
     // Görünüm
-    { id: 'parfum', cat: 'gorunum', name: 'İmza parfüm', price: 12000, consumable: true, fx: { 's.karizma': 1, moral: 1 }, desc: 'Kokuyu menajerin seçti.' },
+    { id: 'imza_parfum', cat: 'gorunum', name: 'İmza parfüm', price: 12000, consumable: true, fx: { 's.karizma': 1, moral: 1 }, desc: 'Kokuyu menajerin seçti.' },
     { id: 'tasarim_takim', cat: 'gorunum', name: 'Tasarım takım elbise', price: 90000, lux: 1, fx: { 's.karizma': 2, sohret: 0.5 }, desc: 'Ödül törenleri için.' },
     { id: 'dovme_sanat', cat: 'gorunum', name: 'Ünlü dövme sanatçısı', price: 40000, lux: 0, fx: { 's.karizma': 1, 'takipci%': 1 }, desc: 'Kolunda bir eser.' },
     // Profesyonel
-    { id: 'oksijen', cat: 'pro', name: 'Oksijen odası', price: 900000, upkeep: 3000, lux: 1, injMul: 0.85, weekly: { enerji: 3 }, desc: 'Evde toparlanma kapsülü.' },
     { id: 'gps_yelek', cat: 'pro', name: 'GPS takip yeleği', price: 60000, trainMul: 1.04, desc: 'Her koşunun verisi telefonunda.' },
     { id: 'ev_spor', cat: 'pro', name: 'Ev spor salonu', price: 450000, upkeep: 1000, trainMul: 1.06, weekly: { 'a.fizik': 0.2 }, desc: 'Gece de çalışabilirsin.' },
     { id: 'krampon_ozel', cat: 'pro', name: 'Ayağına özel krampon', price: 75000, trainMul: 1.03, fx: { moral: 2 }, desc: 'Ayak kalıbından üretildi.' },
@@ -97,11 +96,9 @@
     { id: 'h_takim_forma', cat: 'hediye', name: 'Takıma özel tişört', price: 30000, consumable: true, fx: { 'r.takim': 6 }, desc: 'Herkesin adı arkasında.' },
     { id: 'h_hoca', cat: 'hediye', name: 'Hocaya taktik kitabı seti', price: 8000, consumable: true, fx: { 'r.hoca': 4 }, desc: 'Biraz yağcılık, biraz saygı.' },
     // Yatırım
-    { id: 'kafe', cat: 'yatirim', name: 'Mahalle kafesi', price: 2.2e6, upkeep: 4000, income: [2000, 9000], fx: { 'r.memleket': 3 }, desc: 'Arkadaşın işletiyor, sen ortaksın.' },
+    { id: 'mahalle_kafe', cat: 'yatirim', name: 'Mahalle kafesi', price: 2.2e6, upkeep: 4000, income: [2000, 9000], fx: { 'r.memleket': 3 }, desc: 'Arkadaşın işletiyor, sen ortaksın.' },
     { id: 'futbol_okulu', cat: 'yatirim', name: 'Çocuk futbol okulu', price: 3.5e6, upkeep: 7000, income: [3000, 11000], fx: { 'r.memleket': 10, 's.liderlik': 2 }, desc: 'Memleketteki çocuklar için.' },
     { id: 'halisaha_isletme', cat: 'yatirim', name: 'Halı saha işletmesi', price: 1.6e6, upkeep: 3000, income: [1500, 6500], desc: 'Akşamları hep dolu.' },
-    // Efsane
-    { id: 'yat', cat: 'efsane', name: 'Mega yat', price: 2.2e8, upkeep: 400000, lux: 6, fx: { sohret: 5, 'takipci%': 4, 'r.taraftar': -6 }, desc: 'Akdeniz’de magazinin yeni durağı.' }
   );
 
   /* ---------- Yeni kökenler: kulübünü kendin seçtiğin başlangıçlar ---------- */
@@ -234,4 +231,9 @@
   // Cevap süresi (hafta). Verilmeyenler 3 hafta. Süresinde cevap vermezsen o kişiyle ilişkin biraz bozulur.
   const WAIT = { c_kanka_borc: 1, c_anne_hasta: 1, c_hoca_gece: 1, c_kaptan_disiplin: 1, c_partner_ozlem: 2, c_menajer_reklam: 2, c_kurs_kampanya: 2, c_kanka_mac: 1, c_memleket_dernek: 2, c_takim_grup: 1, c_kardes_odev: 1 };
   D.convos.forEach((c) => { c.wait = WAIT[c.id] || 3; });
+  // tekrar: aynı sohbet en az 40 hafta sonra; bazıları kariyerde neredeyse bir kez
+  Object.entries({ c_eski_hoca: 150, c_kanka_kiz: 60, c_anne_evlilik: 60, c_eski_sevgili: 120, c_fan_genc: 60 }).forEach(([id, r]) => { const c = D.convos.find((x) => x.id === id); if (c) c.rep = r; });
+  // yurt dışındayken memleket derneği çağırmaz
+  ['c_memleket_dernek'].forEach((id) => { const c = D.convos.find((x) => x.id === id); if (c) c.if = Object.assign({}, c.if, { abroad: false }); });
+  ['memleket_kahve', 'memleket'].forEach((id) => { const a = D.activities.find((x) => x.id === id); if (a) a.if = Object.assign({}, a.if, { abroad: false }); });
 })(typeof window !== 'undefined' ? window : globalThis);
