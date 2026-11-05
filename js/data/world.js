@@ -209,12 +209,19 @@ Talas|ICA|4|Kayseri;Develi|ICA|5|Kayseri;Elbistan|AKD|4|Kahramanmaraş;Şarkış
   };
 
   /* ---------- Turnuvalar (isimler kurgusal) ----------
-     Avrupa Yıldızlar Ligi: kulüpler turnuvası. Ülke kotası 32 takım eder; önceki sezonun lig sıralamasıyla girilir.
-     Küresel Kupa: 4 yılda bir yazın oynanan milli takımlar turnuvası; öncesindeki sezonda eleme grubu oynanır. */
+     Kulüp kupaları üç kademe: Yıldızlar Ligi (32), Kıta Kupası (16), Gelecek Ligi (16). Ülkenin üst ligindeki önceki sezon
+     sıralamasına göre ilk sıralar Yıldızlar Ligi'ne, sonrakiler Kıta Kupası'na, onlardan sonrakiler Gelecek Ligi'ne gider.
+     Milli takımlar 4 yıllık döngüde: 2 sezon Milletler Kupası elemesi → yaz turnuvası, 2 sezon Küresel Kupa elemesi → yaz turnuvası. */
   D.cups = {
-    cl: { name: 'Avrupa Yıldızlar Ligi', short: 'Yıldızlar Ligi', slots: { EN: 5, ES: 5, IT: 5, DE: 4, FR: 4, PT: 3, NL: 3, TR: 3 } },
-    wc: { name: 'Küresel Kupa', short: 'Küresel Kupa', qual: 'Küresel Kupa Elemeleri' }
+    cl: { name: 'Avrupa Yıldızlar Ligi', short: 'Yıldızlar Ligi', size: 32, slots: { EN: 5, ES: 5, IT: 5, DE: 4, FR: 4, PT: 3, NL: 3, TR: 3 }, fame: 12 },
+    el: { name: 'Avrupa Kıta Kupası', short: 'Kıta Kupası', size: 16, slots: { EN: 2, ES: 2, IT: 2, DE: 2, FR: 2, PT: 2, NL: 2, TR: 2 }, fame: 8 },
+    ecl: { name: 'Avrupa Gelecek Ligi', short: 'Gelecek Ligi', size: 16, slots: { EN: 2, ES: 2, IT: 2, DE: 2, FR: 2, PT: 2, NL: 2, TR: 2 }, fame: 5 },
+    euro: { name: 'Avrupa Milletler Kupası', short: 'Milletler Kupası', qual: 'Milletler Kupası Elemeleri', size: 16 },
+    wc: { name: 'Küresel Kupa', short: 'Küresel Kupa', qual: 'Küresel Kupa Elemeleri', size: 32 }
   };
+  D.clubCups = ['cl', 'el', 'ecl'];
+  // Avrupa milli takımları (elemeler ve Milletler Kupası bunlardan oluşur)
+  D.europe = ['Fransa', 'İngiltere', 'İspanya', 'Almanya', 'Portekiz', 'Hollanda', 'Belçika', 'İtalya', 'Hırvatistan', 'Danimarka', 'Türkiye', 'İsviçre', 'Sırbistan', 'Avusturya', 'Polonya', 'Ukrayna', 'İsveç', 'Norveç', 'Macaristan', 'İskoçya', 'Çekya', 'Galler', 'Romanya', 'Yunanistan', 'Slovakya', 'Gürcistan', 'İzlanda', 'Arnavutluk', 'Slovenya', 'İrlanda', 'Finlandiya', 'Bosna-Hersek', 'Karadağ', 'Kazakistan', 'Azerbaycan', 'Litvanya', 'Letonya', 'Ermenistan', 'Lüksemburg', 'Kıbrıs', 'Malta', 'Andorra', 'Moldova'];
   // Milli takımlar: [ad, güç, forma rengi 1, forma rengi 2]
   D.nations = [
     ['Arjantin', 88, '#75AADB', '#FFFFFF'], ['Fransa', 88, '#002395', '#FFFFFF'], ['Brezilya', 87, '#FEDD00', '#009C3B'], ['İngiltere', 87, '#FFFFFF', '#1D3C8F'],

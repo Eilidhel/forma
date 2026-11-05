@@ -120,7 +120,7 @@ function runCareer(i) {
       }
       case 'press': { while (!st.done) { const q = F.pressQ(st.qs[st.i]); F.pressAnswer(rnd() < 0.1 ? -1 : Math.floor(rnd() * q.o.length)); } F.advance(); break; }
       case 'post': { const ph = pick(F.postPhotos()).id; const tn = pick(D.postTones).id; F.makePost(ph, tn); F.advance(); break; }
-      case 'summary': case 'seasonSummary': F.advance(); break;
+      case 'summary': case 'seasonSummary': case 'natInfo': F.advance(); break;
       case 'offers': {
         const P = S.P;
         if (S.offers.length && (P.contract.years <= 0 || rnd() < 0.35)) {

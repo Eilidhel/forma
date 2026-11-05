@@ -1224,10 +1224,11 @@
     const natBreak = !winterBreak && F.isNatBreak();
     if (natBreak) {
       S.natBreakDone = S.season + ':' + S.league.round;
-      // eleme dönemindeyse bu aranın eleme maçları oynanır; senin maçın (çağrıldıysan) kuyruğa girer
-      const natFix = F.natBreakFixture ? F.natBreakFixture(F.calledUp() && (!F.wcSquad || F.wcSquad())) : null;
-      if (F.calledUp()) S.queue.push(natFix ? { type: 'match', nat: true, pre: true, fix: natFix } : { type: 'match', nat: true, pre: true });
-      else S.wk.notes.push('Milli ara: lig bu hafta oynanmıyor. Kulüpte antrenmana devam ettin.');
+      // milli takım takvimi: bu aranın eleme maçları oynanır; önce milli ara ekranı, sonra (çağrıldıysan) maçların
+      const natSteps = F.natBreakSteps ? F.natBreakSteps() : null;
+      if (natSteps) natSteps.forEach((st) => S.queue.push(st));
+      else if (F.calledUp()) S.queue.push({ type: 'match', nat: true, pre: true });
+      if (!F.calledUp()) S.wk.notes.push('Milli ara: lig bu hafta oynanmıyor. Kulüpte antrenmana devam ettin.');
     }
     const fxt = !natBreak && !winterBreak && S.league.round < F.seasonRounds() ? F.myFixture() : null;
     if (fxt) {

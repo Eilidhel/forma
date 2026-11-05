@@ -496,6 +496,28 @@
     return Object.assign({ bar: statusBar() }, homeView());
   }
 
+  // ana ekran: yaklaşan milli ara ve Avrupa kupası maçı
+  function upcomingCards() {
+    const S = F.S, P = S.P, Cd = F.DATA.cups;
+    let out = '';
+    try {
+      const nb = F.nextNatBreak && F.nextNatBreak();
+      const up = nb && F.natUpcoming();
+      if (up) {
+        const when = nb.in <= 0 ? 'bu hafta' : nb.in === 1 ? 'gelecek hafta' : nb.in + ' hafta sonra';
+        const need = P.natTeam === 'DE' ? 80 : 73;
+        const st = !P.natTeam ? 'Milli takım seçimini henüz yapmadın.' : F.wcSquad() ? 'Kadroya çağrılman bekleniyor.' : F.calledUp() ? 'U21 çağrısı bekleniyor; A takım için güç ' + need + ' gerekli.' : 'Kadroya girmek için güç ' + need + ' civarı gerekli (şu an ' + F.ovr() + ').';
+        out += `<div class="card stack" style="gap:6px"><div class="row"><div class="label grow">Milli ara · ${esc(when)}</div><span class="chip ${F.wcSquad() ? 'good' : ''}">${esc(up.nation)}</span></div><b class="small">${esc(up.comp)}</b>${up.opps.length ? `<div class="small">${up.opps.map((o) => esc(o.home ? up.nation + ' – ' + o.opp : o.opp + ' – ' + up.nation)).join('<br>')}</div>` : ''}<span class="tiny muted">${esc(st)}</span></div>`;
+      }
+      const C = F.myClubCup && F.myClubCup();
+      if (C && C.md < C.cal.length && S.league) {
+        const r = C.cal[C.md] - S.league.round;
+        const st = F.cupStages(C);
+        if (F.cupAlive(C, P.contract.team) && r >= 0) out += `<div class="card row"><div class="grow"><div class="label">${esc(Cd[C.id].name)}</div><span class="small">${C.md < C.gr ? (C.md + 1) + '. grup maçı' : esc(F.STAGE_NAME[st[C.md - C.gr]])} · ${r === 0 ? 'bu hafta ortası' : r + ' hafta sonra'}</span></div><button class="btn ghost" data-a="open" data-v="lig" style="width:auto">Tablo</button></div>`;
+      }
+    } catch (e) { /* kart hatası ana ekranı bozmasın */ }
+    return out;
+  }
   function homeView() {
     const S = F.S, P = S.P;
     const t = F.myTeam();
@@ -524,6 +546,7 @@
           <div class="row small" style="justify-content:space-between"><span>${esc(F.leagueName())}</span><b class="num">${pos}. sıra</b></div>
         </div>
         ${o ? `<div class="card"><div class="label" style="margin-bottom:8px">Sonraki maç · ${fx.home ? 'İç saha' : 'Deplasman'}</div><div class="next"><div class="tm">${badge(fx.home ? t : o, 36)}<span>${esc(fx.home ? t.name : o.name)}</span></div><span class="vs">VS</span><div class="tm">${badge(fx.home ? o : t, 36)}<span>${esc(fx.home ? o.name : t.name)}</span></div></div></div>` : `<div class="card small muted">Bu sezonun maçları bitti.</div>`}
+        ${upcomingCards()}
         ${order}${S.agent ? S.tasks.filter((t) => !t.done).slice(0, 2).map((t) => `<div class="order agent"><span class="yc"></span><span>Menajer ${esc(F.npc('menajer') ? F.npc('menajer').name.split(' ')[0] : '')}: <b>${esc(t.desc)}</b> <span class="tiny">· ${Math.max(0, t.until - S.t)} hafta</span></span></div>`).join('') : ''}
         <div class="card stack" style="gap:8px">${meter('Enerji', P.life.enerji)}${meter('Moral', P.life.moral)}${meter('Sağlık', P.life.saglik)}${meter('Form', P.life.form + 10, 20).replace(/<span class="v">\d+<\/span>/, `<span class="v">${P.life.form > 0 ? '+' : ''}${Math.round(P.life.form)}</span>`)}</div>
         ${ch}
@@ -582,6 +605,7 @@
       case 'post': return postView(st);
       case 'summary': return summaryView(st);
       case 'seasonSummary': return seasonView(st);
+      case 'natInfo': return natInfoView(st);
       case 'goals': return goalsView(st);
       case 'offers': return offersView(st);
       case 'retire': return retireView(st);
@@ -1199,61 +1223,125 @@
         ${seasons ? `<div class="scroll-x"><table><thead><tr><th>Sezon</th><th>Kulüp</th><th>Sıra</th><th>Maç</th><th>Gol</th><th>Not</th></tr></thead><tbody>${seasons}</tbody></table></div>` : ''}</div>`);
   }
 
-  /* ---------- Turnuvalar: Yıldızlar Ligi, Küresel Kupa ve elemeleri ---------- */
-  function cupOptions(key) {
-    const S = F.S, C = F.DATA.cups;
-    const o = [];
-    if (S.cl && S.cl.season === S.season) o.push(['CL', C.cl.name + (S.cl.teams.includes(S.P.contract.team) ? ' (kulübün var)' : '')]);
-    if (S.wcq && (S.wcq.year === S.year || S.wcq.year === S.year - 1)) o.push(['WCQ', C.wc.qual + ' · ' + S.wcq.nation]);
-    if (S.wc) o.push(['WC', C.wc.name + ' ' + S.wc.year]);
-    return o.map(([k, n]) => `<option value="${k}" ${k === key ? 'selected' : ''}>🏆 ${esc(n)}</option>`).join('');
+  /* ---------- Turnuvalar: üç kulüp kupası, milli takım elemeleri ve turnuvaları ---------- */
+  // takım adı + arma (kulüp id'si ya da milli takım adı)
+  function cupName(id, isNat, short) {
+    if (isNat) return `<span class="row" style="gap:6px">${badge({ name: id, colors: F.natColors(id), id: 'n' + F.DATA.nations.findIndex((y) => y[0] === id) }, 14)}<span>${esc(id)}</span></span>`;
+    const t = F.team(id);
+    return `<span class="row" style="gap:6px">${badge(t, 14)}<span>${esc(t.name)}</span>${short ? '' : `<span class="tiny muted">${esc(t.country)}</span>`}</span>`;
   }
-  function cupView(key, sel) {
-    const S = F.S, Cd = F.DATA.cups;
-    const isNat = key !== 'CL';
-    const C = key === 'CL' ? S.cl : key === 'WC' ? S.wc : null;
-    const mine = key === 'CL' ? S.P.contract.team : (C || S.wcq || {}).nation;
-    const natCol = (n) => { const x = F.DATA.nations.find((y) => y[0] === n); return x ? [x[2], x[3]] : ['#334455', '#99aabb']; };
-    const nm = (id, short) => (isNat ? `<span class="row" style="gap:6px">${badge({ name: id, colors: natCol(id), id: 'n' + F.DATA.nations.findIndex((y) => y[0] === id) }, 14)}<span>${esc(id)}</span></span>` : `<span class="row" style="gap:6px">${badge(F.team(id), 14)}<span>${esc(F.team(id).name)}</span>${short ? '' : `<span class="tiny muted">${esc(F.team(id).country)}</span>`}</span>`);
-    const tableHtml = (title, table, up) => {
-      const order = F.sortTable(table);
-      const rows = order.map((id, i) => { const r = table[id]; return `<tr class="${id === mine ? 'me' : ''} ${i < up ? 'up' : ''}"><td class="num">${i + 1}</td><td>${nm(id)}</td><td class="num">${r.p}</td><td class="num">${r.gf - r.ga > 0 ? '+' : ''}${r.gf - r.ga}</td><td class="num"><b>${r.pts}</b></td></tr>`; }).join('');
-      return `<div class="card scroll-x"><div class="label">${esc(title)}</div><table><thead><tr><th>#</th><th>Takım</th><th>O</th><th>Av</th><th>P</th></tr></thead><tbody>${rows}</tbody></table></div>`;
-    };
-    if (key === 'WCQ') {
-      const Q = S.wcq;
-      const res = { direkt: 'Grup birincisi: ' + Cd.wc.name + "'ya doğrudan katılıyor.", 'baraj-kazandı': 'Grup ikincisi, barajı geçti: ' + Cd.wc.name + "'ya katılıyor.", 'baraj-kaybetti': 'Grup ikincisi, barajda elendi.', elendi: 'Grupta elendi.' }[Q.result];
-      return appShell('Lig', `${sel}${tableHtml(Cd.wc.qual + ' · ' + Q.nation + ' grubu', Q.table, 1)}
-        <p class="tiny muted">${res ? esc(res) : 'Eleme maçları milli aralarda oynanır (' + Q.r + '/' + Q.fx.length + ' hafta). Grup birincisi doğrudan, ikincisi baraj maçıyla ' + esc(Cd.wc.name) + "'ya gider. Turnuva sezon bitince yazın oynanır."}</p>`);
-    }
-    if (!C) return appShell('Lig', sel);
-    const groups = C.groups.map((g, gi) => tableHtml('ABCDEFGH'[gi] + ' Grubu', C.tables[gi], 2)).join('');
-    const ko = ['final', 'sf', 'qf', 'r16'].filter((st) => C.ko[st]).map((st) => {
-      const rows = C.ko[st].map((p, j) => {
+  function cupTable(title, table, up, mine, isNat) {
+    const order = F.sortTable(table);
+    const rows = order.map((id, i) => { const r = table[id]; return `<tr class="${id === mine ? 'me' : ''} ${i < up ? 'up' : ''}"><td class="num">${i + 1}</td><td>${cupName(id, isNat)}</td><td class="num">${r.p}</td><td class="num">${r.gf - r.ga > 0 ? '+' : ''}${r.gf - r.ga}</td><td class="num"><b>${r.pts}</b></td></tr>`; }).join('');
+    return `<div class="card scroll-x"><div class="label">${esc(title)}</div><table><thead><tr><th>#</th><th>Takım</th><th>O</th><th>Av</th><th>P</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+  function cupKo(C, mine, isNat) {
+    return F.cupStages(C).slice().reverse().filter((st) => C.ko[st]).map((st) => {
+      const rows = C.ko[st].map((p) => {
         const r = C.kores.find((x) => x.ko === st && x.h === p[0] && x.a === p[1]);
-        const cls = p.includes(mine) ? 'me' : '';
-        return `<div class="li small ${cls}" style="display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center"><span style="${r && r.w === p[0] ? 'font-weight:700' : ''}">${nm(p[0], true)}</span><b class="num">${r ? r.gh : '–'}</b><span style="${r && r.w === p[1] ? 'font-weight:700' : ''}">${nm(p[1], true)}</span><b class="num">${r ? r.ga : '–'}${r && r.pen ? ' <span class="tiny muted">(pen.)</span>' : ''}</b></div>`;
+        return `<div class="li small ${p.includes(mine) ? 'me' : ''}" style="display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center"><span style="${r && r.w === p[0] ? 'font-weight:700' : ''}">${cupName(p[0], isNat, true)}</span><b class="num">${r ? r.gh : '–'}</b><span style="${r && r.w === p[1] ? 'font-weight:700' : ''}">${cupName(p[1], isNat, true)}</span><b class="num">${r ? r.ga : '–'}${r && r.pen ? ' <span class="tiny muted">(pen.)</span>' : ''}</b></div>`;
       }).join('');
       return `<div class="label">${esc(F.STAGE_NAME[st])}</div><div class="card list">${rows}</div>`;
     }).join('');
+  }
+  const natqResult = (Q) => ({ direkt: 'doğrudan katılıyor', 'baraj-kazandı': 'barajı geçip katılıyor', 'baraj-kaybetti': 'barajda elendi', elendi: 'elendi' }[Q.result]);
+  function cupOptions(key) {
+    const S = F.S, Cd = F.DATA.cups;
+    const o = [];
+    const cc = F.clubCups();
+    const mineC = F.myClubCup();
+    if (cc) F.DATA.clubCups.forEach((k) => { if (cc[k]) o.push(['C:' + k, Cd[k].name + (mineC && mineC.id === k ? ' (kulübün var)' : '')]); });
+    if (S.natq) o.push(['N:q', Cd[S.natq.kind].qual + ' · ' + S.natq.nation]);
+    Object.keys(S.ncups || {}).sort((a, b) => S.ncups[b].year - S.ncups[a].year).forEach((k) => o.push(['N:' + k, Cd[k].name + ' ' + S.ncups[k].year]));
+    return o.map(([k, n]) => `<option value="${k}" ${k === key ? 'selected' : ''}>🏆 ${esc(n)}</option>`).join('');
+  }
+  const cupExists = (key) => {
+    const S = F.S;
+    if (!key || !/^[CN]:/.test(key)) return false;
+    const k = key.slice(2);
+    if (key[0] === 'C') { const cc = F.clubCups(); return !!(cc && cc[k]); }
+    return k === 'q' ? !!S.natq : !!(S.ncups && S.ncups[k]);
+  };
+  function cupView(key, sel) {
+    const S = F.S, Cd = F.DATA.cups;
+    const k = key.slice(2);
+    if (key === 'N:q') {
+      const Q = S.natq;
+      const T = Cd[Q.kind];
+      const direct = Q.kind === 'euro' ? 2 : 1;
+      const res = Q.result ? Q.nation + ' grubu ' + Q.pos + '. bitirdi: ' + natqResult(Q) + '.' : `Elemeler iki sezon sürer ve milli aralarda oynanır (${Q.r}/${Q.fx.length} maç günü). İlk ${direct} doğrudan, ${direct + 1}. baraj maçıyla ${F.dat(T.name)} gider. Turnuva ${Q.target} yazında oynanır.`;
+      const last = Q.results.filter((x) => x.h === Q.nation || x.a === Q.nation).slice(-6).reverse().map((x) => `<div class="li small"><span class="grow">${esc(x.h)} – ${esc(x.a)}</span><b class="num">${x.gh}–${x.ga}</b></div>`).join('');
+      return appShell('Lig', `${sel}${cupTable(T.qual + ' · ' + Q.nation + ' grubu', Q.table, direct, Q.nation, true)}${last ? `<div class="label">${esc(Q.nation)} maçları</div><div class="card list">${last}</div>` : ''}<p class="tiny muted">${esc(res)}</p>`);
+    }
+    const isNat = key[0] === 'N';
+    const C = isNat ? S.ncups[k] : F.clubCups()[k];
+    const mine = isNat ? C.nation : S.P.contract.team;
+    const groups = C.groups.map((g, gi) => cupTable('ABCDEFGH'[gi] + ' Grubu', C.tables[gi], 2, mine, isNat)).join('');
     const champ = C.winner ? `<div class="card row"><span class="chip good">Şampiyon</span><b class="grow">${isNat ? esc(C.winner) : esc(F.team(C.winner).name)}</b></div>` : '';
     const myR = C.teams.includes(mine) ? F.cupReached(C, mine) : null;
-    const note = key === 'CL'
-      ? `Her ülkenin üst liginden önceki sezonun en üst sıralarındaki kulüpler katılır (İngiltere, İspanya, İtalya 5 · Almanya, Fransa 4 · Türkiye, Portekiz, Hollanda 3). Grupta ilk 2 tur atlar; eleme maçları tek maçtır.${myR ? ' Kulübün: ' + myR + '.' : ''}`
-      : `${C.qual ? esc(C.nation) + (C.squad ? ' kadrosundasın.' : ' kadrosunda değilsin.') : esc(C.nation) + ' bu turnuvaya katılamadı.'}${myR ? ' Sonuç: ' + myR + '.' : ''}`;
-    return appShell('Lig', `${sel}${champ}${ko}${groups ? '<div class="label">Gruplar</div>' + groups : ''}<p class="tiny muted">${note}</p>`);
+    const note = isNat
+      ? `${C.qual ? esc(C.nation) + (C.squad ? ' kadrosundasın.' : ' kadrosunda değilsin.') : esc(C.nation) + ' bu turnuvaya katılamadı.'}${myR ? ' Sonuç: ' + myR + '.' : ''}`
+      : `Her ülkenin üst liginin önceki sezon sıralamasına göre: ilk sıralar Yıldızlar Ligi'ne, sonraki iki kulüp Kıta Kupası'na, onlardan sonraki iki kulüp Gelecek Ligi'ne gider. Grupta ilk 2 tur atlar; eleme maçları tek maçtır.${myR ? ' Kulübün: ' + myR + '.' : ''}`;
+    return appShell('Lig', `${sel}${champ}${cupKo(C, mine, isNat)}${groups ? '<div class="label">Gruplar</div>' + groups : ''}<p class="tiny muted">${note}</p>`);
+  }
+
+  /* ---------- Milli ara ve milli turnuva ekranları ---------- */
+  function natInfoView(st) {
+    const S = F.S, Cd = F.DATA.cups;
+    const T = Cd[st.kind];
+    const chip = (ok, t) => `<span class="chip ${ok ? 'good' : ''}" style="align-self:flex-start">${esc(t)}</span>`;
+    if (st.mode === 'break') {
+      const Q = S.natq;
+      const [r0, r1] = st.rounds;
+      const mineRows = [], otherRows = [];
+      for (let r = r0; r < r1; r++) (Q.fx[r] || []).forEach(([h, a]) => {
+        const res = Q.results.find((x) => x.r === r && x.h === h && x.a === a);
+        const me = h === Q.nation || a === Q.nation;
+        const row = `<div class="li small ${me ? 'me' : ''}"><span class="grow">${cupName(h, true, true)}</span><b class="num" style="padding:0 8px">${res ? res.gh + '–' + res.ga : me && st.called === 'A' ? 'oynayacaksın' : 'vs'}</b><span class="grow" style="display:flex;justify-content:flex-end">${cupName(a, true, true)}</span></div>`;
+        (me ? mineRows : otherRows).push(row);
+      });
+      const status = st.called === 'A' ? chip(true, Q.nation + ' A Milli Takımı kadrosundasın') : st.called === 'U21' ? chip(true, 'U21 Milli Takımı\'na çağrıldın') : chip(false, 'Bu kez kadroda yoksun');
+      const why = st.called === 'A' ? 'Lig bu hafta duruyor. Kampa katılıyorsun; maçlarda sahaya çıkma şansın var.' : st.called === 'U21' ? 'A takım elemelerde oynarken sen U21 ile hazırlık maçına çıkacaksın.' : 'Lig bu hafta duruyor. Kulüpte çalışmaya devam ediyorsun; milli takımın maçlarını tribünden izledin.';
+      return {
+        main: `<div class="stack fade"><div class="pitchlines"><div class="label" style="color:inherit;opacity:.8">Milli ara</div><div class="display" style="font-size:34px;margin-top:6px">${esc(T.qual)}</div><div class="small">${r1 - r0 > 1 ? (r0 + 1) + '. ve ' + r1 + '. maç günü' : r1 + '. maç günü'} · ${esc(Q.target + '')} yazındaki ${esc(T.name)} için</div></div>
+          ${status}<p class="small muted">${why}</p>
+          ${mineRows.length ? `<div class="label">${esc(Q.nation)} maçları</div><div class="card list">${mineRows.join('')}</div>` : ''}
+          ${cupTable(Q.nation + ' grubu', Q.table, Q.kind === 'euro' ? 2 : 1, Q.nation, true)}
+          ${otherRows.length ? `<div class="label">Gruptaki diğer maçlar</div><div class="card list">${otherRows.join('')}</div>` : ''}</div>`,
+        dock: `<button class="btn" data-a="ev-next">${st.called ? 'Kampa katıl' : 'Devam'}</button>`
+      };
+    }
+    const W = (S.ncups || {})[st.kind];
+    if (!W) return { main: '', dock: `<button class="btn" data-a="ev-next">Devam</button>` };
+    if (st.mode === 'cupStart') {
+      const gi = W.groups.findIndex((g) => g.includes(W.nation));
+      return {
+        main: `<div class="stack fade"><div class="pitchlines"><div class="label" style="color:inherit;opacity:.8">Yaz turnuvası</div><div class="display" style="font-size:34px;margin-top:6px">${esc(T.name)} ${W.year}</div><div class="small">${W.teams.length} milli takım · ${W.groups.length} grup</div></div>
+          ${W.squad ? chip(true, W.nation + ' kadrosundasın') : chip(false, W.nation + ' kadrosuna seçilmedin')}
+          <p class="small muted">${W.squad ? 'Turnuvayı maç maç oynayacaksın. Gruptan ilk iki çıkar, sonra tek maç eleme.' : 'Hoca seni turnuva kadrosuna almadı. Turnuvayı uzaktan takip edeceksin.'}</p>
+          ${gi >= 0 ? cupTable('ABCDEFGH'[gi] + ' Grubu', W.tables[gi], 2, W.nation, true) : ''}</div>`,
+        dock: `<button class="btn" data-a="ev-next">${W.squad ? 'Turnuvaya başla' : 'Devam'}</button>`
+      };
+    }
+    const fin = W.kores.find((x) => x.ko === 'final');
+    const myR = W.qual ? F.cupReached(W, W.nation) : null;
+    return {
+      main: `<div class="stack fade"><div class="pitchlines"><div class="label" style="color:inherit;opacity:.8">${esc(T.name)} ${W.year} bitti</div><div class="display" style="font-size:38px;margin-top:6px">${esc(W.winner)}</div><div class="small">şampiyon${fin ? ' · finalde ' + esc(fin.h) + ' ' + fin.gh + '–' + fin.ga + ' ' + esc(fin.a) + (fin.pen ? ' (pen.)' : '') : ''}</div></div>
+        <div class="card small">${W.qual ? `<b>${esc(W.nation)}</b>: ${esc(myR === 'şampiyon' ? 'şampiyon oldu!' : myR === 'finalist' ? 'finalde kaybetti' : myR === 'Grup aşaması' ? 'grupta elendi' : myR + ' turunda elendi')}${W.squad ? '' : ' (kadroda değildin)'}` : `${esc(W.nation)} bu turnuvaya katılamadı.`}</div>
+        ${cupKo(W, W.nation, true)}</div>`,
+      dock: `<button class="btn" data-a="ev-next">Devam</button>`
+    };
   }
 
   function ligView() {
     const S = F.S;
     const myKey = S.league.key;
     let key = U.leagueKey || myKey;
-    if (!['CL', 'WC', 'WCQ'].includes(key) && !S.world.comps[key]) key = myKey;
-    if (['CL', 'WC', 'WCQ'].includes(key)) {
+    if (!cupExists(key) && !S.world.comps[key]) key = myKey;
+    if (cupExists(key)) {
       const compsAll = Object.values(S.world.comps).sort((a, b) => (a.c === 'TR' ? 0 : 1) - (b.c === 'TR' ? 0 : 1) || a.c.localeCompare(b.c) || a.tier - b.tier || a.g - b.g);
       const sel = `<select id="lg-sel" aria-label="Lig seç">${cupOptions(key)}${compsAll.map((c) => `<option value="${c.key}">${esc(c.name + (c.gname ? ' · ' + c.gname : ''))}${c.key === myKey ? ' (senin ligin)' : ''}</option>`).join('')}</select>`;
-      if ((key === 'CL' && S.cl) || (key === 'WC' && S.wc) || (key === 'WCQ' && S.wcq)) return cupView(key, sel);
-      key = myKey;
+      return cupView(key, sel);
     }
     const comp = S.world.comps[key];
     let order, table;
