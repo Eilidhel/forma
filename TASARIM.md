@@ -12,7 +12,8 @@ Kaynak prompt: `../futbol-oyunu-prompt.md`
 | 8 köken | ✅ | Her birinin giriş diyaloğu ve 3–6 olaylık kendi zinciri var |
 | 4 mevki | ✅ | Maç anları mevkiye göre değişir (kalecinin kendine ait anları var) |
 | Türkiye 5 lig | ✅ | Süper Lig 18, 1. Lig 18, 2. Lig 2×18, 3. Lig 3×16, BAL 4×14 (bölgesel gruplar) |
-| Yurt dışı | ✅ | İngiltere, İspanya, İtalya, Almanya (Bölge Ligi dahil), PES tarzı isim + gerçek renk |
+| Yurt dışı | ✅ | 7 ülke, 18 lig (EN/ES/DE/IT 3 kademe, FR/NL/PT 2 kademe), her lig 18 takım; üst lig PES tarzı isim + gerçek renk, alt ligler şehir listesinden |
+| Turnuvalar | ✅ | Avrupa Yıldızlar Ligi (32 kulüp, 8 grup + eleme), Küresel Kupa (4 yılda bir, eleme grubu + 32 milli takım). İsimler kurgusal. `js/tournaments.js` |
 | Yükselme / düşme | ✅ | Her sezon sonu tüm ligler simüle edilir, takım güçleri kayar |
 | Haftalık plan | ✅ | Antrenman odağı + yük, 3–4 boş zaman slotu, 20 etkinlik (getiri + bedel) |
 | Hoca talimatı | ✅ | Uyarsan ilişki artar, diktatör hoca uymayanı cezalandırır |

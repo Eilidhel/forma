@@ -45,23 +45,85 @@
       trByTier.push(list.map((t) => t.id));
     });
 
-    // Yabancı
-    const foreignTiers = { EN: [D.foreign.EN], ES: [D.foreign.ES], DE: [D.foreign.DE, D.foreign.DE2], IT: [D.foreign.IT] };
-    const fByTier = {};
-    Object.keys(foreignTiers).forEach((c) => {
-      fByTier[c] = foreignTiers[c].map((list, ti) => {
-        const tier = D.leagues[c].tiers[ti];
-        return list.map((row, rank) => {
-          const frac = 1 - rank / (list.length - 1);
-          const str = Math.round(tier.str[0] + frac * (tier.str[1] - tier.str[0]) + F.rf(-2, 2));
-          return mk({ name: row[0], province: row[0].split(' ')[0], region: c, country: c, str, colors: [row[1], row[2]], colorName: '', stadium: row[0].split(' ')[0] + ' Arena', fans: ti === 0 ? 5 : 2, fin: ti === 0 ? 5 : 2, academy: ti === 0 ? 5 : 2, big: ti === 0 && rank < 4 }).id;
-        });
-      });
-    });
-
+    // Yabancı: her ülkenin tüm lig seviyeleri (Türkiye'deki sistemle)
     S.world = { teams, comps: {} };
+    const fByTier = {};
+    F.foreignCountries().forEach((c) => {
+      const used = new Set();
+      fByTier[c] = D.leagues[c].tiers.map((tier, ti) => F.foreignTierTeams(c, ti, tier.groups * tier.size, used, mk));
+    });
     F.buildComps('TR', trByTier);
     Object.keys(fByTier).forEach((c) => F.buildComps(c, fByTier[c]));
+  };
+
+  F.foreignCountries = () => Object.keys(D.leagues).filter((c) => c !== 'TR');
+  // Yabancı bir lig seviyesi için kulüp üretir: üst ligde PES tarzı kulüpler, Almanya Bölge Ligi'nde gurbetçi kulüpleri,
+  // geri kalan yerler Türkiye'deki gibi şehir listesinden büyüklüğe (ve biraz şansa) göre dolar.
+  const PLACE_BASE = { 1: 70, 2: 61, 3: 53 };
+  F.foreignTierTeams = function (c, ti, count, used, mk) {
+    const tier = D.leagues[c].tiers[ti];
+    const rows = [];
+    const take = (list) => list.forEach((r) => { if (rows.length < count && !used.has(r.name)) { used.add(r.name); rows.push(r); } });
+    const named = (list) => (list || []).map((r) => ({ name: r[0], colors: [r[1], r[2]], named: true }));
+    if (ti === 0) take(named(D.foreign[c]));
+    if (tier.diaspora) take(named(D.foreign[c + '2']));
+    if (rows.length < count) {
+      const places = String((D.foreignPlaces || {})[c] || '').split(';').filter(Boolean).map((s) => {
+        const [name, size] = s.split('|');
+        return { name, raw: (PLACE_BASE[size] || 53) + F.rf(-9, 9) };
+      }).sort((a, b) => b.raw - a.raw);
+      take(places);
+    }
+    for (let k = 1; rows.length < count && k < 99; k++) take([{ name: D.leagues[c].name + ' Gençlik ' + k }]);
+    const lvl = ti === 0 ? 5 : ti === 1 ? 3 : 2;
+    return rows.map((r, rank) => {
+      const frac = 1 - rank / Math.max(1, rows.length - 1);
+      const str = Math.round(tier.str[0] + frac * (tier.str[1] - tier.str[0]) + F.rf(-2, 2));
+      const pal = r.colors ? null : F.pick(D.palette);
+      const city = r.named ? r.name.split(' ')[0] : r.name;
+      return mk({
+        name: r.name, province: city, region: c, country: c, str, colors: r.colors || [pal[0], pal[1]], colorName: pal ? pal[2] : '',
+        stadium: city + (r.named || ti === 0 ? ' Arena' : ' ' + F.pick(['Stadı', 'Park', 'Arena', 'Şehir Stadı'])),
+        fans: lvl, fin: lvl, academy: lvl, big: ti === 0 && rank < 4
+      }).id;
+    });
+  };
+
+  // Eski kayıtlar: yabancı ülkelerde tek lig vardı (12 takım). Eksik ligleri ve kulüpleri ekler, mevcut kulüpleri korur.
+  F.migrateWorld = function (S) {
+    const W = S.world;
+    if (!W || !W.teams || !W.comps) return false;
+    let changed = false;
+    let n = Object.keys(W.teams).reduce((m, k) => Math.max(m, +String(k).slice(1) || 0), -1) + 1;
+    const mk = (o) => { const id = 't' + n++; W.teams[id] = Object.assign({ id }, o); return W.teams[id]; };
+    const keep = F.S;
+    F.S = S;
+    try {
+      F.foreignCountries().forEach((c) => {
+        const tiers = D.leagues[c].tiers;
+        const comps = Object.values(W.comps).filter((k) => k.c === c);
+        const need = tiers.map((t) => t.groups * t.size);
+        const have = tiers.map(() => []);
+        comps.forEach((k) => {
+          let ti = tiers.findIndex((t) => t.name === k.name);
+          if (ti < 0) ti = Math.min(tiers.length - 1, Math.max(0, k.tier - 1));
+          have[ti].push(...k.teams);
+        });
+        const ok = comps.length === tiers.reduce((a, t) => a + t.groups, 0) && have.every((ids, ti) => ids.length === need[ti]) && comps.every((k) => tiers[k.tier - 1] && tiers[k.tier - 1].name === k.name);
+        if (ok) return;
+        changed = true;
+        // fazlası bir alt lige kayar, son ligde kalır
+        for (let ti = 0; ti < tiers.length - 1; ti++) if (have[ti].length > need[ti]) have[ti + 1].unshift(...have[ti].splice(need[ti]));
+        const used = new Set(Object.values(W.teams).filter((t) => t.country === c).map((t) => t.name));
+        tiers.forEach((tier, ti) => {
+          const miss = need[ti] - have[ti].length;
+          if (miss > 0) have[ti].push(...F.foreignTierTeams(c, ti, miss, used, mk));
+        });
+        F.buildComps(c, have);
+      });
+      if (changed && S.league && S.P && W.teams[S.P.contract.team]) S.league.key = W.teams[S.P.contract.team].comp;
+    } finally { F.S = keep; }
+    return changed;
   };
 
   const REGION_ORDER = ['MAR', 'EGE', 'AKD', 'ICA', 'KAR', 'DOG', 'GDA'];
@@ -960,7 +1022,7 @@
       if (s.type === 'seasonEndAuto') { S.queue.shift(); F.endSeason(); continue; }
       if (s.type === 'newSeasonAuto') { S.queue.shift(); F.startSeason(false); continue; }
       if (s.type === 'offers' && (!S.offers || !S.offers.length) && S.P.contract.years > 0) { S.queue.shift(); continue; }
-      if (s.type === 'match' && !s.nat && !s.m && (S.league.round >= F.seasonRounds() || !F.myFixture())) { S.queue.shift(); continue; }
+      if (s.type === 'match' && !s.nat && !s.cup && !s.m && (S.league.round >= F.seasonRounds() || !F.myFixture())) { S.queue.shift(); continue; }
       if (s.type === 'ev') {
         const ev = F.EV[s.id];
         if (!ev || (s.node === 'start' && !s.log.length && !F.cond(ev.if) && !s.forced)) { S.queue.shift(); continue; }
@@ -1162,7 +1224,9 @@
     const natBreak = !winterBreak && F.isNatBreak();
     if (natBreak) {
       S.natBreakDone = S.season + ':' + S.league.round;
-      if (F.calledUp()) S.queue.push({ type: 'match', nat: true, pre: true });
+      // eleme dönemindeyse bu aranın eleme maçları oynanır; senin maçın (çağrıldıysan) kuyruğa girer
+      const natFix = F.natBreakFixture ? F.natBreakFixture(F.calledUp() && (!F.wcSquad || F.wcSquad())) : null;
+      if (F.calledUp()) S.queue.push(natFix ? { type: 'match', nat: true, pre: true, fix: natFix } : { type: 'match', nat: true, pre: true });
       else S.wk.notes.push('Milli ara: lig bu hafta oynanmıyor. Kulüpte antrenmana devam ettin.');
     }
     const fxt = !natBreak && !winterBreak && S.league.round < F.seasonRounds() ? F.myFixture() : null;
@@ -1177,6 +1241,8 @@
       }
       S.queue.push({ type: 'match', pre: true });
     }
+    // kupa haftası: Avrupa Yıldızlar Ligi maçı (hafta ortası)
+    if (F.weekCupSteps) F.weekCupSteps(!!fxt).forEach((st) => S.queue.push(st));
     S.queue.push({ type: 'weekEnd' });
     F.processAuto();
   };
@@ -1531,6 +1597,8 @@
     P.subs = P.subs || [];
     S.convos = S.convos || [];
     P.roleExp = P.roleExp || {};
+    // eski kayıt: Avrupa'da tek lig vardı, alt ligler ve yeni ülkeler eklenir
+    F.migrateWorld(S);
     // eski kayıt: deden vefat ettiyse bunu hatırla (tavsiye olayı bir daha gelmesin)
     if (S.seen && S.seen.aile_dede_vefat != null) S.flags.dede_vefat = 1;
     // eski sürüm hatası: şike cezasında kulüpten kovulma uygulanmamıştı. 15 maçlık cezası sürüp hâlâ kulüpteyse şimdi uygula

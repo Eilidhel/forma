@@ -14,7 +14,12 @@
     if (step.m) return step.m;
     const me = F.myTeam();
     let m;
-    if (step.nat) {
+    const fix = step.fix;
+    if (fix) {
+      // kupa / eleme maçı: rakip ve güçler adımda hazır gelir
+      const opp = fix.opp ? F.team(fix.opp) : null;
+      m = { nat: !!step.nat, cup: !!step.cup, kind: fix.kind, opp: fix.opp || null, oppName: opp ? opp.name : fix.oppName, oppColors: fix.oppColors || null, home: !!fix.home, myStr: step.nat ? fix.myStr : me.str, oppStr: opp ? opp.str : fix.oppStr, comp: fix.comp, big: true, ko: !!fix.ko };
+    } else if (step.nat) {
       const oppName = F.pick(NAT_OPP);
       m = { nat: true, oppName, home: F.chance(0.5), myStr: P.natTeam === 'DE' ? 86 : 78, oppStr: F.ri(72, 88), comp: (P.age <= 21 && F.ovr() < 73 ? 'U21' : 'A') + ' Milli Takım' };
     } else {
@@ -27,7 +32,7 @@
       m.scout = !F.isAbroad() && P.age <= 25 && F.chance(0.12);
     }
     // Kadro kararı: maç haftasının başında verilir (hoca taktiği ancak oynayacaksan anlatır)
-    let status = !m.nat && S.preStatus && S.preStatus.t === S.t ? S.preStatus.s : F.rollStatus(m);
+    let status = !m.nat && !m.cup && S.preStatus && S.preStatus.t === S.t ? S.preStatus.s : F.rollStatus(m);
     if (P.injury) status = 'sakat';
     else if (P.suspended > 0 && !m.nat) status = 'ceza';
     m.status = status;
@@ -54,7 +59,7 @@
     m.bgGF = F.poisson(lf * (m.played ? 0.75 : 1));
     m.bgGA = F.poisson(la * (m.played ? (defRole ? 0.72 : 0.85) : 1));
     const mates = (S.mates || []).map((x) => x.split(' ')[0]).filter((x) => x && x !== P.name);
-    const myTeam = m.nat ? (P.natTeam === 'DE' ? 'Almanya' : 'Türkiye') : F.myTeam().name;
+    const myTeam = m.nat ? F.natName() : F.myTeam().name;
     m.myName = myTeam;
     const opp = () => (F.isAbroad() ? F.foreignName() : F.fullName()).split(' ').slice(-1)[0];
     const fill = (t) => t.replace(/{oyuncu}/g, mates.length ? F.pick(mates) : 'Takım arkadaşın').replace(/{rakipoyuncu}/g, opp()).replace(/{takim}/g, myTeam).replace(/{rakip}/g, m.oppName).replace(/{kaleci}/g, mates[0] || 'kalecimiz');
@@ -263,8 +268,8 @@
       m.rating = F.clamp(Math.round((m.rating + F.rf(-0.35, 0.35)) * 10) / 10, 3, 10);
     } else m.rating = null;
 
-    // Lig tablosu
-    if (!m.nat) {
+    // Lig tablosu (kupa maçları lige yazılmaz)
+    if (!m.nat && !m.cup) {
       const L = S.league;
       const fx = F.myFixture();
       const rd = L.fixtures[L.round];
@@ -805,7 +810,8 @@
     // Diğer liglerin simülasyonu
     const finals = {};
     Object.values(S.world.comps).forEach((c) => {
-      if (c.key === L.key) { finals[c.key] = order; return; }
+      // (eski kayıtta lig sezon ortasında büyüdüyse fikstürde olmayan takımlar sona eklenir)
+      if (c.key === L.key) { finals[c.key] = order.concat(c.teams.filter((id) => !order.includes(id))); return; }
       finals[c.key] = F.simFullSeason(c.teams);
     });
     // Kupa / yükselme
@@ -950,11 +956,14 @@
       const ti = F.tierOf(t.id);
       if (ti.c === 'TR' && ti.t < curT - jump) return false;
       if (ti.c !== 'TR' && myTi.c === 'TR' && curT > 2) return false;
-      if (ti.c !== 'TR' && !(ti.c === 'DE' && ti.t === 2 && P.origin === 'gurbetci')) {
+      const dias = ti.c !== 'TR' && !!F.tierDef(ti.c, ti.t).diaspora;
+      if (ti.c !== 'TR' && !(dias && P.origin === 'gurbetci')) {
         if (ovr < 70) return false;
         if (P.dil < 25 && F.chance(0.6)) return false;
       }
-      if (ti.c === 'DE' && ti.t === 2 && P.origin !== 'gurbetci') return false;
+      if (dias && P.origin !== 'gurbetci') return false;
+      // yurt dışının üçüncü ligleri ancak o ülkede oynayan oyuncuya teklif yapar
+      if (ti.c !== 'TR' && !dias && ti.t >= 3 && myTi.c !== ti.c) return false;
       if (spec === 'up') return t.str > F.myTeam().str + 2 && t.str <= ovr + reach + 2;
       if (spec === 'abroad') return ti.c !== 'TR' && t.str <= ovr + reach + 4;
       if (spec === 'down') return t.str < F.myTeam().str - 2;

@@ -73,16 +73,60 @@ Talas|ICA|4|Kayseri;Develi|ICA|5|Kayseri;Elbistan|AKD|4|Kahramanmaraş;Şarkış
         { name: 'Bölgesel Amatör Lig', short: 'BAL', groups: 4, size: 14, up: 4, down: 0, str: [33, 46], wage: [4e3, 13e3], groupNames: ['1. Grup', '2. Grup', '3. Grup', '4. Grup'], regional: true }
       ]
     },
-    EN: { name: 'İngiltere', flag: 'EN', tiers: [{ name: 'İngiltere Premier', groups: 1, size: 12, up: 0, down: 0, str: [76, 91], wage: [1.6e6, 11e6] }] },
-    ES: { name: 'İspanya', flag: 'ES', tiers: [{ name: 'İspanya Birinci Lig', groups: 1, size: 12, up: 0, down: 0, str: [74, 91], wage: [1.3e6, 10e6] }] },
+    // Avrupa: Türkiye'deki gibi kademeli ligler. Üst ligde PES tarzı kulüpler, alt liglerde şehir kulüpleri.
+    EN: {
+      name: 'İngiltere', flag: 'EN',
+      tiers: [
+        { name: 'İngiltere Premier', groups: 1, size: 18, up: 0, down: 3, str: [75, 91], wage: [1.6e6, 11e6] },
+        { name: 'İngiltere İkinci Lig', groups: 1, size: 18, up: 3, down: 3, str: [64, 77], wage: [300e3, 1.6e6] },
+        { name: 'İngiltere Üçüncü Lig', groups: 1, size: 18, up: 3, down: 0, str: [55, 67], wage: [60e3, 300e3] }
+      ]
+    },
+    ES: {
+      name: 'İspanya', flag: 'ES',
+      tiers: [
+        { name: 'İspanya Birinci Lig', groups: 1, size: 18, up: 0, down: 3, str: [72, 91], wage: [1.3e6, 10e6] },
+        { name: 'İspanya İkinci Lig', groups: 1, size: 18, up: 3, down: 3, str: [62, 74], wage: [200e3, 1.2e6] },
+        { name: 'İspanya Üçüncü Lig', groups: 1, size: 18, up: 3, down: 0, str: [52, 64], wage: [40e3, 200e3] }
+      ]
+    },
     DE: {
       name: 'Almanya', flag: 'DE',
       tiers: [
-        { name: 'Almanya Birinci Lig', groups: 1, size: 12, up: 0, down: 2, str: [73, 89], wage: [1.2e6, 8e6] },
-        { name: 'Almanya Bölge Ligi', groups: 1, size: 12, up: 2, down: 0, str: [44, 58], wage: [10e3, 40e3] }
+        { name: 'Almanya Birinci Lig', groups: 1, size: 18, up: 0, down: 2, str: [72, 89], wage: [1.2e6, 8e6] },
+        { name: 'Almanya İkinci Lig', groups: 1, size: 18, up: 2, down: 2, str: [62, 75], wage: [250e3, 1.3e6] },
+        { name: 'Almanya Bölge Ligi', groups: 1, size: 18, up: 2, down: 0, str: [44, 58], wage: [10e3, 40e3], diaspora: true }
       ]
     },
-    IT: { name: 'İtalya', flag: 'IT', tiers: [{ name: 'İtalya Birinci Lig', groups: 1, size: 12, up: 0, down: 0, str: [73, 89], wage: [1.1e6, 8e6] }] }
+    IT: {
+      name: 'İtalya', flag: 'IT',
+      tiers: [
+        { name: 'İtalya Birinci Lig', groups: 1, size: 18, up: 0, down: 3, str: [72, 89], wage: [1.1e6, 8e6] },
+        { name: 'İtalya İkinci Lig', groups: 1, size: 18, up: 3, down: 3, str: [61, 74], wage: [180e3, 1e6] },
+        { name: 'İtalya Üçüncü Lig', groups: 1, size: 18, up: 3, down: 0, str: [52, 64], wage: [35e3, 180e3] }
+      ]
+    },
+    FR: {
+      name: 'Fransa', flag: 'FR',
+      tiers: [
+        { name: 'Fransa Birinci Lig', groups: 1, size: 18, up: 0, down: 3, str: [70, 88], wage: [900e3, 7e6] },
+        { name: 'Fransa İkinci Lig', groups: 1, size: 18, up: 3, down: 0, str: [60, 72], wage: [150e3, 800e3] }
+      ]
+    },
+    NL: {
+      name: 'Hollanda', flag: 'NL',
+      tiers: [
+        { name: 'Hollanda Birinci Lig', groups: 1, size: 18, up: 0, down: 2, str: [65, 84], wage: [400e3, 3e6] },
+        { name: 'Hollanda İkinci Lig', groups: 1, size: 18, up: 2, down: 0, str: [56, 68], wage: [60e3, 300e3] }
+      ]
+    },
+    PT: {
+      name: 'Portekiz', flag: 'PT',
+      tiers: [
+        { name: 'Portekiz Birinci Lig', groups: 1, size: 18, up: 0, down: 2, str: [64, 85], wage: [350e3, 3e6] },
+        { name: 'Portekiz İkinci Lig', groups: 1, size: 18, up: 2, down: 0, str: [55, 67], wage: [50e3, 250e3] }
+      ]
+    }
   };
 
   // Yabancı kulüpler — PES tarzı isimler, gerçeğe yakın renkler
@@ -91,33 +135,106 @@ Talas|ICA|4|Kayseri;Develi|ICA|5|Kayseri;Elbistan|AKD|4|Kahramanmaraş;Şarkış
       ['Merseyside Kırmızı', '#C8102E', '#F6EB61'], ['Manchester Mavi', '#6CABDD', '#FFFFFF'], ['Manchester Kırmızı', '#DA291C', '#111111'],
       ['Kuzey Londra Kırmızı', '#EF0107', '#FFFFFF'], ['Londra Mavi', '#034694', '#FFFFFF'], ['Kuzey Londra Beyaz', '#FFFFFF', '#132257'],
       ['Tyneside Siyah-Beyaz', '#111111', '#FFFFFF'], ['Midlands Bordo-Mavi', '#670E36', '#95BFE5'], ['Merseyside Mavi', '#003399', '#FFFFFF'],
-      ['Doğu Londra Bordo', '#7A263A', '#1BB1E7'], ['Güney Sahili Mavi-Beyaz', '#0057B8', '#FFFFFF'], ['Nottingham Kırmızı', '#DD0000', '#FFFFFF']
+      ['Doğu Londra Bordo', '#7A263A', '#1BB1E7'], ['Güney Sahili Mavi-Beyaz', '#0057B8', '#FFFFFF'], ['Nottingham Kırmızı', '#DD0000', '#FFFFFF'],
+      ['Leeds Beyaz', '#FFFFFF', '#1D428A'], ['Midlands Turuncu-Siyah', '#FDB913', '#231F20'], ['Leicester Mavi', '#003090', '#FDBE11'],
+      ['Batı Londra Beyaz', '#FFFFFF', '#111111'], ['Güney Londra Mavi-Kırmızı', '#1B458F', '#C4122E'], ['Dorset Kırmızı-Siyah', '#DA291C', '#111111']
     ],
     ES: [
       ['Madrid Beyaz', '#FFFFFF', '#FEBE10'], ['Katalonya Bordo-Mavi', '#A50044', '#004D98'], ['Madrid Kırmızı-Beyaz', '#CB3524', '#FFFFFF'],
       ['Endülüs Beyaz-Kırmızı', '#FFFFFF', '#D71920'], ['Endülüs Yeşil', '#00954C', '#FFFFFF'], ['Bask Kırmızı-Beyaz', '#EE2523', '#FFFFFF'],
       ['Bask Mavi-Beyaz', '#0067B1', '#FFFFFF'], ['Valencia Beyaz-Siyah', '#FFFFFF', '#111111'], ['Castellón Sarı', '#FFE667', '#005187'],
-      ['Vigo Gök Mavi', '#8AC3EE', '#FFFFFF'], ['Mayorka Kırmızı-Siyah', '#E20613', '#111111'], ['Kanarya Sarı-Mavi', '#FFE400', '#0059A0']
+      ['Vigo Gök Mavi', '#8AC3EE', '#FFFFFF'], ['Mayorka Kırmızı-Siyah', '#E20613', '#111111'], ['Kanarya Sarı-Mavi', '#FFE400', '#0059A0'],
+      ['Pamplona Kırmızı', '#D91A21', '#0A346F'], ['Madrid Güney Mavi', '#005999', '#FFFFFF'], ['Vallecas Beyaz-Kırmızı', '#FFFFFF', '#E53027'],
+      ['Girona Kırmızı-Beyaz', '#CD2534', '#FFFFFF'], ['Barselona Mavi-Beyaz', '#007FC8', '#FFFFFF'], ['Vitoria Mavi-Beyaz', '#0B3C8C', '#FFFFFF']
     ],
     DE: [
       ['Bavyera Kırmızı', '#DC052D', '#FFFFFF'], ['Ruhr Sarı-Siyah', '#FDE100', '#111111'], ['Ren Kırmızı-Siyah', '#E32221', '#111111'],
       ['Saksonya Kırmızı-Beyaz', '#DD0741', '#FFFFFF'], ['Main Siyah-Kırmızı', '#111111', '#E1000F'], ['Swabya Beyaz-Kırmızı', '#FFFFFF', '#E32219'],
       ['Ren Yeşil-Beyaz', '#00A54F', '#FFFFFF'], ['Aşağı Saksonya Yeşil', '#65B32E', '#FFFFFF'], ['Kuzey Limanı Yeşil', '#1D9053', '#FFFFFF'],
-      ['Köln Kırmızı-Beyaz', '#ED1C24', '#FFFFFF'], ['Berlin Mavi-Beyaz', '#005CA9', '#FFFFFF'], ['Ruhr Mavi-Beyaz', '#004D9D', '#FFFFFF']
+      ['Köln Kırmızı-Beyaz', '#ED1C24', '#FFFFFF'], ['Berlin Mavi-Beyaz', '#005CA9', '#FFFFFF'], ['Ruhr Mavi-Beyaz', '#004D9D', '#FFFFFF'],
+      ['Kara Orman Kırmızı-Siyah', '#E2001A', '#111111'], ['Kraichgau Mavi', '#1961B5', '#FFFFFF'], ['Mainz Kırmızı-Beyaz', '#C3141E', '#FFFFFF'],
+      ['Augsburg Kırmızı-Yeşil', '#BA3733', '#46714D'], ['Doğu Berlin Kırmızı', '#EB1923', '#FFFFFF'], ['Hamburg Kahverengi', '#624839', '#FFFFFF']
     ],
     DE2: [
       ['Duisburg Liman', '#0A6CB3', '#FFFFFF'], ['Essen Kuzey', '#C8102E', '#FFFFFF'], ['Gelsenkirchen Gençlik', '#1D3C8F', '#FFFFFF'],
       ['Dortmund Hörde', '#F2C200', '#111111'], ['Köln Mülheim', '#C8102E', '#111111'], ['Mannheim Doğu', '#006A4E', '#FFFFFF'],
       ['Offenbach Yıldız', '#C8102E', '#FFFFFF'], ['Wuppertal Vadi', '#5B2C83', '#FFFFFF'], ['Aachen Sınır', '#F2C200', '#111111'],
-      ['Bochum Kuzey', '#0A6CB3', '#FFFFFF'], ['Duisburg Marxloh', '#006A4E', '#C8102E'], ['Hamburg Wilhelmsburg', '#111111', '#FFFFFF']
+      ['Bochum Kuzey', '#0A6CB3', '#FFFFFF'], ['Duisburg Marxloh', '#006A4E', '#C8102E'], ['Hamburg Wilhelmsburg', '#111111', '#FFFFFF'],
+      ['Berlin Kreuzberg Gücü', '#C8102E', '#FFFFFF'], ['Frankfurt Gallus', '#111111', '#C8102E'], ['Stuttgart Cannstatt', '#FFFFFF', '#C8102E'],
+      ['Hannover Linden', '#006A4E', '#FFFFFF'], ['Nürnberg Gostenhof', '#8A1538', '#FFFFFF'], ['Bremen Gröpelingen', '#0A6CB3', '#FFFFFF']
     ],
     IT: [
       ['Torino Siyah-Beyaz', '#111111', '#FFFFFF'], ['Milano Kırmızı-Siyah', '#FB090B', '#111111'], ['Milano Mavi-Siyah', '#010E80', '#111111'],
       ['Roma Sarı-Kırmızı', '#8E1F2F', '#F0BC42'], ['Roma Gök Mavi', '#87D8F7', '#FFFFFF'], ['Campania Mavi', '#12A0D7', '#FFFFFF'],
       ['Floransa Mor', '#482E92', '#FFFFFF'], ['Bergamo Siyah-Mavi', '#1E71B8', '#111111'], ['Bologna Kırmızı-Mavi', '#A21C26', '#1A2F48'],
-      ['Torino Bordo', '#8A1E03', '#FFFFFF'], ['Cenova Kırmızı-Mavi', '#AD0B26', '#1C2D5A'], ['Udine Siyah-Beyaz', '#FFFFFF', '#111111']
+      ['Torino Bordo', '#8A1E03', '#FFFFFF'], ['Cenova Kırmızı-Mavi', '#AD0B26', '#1C2D5A'], ['Udine Siyah-Beyaz', '#FFFFFF', '#111111'],
+      ['Sardinya Kırmızı-Mavi', '#A6192E', '#002350'], ['Verona Sarı-Mavi', '#FFD200', '#003399'], ['Salento Sarı-Kırmızı', '#FFE600', '#D4021D'],
+      ['Emilia Yeşil-Siyah', '#00A752', '#111111'], ['Parma Beyaz-Sarı', '#FFFFFF', '#FFD200'], ['Como Mavi', '#1B3C7F', '#FFFFFF']
+    ],
+    FR: [
+      ['Paris Lacivert-Kırmızı', '#004170', '#DA291C'], ['Marsilya Beyaz-Mavi', '#FFFFFF', '#2FAEE0'], ['Lyon Beyaz-Kırmızı', '#FFFFFF', '#DA001A'],
+      ['Monako Kırmızı-Beyaz', '#E51B22', '#FFFFFF'], ['Lille Kırmızı', '#E01E13', '#1B2A47'], ['Rennes Kırmızı-Siyah', '#E13327', '#111111'],
+      ['Azur Kırmızı-Siyah', '#C8102E', '#111111'], ['Lens Sarı-Kırmızı', '#FFE500', '#D4001A'], ['Nantes Sarı-Yeşil', '#FCD405', '#00843D'],
+      ['Strazburg Mavi', '#009FE3', '#FFFFFF'], ['Reims Kırmızı-Beyaz', '#D6001C', '#FFFFFF'], ['Montpellier Turuncu-Mavi', '#F58220', '#002B5C'],
+      ['Toulouse Mor', '#5B2C83', '#FFFFFF'], ['Brest Kırmızı', '#E30613', '#FFFFFF'], ['Akitanya Lacivert', '#1B2A47', '#FFFFFF'],
+      ['Saint-Étienne Yeşil', '#00843D', '#FFFFFF'], ['Auxerre Beyaz-Mavi', '#FFFFFF', '#0055A4'], ['Le Havre Gök Mavi', '#5DADE2', '#1B2A47']
+    ],
+    NL: [
+      ['Amsterdam Kırmızı-Beyaz', '#D2122E', '#FFFFFF'], ['Eindhoven Kırmızı', '#ED1C24', '#FFFFFF'], ['Rotterdam Liman Kırmızı', '#E3001B', '#111111'],
+      ['Alkmaar Kırmızı', '#DB0021', '#FFFFFF'], ['Enschede Kırmızı-Beyaz', '#E30613', '#FFFFFF'], ['Utrecht Kırmızı', '#E2001A', '#FFFFFF'],
+      ['Frizya Mavi-Beyaz', '#0055A4', '#FFFFFF'], ['Groningen Yeşil-Beyaz', '#00A650', '#FFFFFF'], ['Arnhem Sarı-Siyah', '#FFE500', '#111111'],
+      ['Rotterdam Kırmızı-Beyaz', '#C8102E', '#FFFFFF'], ['Lahey Yeşil-Sarı', '#00843D', '#FCD405'], ['Nijmegen Kırmızı-Yeşil', '#C8102E', '#00843D'],
+      ['Zwolle Mavi-Beyaz', '#0057B8', '#FFFFFF'], ['Tilburg Kırmızı-Lacivert', '#C8102E', '#1D3C8F'], ['Breda Sarı-Siyah', '#FCD405', '#111111'],
+      ['Almelo Beyaz-Siyah', '#FFFFFF', '#111111'], ['Limburg Sarı-Yeşil', '#FCD405', '#00843D'], ['Deventer Kırmızı-Sarı', '#C8102E', '#FCD405']
+    ],
+    PT: [
+      ['Lizbon Kırmızı', '#E30613', '#FFFFFF'], ['Lizbon Yeşil-Beyaz', '#00843D', '#FFFFFF'], ['Porto Mavi-Beyaz', '#003893', '#FFFFFF'],
+      ['Minho Kırmızı-Beyaz', '#D8001E', '#FFFFFF'], ['Guimarães Beyaz-Siyah', '#FFFFFF', '#111111'], ['Belém Mavi', '#0055A4', '#FFFFFF'],
+      ['Porto Damalı', '#111111', '#FFFFFF'], ['Famalicão Lacivert', '#1D3C8F', '#FFFFFF'], ['Madeira Yeşil-Kırmızı', '#00843D', '#C8102E'],
+      ['Arouca Sarı-Mavi', '#FCD405', '#1D3C8F'], ['Riviera Sarı-Mavi', '#FCD405', '#0057B8'], ['Moreira Yeşil-Beyaz', '#006A4E', '#FFFFFF'],
+      ['Chaves Mavi-Kırmızı', '#1D3C8F', '#C8102E'], ['Vizela Gök Mavi', '#4FA3D9', '#FFFFFF'], ['Lizbon Siyah-Beyaz', '#111111', '#FFFFFF'],
+      ['Vila do Conde Yeşil', '#00843D', '#FFFFFF'], ['Barcelos Kırmızı', '#C8102E', '#1D3C8F'], ['Azor Kırmızı-Beyaz', '#E30613', '#FFFFFF']
     ]
   };
+
+  // Alt ligler: Türkiye'deki sistemin aynısı. "Şehir|büyüklük(1=büyük … 3=küçük)" listesinden güce göre dağıtılır.
+  D.foreignPlaces = {
+    EN: 'Sheffield|1;Sunderland|1;Middlesbrough|1;Derby|1;Stoke|1;Norwich|1;Ipswich|1;Burnley|1;Blackburn|1;Bristol|1;Cardiff|1;Swansea|1;Hull|2;Watford|2;Southampton|1;Portsmouth|2;Coventry|2;Preston|2;Plymouth|2;Luton|2;Reading|2;Wigan|2;Bolton|2;Barnsley|2;Huddersfield|2;Oxford|2;Peterborough|3;Blackpool|3;Wrexham|3;Cambridge|3;Exeter|3;Lincoln|3;Northampton|3;Rotherham|3;Stockport|3;Bradford|3;Doncaster|3;Mansfield|3;Shrewsbury|3;Carlisle|3;Gillingham|3;Wycombe|3',
+    ES: 'Zaragoza|1;Oviedo|1;Gijón|1;Santander|1;Málaga|1;Granada|1;Almería|1;Cádiz|1;Valladolid|1;La Coruña|1;Elche|2;Leganés|2;Córdoba|2;Huelva|2;Alicante|2;Murcia|2;Cartagena|2;Albacete|2;Tenerife|2;Burgos|2;Eibar|2;Huesca|2;León|3;Salamanca|3;Logroño|3;Ferrol|3;Lugo|3;Pontevedra|3;Ourense|3;Badajoz|3;Mérida|3;Jaén|3;Marbella|3;Algeciras|3;Tarragona|3;Lleida|3;Sabadell|3;Terrassa|3;Alcorcón|3;Ponferrada|3;Miranda|3',
+    DE: 'Hannover|1;Nürnberg|1;Düsseldorf|1;Kaiserslautern|1;Karlsruhe|1;Paderborn|2;Magdeburg|2;Braunschweig|2;Kiel|2;Darmstadt|2;Fürth|2;Münster|2;Regensburg|3;Ulm|3;Bielefeld|2;Rostock|2;Dresden|2;Saarbrücken|3;Osnabrück|3;Heidenheim|2;Elversberg|3;Wiesbaden|3;Ingolstadt|3',
+    IT: 'Palermo|1;Bari|1;Brescia|1;Cremona|1;Pisa|1;Venedik|1;Spezia|1;Modena|1;Reggio Emilia|2;Cesena|2;Catanzaro|2;Salerno|1;Frosinone|2;Empoli|2;Monza|2;Ascoli|2;Terni|2;Perugia|2;Pescara|2;Padova|2;Vicenza|2;Triest|2;Avellino|3;Benevento|3;Cosenza|3;Catania|3;Messina|3;Foggia|3;Taranto|3;Livorno|3;Lucca|3;Arezzo|3;Ancona|3;Rimini|3;Novara|3;Alessandria|3;Mantova|3;Piacenza|3;Ferrara|3;Latina|3',
+    FR: 'Metz|1;Lorient|1;Angers|1;Caen|1;Guingamp|2;Bastia|2;Ajaccio|2;Amiens|2;Grenoble|2;Dijon|2;Troyes|2;Clermont|2;Pau|3;Rodez|3;Laval|3;Annecy|3;Dunkerque|3;Valenciennes|3;Nancy|3;Sochaux|3;Niort|3',
+    NL: 'Volendam|1;Emmen|1;Leeuwarden|1;Den Bosch|2;Dordrecht|2;Helmond|2;Venlo|2;Kerkrade|2;Maastricht|2;Oss|3;Velsen|3;Almere|2;Amersfoort|3;Zaandam|3;Haarlem|3;Leiden|3;Apeldoorn|3;Ede|3;Doetinchem|2;Eindhoven Stad|3;Rotterdam Kralingen|3',
+    PT: 'Coimbra|1;Aveiro|1;Leiria|1;Setúbal|1;Viseu|2;Penafiel|2;Feira|2;Tondela|2;Portimão|2;Covilhã|3;Paços de Ferreira|2;Oliveira|3;Mafra|3;Torres Vedras|3;Felgueiras|3;Trofa|3;Matosinhos|2;Póvoa de Varzim|3;Olhão|3;Évora|3;Barreiro|3;Almada|3'
+  };
+
+  /* ---------- Turnuvalar (isimler kurgusal) ----------
+     Avrupa Yıldızlar Ligi: kulüpler turnuvası. Ülke kotası 32 takım eder; önceki sezonun lig sıralamasıyla girilir.
+     Küresel Kupa: 4 yılda bir yazın oynanan milli takımlar turnuvası; öncesindeki sezonda eleme grubu oynanır. */
+  D.cups = {
+    cl: { name: 'Avrupa Yıldızlar Ligi', short: 'Yıldızlar Ligi', slots: { EN: 5, ES: 5, IT: 5, DE: 4, FR: 4, PT: 3, NL: 3, TR: 3 } },
+    wc: { name: 'Küresel Kupa', short: 'Küresel Kupa', qual: 'Küresel Kupa Elemeleri' }
+  };
+  // Milli takımlar: [ad, güç, forma rengi 1, forma rengi 2]
+  D.nations = [
+    ['Arjantin', 88, '#75AADB', '#FFFFFF'], ['Fransa', 88, '#002395', '#FFFFFF'], ['Brezilya', 87, '#FEDD00', '#009C3B'], ['İngiltere', 87, '#FFFFFF', '#1D3C8F'],
+    ['İspanya', 87, '#C60B1E', '#FFC400'], ['Almanya', 86, '#111111', '#DD0000'], ['Portekiz', 86, '#C8102E', '#006A4E'], ['Hollanda', 85, '#F36C21', '#FFFFFF'],
+    ['Belçika', 83, '#C8102E', '#111111'], ['İtalya', 84, '#0066CC', '#FFFFFF'], ['Hırvatistan', 82, '#FFFFFF', '#C8102E'], ['Uruguay', 82, '#7BAFD4', '#111111'],
+    ['Kolombiya', 80, '#FCD116', '#003893'], ['Danimarka', 80, '#C8102E', '#FFFFFF'], ['Fas', 80, '#C1272D', '#006233'], ['Türkiye', 78, '#E30A17', '#FFFFFF'],
+    ['İsviçre', 79, '#D52B1E', '#FFFFFF'], ['Japonya', 79, '#0B2A87', '#FFFFFF'], ['ABD', 78, '#FFFFFF', '#0A3161'], ['Meksika', 78, '#006847', '#FFFFFF'],
+    ['Senegal', 78, '#FFFFFF', '#00853F'], ['Sırbistan', 77, '#C6363C', '#0C4076'], ['Avusturya', 78, '#ED2939', '#FFFFFF'], ['Polonya', 76, '#FFFFFF', '#DC143C'],
+    ['Ukrayna', 76, '#FFD500', '#005BBB'], ['Güney Kore', 76, '#C60C30', '#111111'], ['Ekvador', 76, '#FFDD00', '#034EA2'], ['İsveç', 76, '#FECC00', '#006AA7'],
+    ['Norveç', 77, '#BA0C2F', '#FFFFFF'], ['Nijerya', 76, '#008751', '#FFFFFF'], ['Mısır', 75, '#CE1126', '#FFFFFF'], ['Avustralya', 74, '#FFCD00', '#00843D'],
+    ['Macaristan', 74, '#CE2939', '#FFFFFF'], ['İskoçya', 74, '#1D3C8F', '#FFFFFF'], ['Çekya', 74, '#D7141A', '#FFFFFF'], ['Cezayir', 75, '#FFFFFF', '#006233'],
+    ['Fildişi Sahili', 76, '#F77F00', '#FFFFFF'], ['Gana', 74, '#FFFFFF', '#111111'], ['Kamerun', 74, '#007A5E', '#CE1126'], ['İran', 73, '#FFFFFF', '#DA0000'],
+    ['Peru', 73, '#FFFFFF', '#D91023'], ['Şili', 73, '#D52B1E', '#0039A6'], ['Paraguay', 73, '#D52B1E', '#FFFFFF'], ['Kanada', 74, '#D80621', '#FFFFFF'],
+    ['Galler', 73, '#C8102E', '#FFFFFF'], ['Romanya', 72, '#FCD116', '#002B7F'], ['Yunanistan', 73, '#0D5EAF', '#FFFFFF'], ['Slovakya', 72, '#FFFFFF', '#0B4EA2'],
+    ['Gürcistan', 72, '#FFFFFF', '#DA291C'], ['Tunus', 72, '#E70013', '#FFFFFF'], ['Suudi Arabistan', 71, '#FFFFFF', '#006C35'], ['İzlanda', 70, '#02529C', '#FFFFFF'],
+    ['Arnavutluk', 70, '#E41E20', '#111111'], ['Slovenya', 72, '#FFFFFF', '#005DA4'], ['İrlanda', 70, '#169B62', '#FFFFFF'], ['Finlandiya', 69, '#FFFFFF', '#002F6C'],
+    ['Bosna-Hersek', 70, '#002395', '#FECB00'], ['Karadağ', 68, '#C40308', '#D4AF37'], ['Kazakistan', 66, '#00AFCA', '#FEC50C'], ['Azerbaycan', 66, '#0092BC', '#E00034'],
+    ['Litvanya', 63, '#FDB913', '#006A44'], ['Letonya', 63, '#9E3039', '#FFFFFF'], ['Ermenistan', 64, '#D90012', '#0033A0'], ['Lüksemburg', 64, '#EF3340', '#00A3E0'],
+    ['Kıbrıs', 63, '#FFFFFF', '#D57800'], ['Malta', 58, '#CF142B', '#FFFFFF'], ['Andorra', 55, '#10069F', '#FEDD00'], ['Moldova', 60, '#003DA5', '#FFD200']
+  ];
 
   D.stadiumPatterns = {
     big: ['{n} Arena', '{n} Şehir Stadı', '{n} Yeni Stadı'],

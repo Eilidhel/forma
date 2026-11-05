@@ -1,7 +1,9 @@
 {
-  "version": "1.20.1",
+  "version": "1.21.0",
   "date": "2026-11-05",
   "notes": [
-    "Maç olayları (hayalet gol, arı sürüsü, sis, martı vb.) artık yalnızca son maçta sahaya çıktıysan geliyor. Hocayla aran iyiyse ilk 11 şansın belirgin şekilde artıyor (Hocanın sana güveni). Çalışkanlık da sayılıyor: ekstra antrenman, video analizi, rakip izleme, sabah koşusu, erken yatma, yüksek disiplin şansını yükseltir; gece hayatı ve geç yatma düşürür. Maçta yaptığın her hareket o yeteneğe XP verir: dribling denersen dribling, uzun pas atarsan uzun pas gelişir. Başarılı hareketler daha çok XP verir, maç sonunda listelenir."
+    "Avrupa'da artık kademeli ligler var: İngiltere, İspanya, Almanya ve İtalya'da 3, yeni eklenen Fransa, Hollanda ve Portekiz'de 2 lig. Her lig 18 takım, yükselme ve düşme var (toplam 324 Avrupa kulübü).",
+    "Yeni turnuva: Avrupa Yıldızlar Ligi. Her sezon 32 kulüp (Türkiye'den 3), 8 grup, Son 16'dan finale tek maç eleme, hafta ortası maçları. Kulübün katılırsa sen de oynarsın.",
+    "Yeni turnuva: Küresel Kupa. 4 yılda bir yazın oynanır; öncesindeki sezon milli aralarda eleme grubu var. A milli takım kadrosundaysan turnuvada maç maç oynarsın. Lig ekranından tüm tabloları ve eleme ağacını izleyebilirsin."
   ]
 }

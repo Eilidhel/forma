@@ -24,7 +24,7 @@
       money: 25000, pot: [66, 92], followers: [2500, 9000], wealth: 3, father: 'hirsli', flags: ['akademi']
     },
     {
-      id: 'gurbetci', name: 'Gurbetçi', regions: ['DE'], start: { c: 'DE', t: 2 }, age: 18,
+      id: 'gurbetci', name: 'Gurbetçi', regions: ['DE'], start: { c: 'DE', t: 3 }, age: 18,
       desc: 'Duisburg\'da doğdun, dedenin geldiği Anadolu kasabasını yazdan yaza gördün. Almanya\'nın bölge liginde sözleşme imzaladın.',
       strong: 'Disiplin ve oyun düzeni', burden: 'Kimlik sorusu: hangi milli takım? "Orada Türk, burada Almancı"',
       attr: { base: 40, bonus: { pas: 5, savunma: 4, fizik: 3 } },

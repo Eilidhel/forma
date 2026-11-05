@@ -43,7 +43,10 @@ Each origin has its own story, starting league, strengths, burdens, family backg
 ### A living football world
 - **Choose your hometown** from 200+ towns and cities. Clubs from your region are favoured at the start, and your hometown club follows you and makes offers.
 - **Realistic offers.** Clubs come in at most two tiers above you, an exceptional player can jump three, and foreign clubs only call players from the top two tiers.
-- **236 clubs** in Turkey's 5 tiers (Süper Lig down to the Regional Amateur League), named after **205 real towns and cities**, plus top flights in England, Spain, Germany and Italy.
+- **236 clubs** in Turkey's 5 tiers (Süper Lig down to the Regional Amateur League), named after **205 real towns and cities**.
+- **324 European clubs in 18 leagues.** England, Spain, Germany and Italy have three tiers each; France, the Netherlands and Portugal have two. Every league has 18 teams with promotion and relegation. Top flights use PES-style fictional names with real club colours, and lower tiers are filled from real towns using the same system as Turkey.
+- **Avrupa Yıldızlar Ligi** (fictional European club cup): 32 clubs qualify from last season's top-flight standings (Turkey gets 3 spots). Eight groups of four, then round of 16, quarter-finals, semi-finals and final, played as midweek matches. Knockout ties are single matches with penalties.
+- **Küresel Kupa** (fictional world cup): every four years in the summer. In the season before it, international breaks become qualifiers in a five-team group. Group winners qualify, runners-up go to a play-off. If you make the senior squad, you play the tournament match by match.
 - Foreign clubs use PES-style fictional names with real club colours.
 - Full league tables, promotion and relegation, winter and summer transfer windows, loans, national team call-ups (U21 and senior) and **international breaks** where the league pauses.
 
