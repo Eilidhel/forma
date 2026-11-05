@@ -234,6 +234,7 @@
       const n = S.npcs[S.roles[who]];
       let label = D.relLabels[who] || who;
       if (who === 'hoca' && D.coachTypes[n.type]) label += ' · ' + D.coachTypes[n.type].name;
+      if (who === 'dost' && D.dostTypes && D.dostTypes[n.type]) label += ' · ' + D.dostTypes[n.type] + (n.from ? ' · ' + n.from : '');
       if (who === 'partner' && n.job) label += ' · ' + n.job;
       if (who === 'menajer' && S.agent) label += ' · ' + D.agentTiers[S.agent.tier].name;
       return { name: n.name, label, rel: n.rel, opts: npcOpts(n, who), tint: ROLE_TINT[who] };
@@ -1075,8 +1076,8 @@
     S.dms.forEach((m) => (m.read = true));
     const reqs = S.requests.map((rq, i) => {
       const def = D.requests.find((r) => r.id === rq.id);
-      const who = D.relLabels[def.who] ? whoInfo(def.who).name : F.tpl(def.who);
-      return `<div class="card stack" style="gap:8px"><div class="row">${av(who)}<div class="grow"><b>${esc(who)}</b><div class="tiny muted">İstek · ${Math.max(0, rq.until - S.t)} hafta içinde cevap bekliyor</div></div></div><p>${esc(F.tpl(def.t))}</p>
+      const who = D.relLabels[def.who] ? whoInfo(def.who).name : rq.who || F.tpl(def.who);
+      return `<div class="card stack" style="gap:8px"><div class="row">${av(who)}<div class="grow"><b>${esc(who)}</b><div class="tiny muted">İstek · ${Math.max(0, rq.until - S.t)} hafta içinde cevap bekliyor</div></div></div><p>${esc(F.tpl(def.t).replace(/{sehir}/g, F.myTeam().province))}</p>
         <div class="meta row wrap">${rq.cost ? `<span class="chip bad">${F.money(-rq.cost)}</span>` : ''}${fxPreview(def.fx)}</div>
         <div class="row"><button class="btn alt sm grow" data-a="req" data-v="${i}" data-w="0">Reddet</button><button class="btn sm grow" data-a="req" data-v="${i}" data-w="1">Kabul et</button></div></div>`;
     }).join('');
@@ -1121,6 +1122,7 @@
     return appShell('Kişiler', `<div class="card stack" style="gap:10px"><div class="label">Genel ilişkiler</div>${agg}</div>
       <div class="label">Kulüp</div><div class="card list">${['hoca', 'baskan', 'kaptan', 'kanka', 'rakip'].map(person).join('')}</div>
       <div class="label">Aile</div><div class="card list">${['anne', 'baba', 'kardes'].map(person).join('') || '<p class="small muted">—</p>'}</div>
+      <div class="label">Yakın arkadaş</div><div class="card list">${person('dost') || '<p class="small muted">—</p>'}</div><p class="tiny muted">Çocukluk arkadaşın kulüp değiştirsen de hep yanında. Bazen başını belaya sokar, bazen seni kurtarır. Boş zamanında onunla buluşmayı unutma.</p>
       ${partner}${kids}
       <div class="label">Medya</div><div class="card list">${['gazeteci', 'magazinci'].map(person).join('')}</div>`);
   }

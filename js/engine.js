@@ -858,6 +858,13 @@
   };
   // Para miktarını lig seviyesine göre ölçekle (1 = bir haftalık maaş civarı)
   F.scaleMoney = (mul) => Math.round(Math.max(3000, F.S.P.contract.wage) * mul / 1000) * 1000;
+  // senden istenen paralar (hediye, forma, borç, bağış…): maaşla büyür ama makul bir tavanı aşmaz.
+  // "w0.1" en fazla ~32 bin, "w1" ~200 bin, "w3" ~480 bin TL. Yıldız olsan da kardeşin 10 forma için milyon istemez.
+  F.costMoney = (mul) => {
+    const raw = Math.max(3000, F.S.P.contract.wage) * mul;
+    const cap = 200000 * Math.pow(Math.max(0.01, mul), 0.8);
+    return Math.max(500, Math.round(Math.min(raw, cap) / 500) * 500);
+  };
 
   /* =========================================================
      OLAYLAR
@@ -936,7 +943,7 @@
       return r;
     });
   };
-  F.evalMoney = (m) => (typeof m === 'string' && m.startsWith('w') ? F.scaleMoney(parseFloat(m.slice(1))) : m);
+  F.evalMoney = (m) => (typeof m === 'string' && m.startsWith('w') ? F.costMoney(parseFloat(m.slice(1))) : m);
   F.chkProb = function (chk) {
     const val = chk.s ? (F.S.P.soft[chk.s] != null ? F.S.P.soft[chk.s] : F.get(chk.s)) : F.get(chk.p);
     return F.clamp(0.5 + (val - chk.d) / 60, 0.08, 0.92);
@@ -949,7 +956,7 @@
     const out = {};
     Object.keys(fx).forEach((k) => {
       const v = fx[k];
-      out[k] = k === 'para' && typeof v === 'string' ? (v.startsWith('-w') ? -F.scaleMoney(parseFloat(v.slice(2))) : F.scaleMoney(parseFloat(v.slice(1)))) : v;
+      out[k] = k === 'para' && typeof v === 'string' ? (v.startsWith('-w') ? -F.costMoney(parseFloat(v.slice(2))) : F.scaleMoney(parseFloat(v.slice(1)))) : v;
     });
     return out;
   };
@@ -1079,8 +1086,13 @@
     const S = F.S;
     const def = D.requests.find((r) => r.id === id);
     if (!def || S.requests.some((r) => r.id === id)) return;
-    S.requests.push({ id, at: S.t, until: S.t + (def.expire || 4), cost: def.cost ? F.evalMoney(def.cost) : 0 });
-    F.addDM(F.tpl(D.relLabels[def.who] ? '{' + def.who + 'Tam}' : def.who), F.tpl(def.t));
+    // fiyat aralığı: istek ne olursa olsun bu aralığın dışına çıkmaz
+    let cost = def.cost ? F.evalMoney(def.cost) : 0;
+    if (def.price) cost = Math.round(F.clamp((cost || F.rf(def.price[0], def.price[1])) * F.rf(0.85, 1.15), def.price[0], def.price[1]) / 500) * 500;
+    const city = F.myTeam() ? F.myTeam().province : '';
+    const fill = (s) => F.tpl(String(s).replace(/{sehir}/g, city));
+    S.requests.push({ id, at: S.t, until: S.t + (def.expire || 4), cost, who: fill(D.relLabels[def.who] ? '{' + def.who + 'Tam}' : def.who) });
+    F.addDM(fill(D.relLabels[def.who] ? '{' + def.who + 'Tam}' : def.who), fill(def.t));
   };
   F.reqAnswer = function (i, accept) {
     const S = F.S;
