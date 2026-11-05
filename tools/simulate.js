@@ -6,7 +6,7 @@ const path = require('path');
 const vm = require('vm');
 
 const ROOT = path.join(__dirname, '..');
-const FILES = ['js/core.js', 'js/data/world.js', 'js/data/life.js', 'js/data/social.js', 'js/data/roles.js', 'js/data/positions.js', 'js/data/attack.js', 'js/data/life2.js', 'js/data/events_origin.js', 'js/data/events_club.js', 'js/data/events_life.js', 'js/data/events_match.js', 'js/data/events_extra.js', 'js/data/events_story.js', 'js/data/events_news.js', 'js/data/events_gen.js', 'js/data/events_dost.js', 'js/art.js', 'js/engine.js', 'js/systems.js', 'js/social2.js', 'js/stats.js', 'js/squad.js', 'js/progress.js', 'js/msgqueue.js', 'js/tournaments.js', 'js/social3.js', 'js/life3.js'];
+const FILES = ['js/core.js', 'js/data/world.js', 'js/data/life.js', 'js/data/social.js', 'js/data/roles.js', 'js/data/positions.js', 'js/data/attack.js', 'js/data/attack2.js', 'js/data/life2.js', 'js/data/events_origin.js', 'js/data/events_club.js', 'js/data/events_life.js', 'js/data/events_match.js', 'js/data/events_extra.js', 'js/data/events_story.js', 'js/data/events_news.js', 'js/data/events_gen.js', 'js/data/events_dost.js', 'js/art.js', 'js/engine.js', 'js/systems.js', 'js/social2.js', 'js/stats.js', 'js/squad.js', 'js/progress.js', 'js/msgqueue.js', 'js/tournaments.js', 'js/social3.js', 'js/life3.js', 'js/matchday.js'];
 FILES.forEach((f) => vm.runInThisContext(fs.readFileSync(path.join(ROOT, f), 'utf8'), { filename: f }));
 const F = globalThis.F;
 F.DEBUG = true;
@@ -121,6 +121,7 @@ function runCareer(i) {
       case 'press': { while (!st.done) { const q = F.pressQ(st.qs[st.i]); F.pressAnswer(rnd() < 0.1 ? -1 : Math.floor(rnd() * q.o.length)); } F.advance(); break; }
       case 'post': { const ph = pick(F.postPhotos()).id; const tn = pick(D.postTones).id; F.makePost(ph, tn); F.advance(); break; }
       case 'summary': case 'seasonSummary': case 'natInfo': F.advance(); break;
+      case 'tactic': F.tacticChoose(Math.floor(rnd() * 3)); F.advance(); break;
       case 'offers': {
         const P = S.P;
         if (S.offers.length && (P.contract.years <= 0 || rnd() < 0.35)) {

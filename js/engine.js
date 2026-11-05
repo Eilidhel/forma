@@ -1199,13 +1199,16 @@
     S.queue = [];
     const due = S.seeds.filter((s) => s.at <= S.t);
     S.seeds = S.seeds.filter((s) => s.at > S.t);
-    due.forEach((s) => { if (F.chance(s.p)) F.queueEvent(s.id); });
+    // Haftanın sırası: plan → plandaki etkinliklerden doğan olaylar (hemen) → taktik toplantısı → maç → basın → diğer olaylar ve haberler
+    const later = [];
+    const defer = (id) => { const ev = F.EV[id]; if (ev && F.canFire(ev, true) && !later.some((x) => x.id === id)) later.push(F.makeEventStep(id)); };
+    due.forEach((s) => { if (F.chance(s.p)) defer(s.id); });
     triggered.slice(0, 2).forEach((id) => F.queueEvent(id));
-    const already = S.queue.length;
+    const already = S.queue.length + later.length;
     // haftada genelde 1-2, bazen 3 olay
     const want = (F.chance(0.92) ? 1 : 0) + (F.chance(0.5) ? 1 : 0) + (F.chance(0.15) ? 1 : 0);
     const n = Math.max(0, want - already);
-    F.pickRandomEvents(n).forEach((id) => F.queueEvent(id));
+    F.pickRandomEvents(n).forEach((id) => defer(id));
 
     F.agentWeekly();
     F.maybeSpawnRequest();
@@ -1252,10 +1255,13 @@
         const ev = F.wpick(pool, (e) => e.w || 10);
         if (ev) S.queue.push(F.makeEventStep(ev.id));
       }
+      // oynayacaksan (ilk 11 ya da yedek) maçtan önce hocanın taktik toplantısı
+      if (['ilk11', 'yedek'].includes(S.preStatus.s)) S.queue.push({ type: 'tactic' });
       S.queue.push({ type: 'match', pre: true });
     }
     // kupa haftası: Avrupa Yıldızlar Ligi maçı (hafta ortası)
     if (F.weekCupSteps) F.weekCupSteps(!!fxt).forEach((st) => S.queue.push(st));
+    later.forEach((st) => S.queue.push(st));
     S.queue.push({ type: 'weekEnd' });
     F.processAuto();
   };

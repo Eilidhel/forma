@@ -172,11 +172,22 @@
     const p = F.momentProb(opt, m);
     const ok = forced != null ? !!forced : F.rand() < p;
     const out = ok ? opt.win : opt.lose;
+    // faul ya da penaltı kazandın: duran topu sen kullanırsın (maç anı bitmez, serbest vuruş / penaltı gelir)
+    if (out === 'fkwon' || out === 'penwon') {
+      const st = out === 'fkwon' ? 'fk' : 'pk';
+      const txtF = F.tpl(opt.winT);
+      m.log.push({ minute: mo.minute, t: txtF, ok: true, kind: 'pass' });
+      m.rating += out === 'penwon' ? 0.2 : 0.1;
+      mo.ref = 'chain:' + st + ':' + F.ri(0, D.attackStages[st].length - 1);
+      return { minute: mo.minute, t: txtF, ok: true, kind: 'pass', chain: true, setPiece: st };
+    }
     // atak zinciri: ilerle, aşama atla ya da aynı aşamada yeniden kur. Maç anı bitmez, yeni durum gelir.
     if (['adv', 'adv2', 'recycle'].includes(out)) {
       const cur = mo.ref.split(':')[1];
       const ord = D.attackOrder;
-      let ni = ord.indexOf(cur) + (out === 'adv' ? 1 : out === 'adv2' ? 2 : 0);
+      // duran toptan (serbest vuruş/penaltı) sonra kısa oyun bitirişe, yeniden kurma son üçte bire gider
+      const base = ord.indexOf(cur) >= 0 ? ord.indexOf(cur) : 1;
+      let ni = base + (out === 'adv' ? 1 : out === 'adv2' ? 2 : 0);
       if (out === 'recycle') mo.rec = (mo.rec || 0) + 1;
       ni = Math.min(ni, ord.length - 1);
       const txtA = F.tpl(opt.winT);

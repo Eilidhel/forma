@@ -614,6 +614,7 @@
       case 'summary': return summaryView(st);
       case 'seasonSummary': return seasonView(st);
       case 'natInfo': return natInfoView(st);
+      case 'tactic': return tacticView(st);
       case 'goals': return goalsView(st);
       case 'offers': return offersView(st);
       case 'retire': return retireView(st);
@@ -706,7 +707,7 @@
       U.flowSkip = false;
       const def = F.momentDef(mo.ref);
       return {
-        main: `<div class="stack fade">${board}${pitch}<div class="card stack moment" style="gap:6px"><div class="row"><div class="minute num grow">${mo.minute}'</div><span class="chip acc">Top sende</span></div>${mo.ref.startsWith('chain:') ? (() => { const st = mo.ref.split(':')[1]; return `<div class="row" style="gap:6px">${D.attackOrder.map((x) => `<span class="chip ${x === st ? 'on' : D.attackOrder.indexOf(x) < D.attackOrder.indexOf(st) ? 'good' : ''}">${D.attackStageNames[x]}</span>`).join('<span class="tiny muted">→</span>')}</div>`; })() : ''}<p class="ev-text">${esc(F.tpl(def.t))}</p></div>${cmt}</div>`,
+        main: `<div class="stack fade">${board}${pitch}<div class="card stack moment" style="gap:6px"><div class="row"><div class="minute num grow">${mo.minute}'</div><span class="chip acc">Top sende</span></div>${mo.ref.startsWith('chain:') ? (() => { const st = mo.ref.split(':')[1]; if (!D.attackOrder.includes(st)) return `<div class="row" style="gap:6px"><span class="chip warn">${esc(D.attackStageNames[st] || st)}</span></div>`; return `<div class="row" style="gap:6px">${D.attackOrder.map((x) => `<span class="chip ${x === st ? 'on' : D.attackOrder.indexOf(x) < D.attackOrder.indexOf(st) ? 'good' : ''}">${D.attackStageNames[x]}</span>`).join('<span class="tiny muted">→</span>')}</div>`; })() : ''}<p class="ev-text">${esc(F.tpl(def.t))}</p></div>${cmt}</div>`,
         dock: `<div class="stack" style="width:100%;gap:8px">${def.o.map((o, i) => `<button class="opt" data-a="m-opt" data-v="${i}"><div class="row"><b class="grow">${esc(o.t)}</b>${probTag(F.momentProb(o, m))}</div><div class="tiny muted" style="margin-top:3px">${esc(D.attrs[o.a] || D.softs[o.a] || o.a)}${o.a2 && D.attrs[o.a2] ? ' + ' + esc(D.attrs[o.a2]) : ''}${o.easy ? ' · kolay seçenek' : ''}</div></button>`).join('')}</div>`
       };
     }
@@ -1294,6 +1295,28 @@
     return appShell('Lig', `${sel}${champ}${cupKo(C, mine, isNat)}${groups ? '<div class="label">Gruplar</div>' + groups : ''}<p class="tiny muted">${note}</p>`);
   }
 
+  /* ---------- Maç öncesi taktik toplantısı ---------- */
+  function tacticView() {
+    const S = F.S, P = S.P;
+    const tp = F.tacticPlan();
+    const plan = D.tacticPlans[tp.key];
+    const h = F.npc('hoca');
+    const opp = tp.opp ? F.team(tp.opp) : null;
+    const me = F.myTeam();
+    const fm = F.teamFormation();
+    const status = S.preStatus && S.preStatus.t === S.t ? S.preStatus.s : null;
+    const res = tp.done != null ? tp.result : null;
+    const bonus = Object.keys(plan.b).map((k) => (typeof D.attrs[k] === 'string' ? D.attrs[k] : (D.attrs[k] && D.attrs[k].name) || k)).join(', ');
+    const opts = [['Planı dinle ve uygula', 'Planın istediği hareketler maçta daha kolay tutar.'], ['Soru sor, planı netleştir', 'Konuşma becerine bağlı: tutarsa bonus büyür, hoca sevinir.'], ['Kendi bildiğini oyna', 'Bireysel hareketlerin biraz rahatlar ama hoca bozulur.']];
+    return {
+      main: `<div class="stack fade"><div class="pitchlines"><div class="label" style="color:inherit;opacity:.8">Taktik toplantısı</div><div class="display" style="font-size:34px;margin-top:6px">${esc(plan.name)}</div><div class="small">${esc(me.name)} – ${opp ? esc(opp.name) : ''} · ${tp.home ? 'iç saha' : 'deplasman'} · ${esc(fm.name || fm.id || '')}</div></div>
+        <div class="card stack" style="gap:8px"><div class="row">${h ? av(h.name) : ''}<div class="grow"><b class="small">${h ? esc(h.name) : 'Hoca'}</b><div class="tiny muted">${h && D.coachTypes[h.type] ? esc(D.coachTypes[h.type].name) + ' hoca' : ''}</div></div>${status ? `<span class="chip ${status === 'ilk11' ? 'good' : ''}">${status === 'ilk11' ? 'İlk 11' : 'Yedek'}</span>` : ''}</div>
+          <p>"${esc(plan.t)}"</p><p class="small"><b>Senden beklediğim:</b> ${esc(plan.you[P.pos] || plan.you.OS)}</p>${opp ? `<p class="tiny muted">Rakip gücü ${opp.str} · bizim gücümüz ${me.str}</p>` : ''}</div>
+        ${res ? `<div class="result stack" style="gap:8px"><p>${esc(res.r)}</p>${deltaChips(res.deltas)}<p class="tiny muted">Bu maçta kolaylaşan hareketler: ${esc(bonus)}</p></div>` : `<div class="stack" style="gap:8px">${opts.map(([t, d], i) => `<button class="opt" data-a="tac-choose" data-v="${i}"><b>${esc(t)}</b><span class="tiny muted" style="display:block">${esc(d)}</span></button>`).join('')}</div>`}</div>`,
+      dock: res ? `<button class="btn" data-a="ev-next">Maça çık</button>` : ''
+    };
+  }
+
   /* ---------- Milli ara ve milli turnuva ekranları ---------- */
   function natInfoView(st) {
     const S = F.S, Cd = F.DATA.cups;
@@ -1659,6 +1682,7 @@
     },
     'cmt-open': (v) => { U.cmt = v; U.cmtText = ''; setTimeout(() => { const ta = document.getElementById('cmt-text'); if (ta) ta.focus(); }, 30); },
     'cmt-cancel': () => { U.cmt = null; },
+    'tac-choose': (v) => { F.tacticChoose(+v); },
     'cmt-send': () => {
       const ta = document.getElementById('cmt-text');
       const r = F.commentPost(U.cmt, ta ? ta.value : U.cmtText || '');
