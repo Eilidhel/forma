@@ -1,9 +1,8 @@
 {
-  "version": "1.23.3",
+  "version": "1.23.4",
   "date": "2026-11-05",
   "notes": [
-    "Sosyal medyada gönderiyi kim yazdıysa (annen, baban, kardeşin, partnerin, yakın arkadaşın, kaptan, hoca, kulüp) altında artık o yazıyor; 'Taraftar' yazmıyor.",
-    "Yorumlarına o kişi kendi ağzıyla cevap veriyor: annen 'kuzum benim', baban 'eyvallah aslanım' der; soğuk ya da kaba yazarsan kırılır, espri yaparsan güler. İlişkin de buna göre değişir.",
-    "Ailenin ya da sevdiklerinin gönderisini beğenmek onları sevindirir."
+    "Yeni kariyer ekranında 'Yetenek puanların' adımı artık baştan görünür; mevki seçince puanları dağıtırsın.",
+    "Alttaki açıklama güncellendi: memleketini sen seçersin, sadece annen, baban ve kardeşin rastgele belirlenir."
   ]
 }

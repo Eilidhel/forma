@@ -475,16 +475,16 @@
         ${og && og.pickClub ? clubPicker(c, og) : ''}
         <div class="label">2 · Mevkin</div>
         ${positionMap(c, 'create')}
-        ${og && c.role ? allocBox(c, og) : ''}
+        ${og && c.role ? allocBox(c, og) : `<div class="label">3 · Yetenek puanların</div><div class="card small muted">${og ? 'Sahada bir mevki seç' : 'Önce başlangıç noktanı, sonra mevkini seç'}; ardından kökenine göre verilen yetenek puanlarını burada dağıtacaksın.</div>`}
         <div class="label">Memleketin</div>
         <select id="c-home" aria-label="Memleket">${(() => { const RN = { MAR: 'Marmara', EGE: 'Ege', AKD: 'Akdeniz', ICA: 'İç Anadolu', KAR: 'Karadeniz', DOG: 'Doğu Anadolu', GDA: 'Güneydoğu Anadolu' }; return '<option value="">Rastgele</option>' + Object.keys(RN).map((r) => '<optgroup label="' + RN[r] + '">' + D.homePlaces.filter((pl) => pl.region === r).sort((x, y) => x.name.localeCompare(y.name, 'tr')).map((pl) => '<option value="' + esc(pl.name) + '"' + (c.home === pl.name ? ' selected' : '') + '>' + esc(pl.name) + (pl.province !== pl.name ? ' (' + esc(pl.province) + ')' : '') + '</option>').join('') + '</optgroup>').join(''); })()}</select>
         <p class="tiny muted">Memleketinin kulübü seni daha çok takip eder ve teklif yapar. Başlangıç kulübün de bu bölgeden seçilir.</p>
-        <div class="label">${og && c.role ? '4' : '3'} · Adın</div>
+        <div class="label">4 · Adın</div>
         <div class="row"><input type="text" id="c-name" placeholder="Ad" value="${esc(c.name)}" maxlength="16" aria-label="Ad"><input type="text" id="c-sur" placeholder="Soyad" value="${esc(c.surname)}" maxlength="18" aria-label="Soyad"></div>
         <button class="btn alt sm" data-a="c-rand" style="align-self:flex-start">Rastgele isim</button>
-        <div class="label">${og && c.role ? '5' : '4'} · Görünüm ve forma numarası</div>
+        <div class="label">5 · Görünüm ve forma numarası</div>
         ${lookEditor(c.look, ['#2f6e4c', '#183a28'], c.number, 'c-numin', c.surname || 'SOYAD')}
-        ${og ? `<p class="small muted">Memleketin ve ailen rastgele belirlenir. Kulübün ${og.start.big ? 'İstanbul\'un dev kulüplerinden biri' : 'kökeninin bölgesinden'} olacak.</p>` : ''}
+        ${og ? `<p class="small muted">Ailen (annen, baban, kardeşin) rastgele belirlenir. Memleketini yukarıdan sen seçersin${c.home ? '' : '; boş bırakırsan rastgele olur'}. Kulübün ${og.start.big ? 'İstanbul\'un dev kulüplerinden biri' : 'çoğunlukla memleketinin bölgesinden'} olacak.</p>` : ''}
       </div>`,
       dock: `<button class="btn" data-a="c-go" ${c.origin && c.role && (!og || !og.pickClub || c.club) ? '' : 'disabled'}>Kariyere başla</button>`
     };
