@@ -518,6 +518,13 @@
     } catch (e) { /* kart hatası ana ekranı bozmasın */ }
     return out;
   }
+  // gönderi başka birini hedef alıyorsa küçük bir etiket: beğenmeden önce kimin hakkında olduğunu gör
+  function postAboutChip(p) {
+    if (p.me || !F.postMeta) return '';
+    const m = F.postMeta(p);
+    if (!m.about || m.about === 'me' || m.tone === 'notr') return '';
+    return `<span class="chip ${m.tone === 'neg' ? 'bad' : 'good'}" style="margin-left:6px;padding:1px 8px">${esc(F.aboutLabel(m.about))} hakkında</span>`;
+  }
   function homeView() {
     const S = F.S, P = S.P;
     const t = F.myTeam();
@@ -1050,8 +1057,8 @@
     const imgBg = { mac: 'var(--accent)', antrenman: '#4b6b5a', aile: '#a0522d', partner: '#b03a6a', araba: '#2f3e66', ev: '#6b5a2f', memleket: '#3a6b8a' };
     if (tab === 'akis') {
       body = `<div class="stack" style="gap:10px"><div class="row small"><span class="grow muted">Takipçi</span><b class="num">${F.num(S.P.followers)}</b></div>${S.feed.length ? S.feed.map((p) => `<div class="post ${p.me ? 'mine' : ''}"><div class="row">${av(p.who)}<div class="grow"><b class="small">${esc(p.who)}</b><div class="tiny muted">${p.kind === 'news' ? 'Haber' : p.kind === 'rumor' ? 'Kulis' : p.kind === 'club' ? 'Resmi hesap' : p.kind === 'viral' ? 'Viral' : p.kind === 'hate' ? 'Eleştiri' : p.me ? 'Sen' : 'Taraftar'}</div></div></div>
-        ${p.img ? `<div class="img" style="background:${imgBg[p.img] || 'var(--accent)'}">${esc((F.postPhotos().find((x) => x.id === p.img) || { name: p.img }).name)}</div>` : ''}<p>${esc(p.t)}</p><div class="row tiny muted">${p.me ? `<span style="width:14px;height:14px;display:inline-block">${ICON.heart}</span>` : `<button class="likebtn ${p.liked ? 'on' : ''}" data-a="like" data-v="${p.id}" aria-label="Beğen" ${p.liked ? 'disabled' : ''}>${ICON.heart}</button>`}<span class="num">${F.num(p.likes)}</span></div>
-        ${p.comments ? p.comments.map((c) => `<div class="small" style="padding-left:8px;border-left:2px solid var(--line)"><b>${esc(c.who)}</b> ${esc(c.t)}</div>`).join('') : ''}</div>`).join('') : '<div class="card small muted">Akış boş. Maça çık, birileri bir şey yazar.</div>'}</div>`;
+        ${p.img ? `<div class="img" style="background:${imgBg[p.img] || 'var(--accent)'}">${esc((F.postPhotos().find((x) => x.id === p.img) || { name: p.img }).name)}</div>` : ''}<p>${esc(p.t)}</p><div class="row tiny muted">${p.me ? `<span style="width:14px;height:14px;display:inline-block">${ICON.heart}</span>` : `<button class="likebtn ${p.liked ? 'on' : ''}" data-a="like" data-v="${p.id}" aria-label="Beğen" ${p.liked ? 'disabled' : ''}>${ICON.heart}</button>`}<span class="num">${F.num(p.likes)}</span>${postAboutChip(p)}<span class="grow"></span>${!p.me && !p.commented && U.cmt !== p.id ? `<button class="pick" style="padding:4px 10px" data-a="cmt-open" data-v="${p.id}">Yorum yap</button>` : ''}</div>
+        ${p.comments ? p.comments.map((c) => `<div class="small" style="padding-left:8px;border-left:2px solid ${c.me ? 'var(--accent)' : 'var(--line)'}"><b>${esc(c.who)}</b> ${esc(c.t)}</div>`).join('') : ''}${U.cmt === p.id ? `<div class="stack" style="gap:6px"><textarea id="cmt-text" rows="2" maxlength="280" placeholder="Yorumunu yaz. Savunmak, teşekkür etmek, espri yapmak ya da katılmak farklı tepki getirir." style="width:100%;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:8px;font:inherit;resize:vertical">${esc(U.cmtText || '')}</textarea><div class="row" style="gap:6px"><button class="btn sm" data-a="cmt-send" style="width:auto">Gönder</button><button class="pick" data-a="cmt-cancel">Vazgeç</button></div></div>` : ''}</div>`).join('') : '<div class="card small muted">Akış boş. Maça çık, birileri bir şey yazar.</div>'}</div>`;
     } else if (tab === 'oda') {
       body = `<div class="card"><div class="label" style="margin-bottom:8px">${esc(F.myTeam().name)} · Soyunma Odası</div><div class="chat">${S.chat.length ? S.chat.slice(-30).map((c) => `<div class="bub them"><b class="tiny" style="color:${hashColor(c.who)}">${esc(c.who)}</b><br>${esc(c.t)}</div>`).join('') : '<p class="small muted">Grup sessiz.</p>'}</div></div>
         <div class="row wrap">${['Hayırlı haftalar beyler 💪', 'Akşam halı saha var mı?', 'Hoca bugün sert, dikkat 😅'].map((t, i) => `<button class="pick" data-a="chat-say" data-v="${i}">${esc(t)}</button>`).join('')}</div><p class="tiny muted">Gruba yazmak takım ilişkini biraz güçlendirir (haftada bir).</p>`;
@@ -1640,7 +1647,24 @@
     'm-finish': () => { F.matchFinish(); },
     'press-opt': (v) => { F.pressAnswer(+v); },
     'post-photo': (v) => { U.post.photo = v; },
-    like: (v) => { const r = F.likePost(v); if (r && r.gain) toast('Beğendin · +' + r.gain + ' takipçi'); else if (r && r.capped) toast('Beğendin. Bu hafta beğenilerden yeterince takipçi kazandın.'); },
+    like: (v) => {
+      const r = F.likePost(v);
+      if (!r) return;
+      const parts = [r.gain ? '+' + F.num(r.gain) + ' takipçi' : r.capped ? 'bu hafta beğenilerden yeterince takipçi kazandın' : ''];
+      (r.effects || []).forEach((e) => parts.push(e.who + ' ' + (e.v > 0 ? '+' : '') + e.v + (e.t ? ' (' + e.t + ')' : '')));
+      if (r.noticed) parts.push('gördü ve sana yazdı');
+      toast('Beğendin' + (parts.filter(Boolean).length ? ' · ' + parts.filter(Boolean).join(' · ') : ''));
+    },
+    'cmt-open': (v) => { U.cmt = v; U.cmtText = ''; setTimeout(() => { const ta = document.getElementById('cmt-text'); if (ta) ta.focus(); }, 30); },
+    'cmt-cancel': () => { U.cmt = null; },
+    'cmt-send': () => {
+      const ta = document.getElementById('cmt-text');
+      const r = F.commentPost(U.cmt, ta ? ta.value : U.cmtText || '');
+      if (r.err) { toast(r.err); return; }
+      U.cmt = null; U.cmtText = '';
+      const eff = F.mergeDeltas(r.deltas || []).filter((d) => !d.trait && d.k && d.k.indexOf('r.') === 0).map((d) => d.label + ' ' + (d.v > 0 ? '+' : '') + Math.round(d.v));
+      toast(r.r + (eff.length ? ' ' + eff.join(' · ') : ''));
+    },
     'post-tone': (v) => { U.post.tone = v; },
     'post-send': () => {
       const st = F.S.queue[0];
@@ -1912,6 +1936,7 @@
   });
   app.addEventListener('input', (e) => {
     const t = e.target;
+    if (t.id === 'cmt-text') { U.cmtText = t.value; return; }
     if (t.id === 'c-numin' || t.id === 'p-numin') {
       const n = Math.max(1, Math.min(99, parseInt(t.value, 10) || 0));
       if (!t.value) return;
