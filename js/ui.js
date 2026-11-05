@@ -698,18 +698,23 @@
     const anim = U.animN !== m.log.length + '|' + S.t;
     U.animN = m.log.length + '|' + S.t;
     // senin anının animasyonu ve sesi (yalnızca yeni hamlede bir kez)
-    const mfx = anim && last ? momentFx(last) : '';
-    if (anim && last && F.SND) F.SND.play(momentSnd(last));
-    // spikerin yeni satırı: gol, düdük, devre, maç sonu sesleri
-    if (F.SND && m.feed) {
-      const fk = S.t + '|' + (m.done ? m.feed.length : m.fi);
-      if (U.sndFeed && U.sndFeed.t === S.t && U.sndFeed.k !== fk) {
-        const f = m.done ? null : m.feed[m.fi - 1];
-        if (f) F.SND.play(f.kind === 'goal' ? (f.side === 'me' ? 'goal' : 'concede') : f.kind === 'half' ? 'half' : f.kind === 'end' ? 'end' : f.kind === 'whistle' ? 'whistle' : '');
-      }
-      U.sndFeed = { t: S.t, k: fk };
+    // spikerin yeni satırı mı açıldı? (gol, fırsat, düdük: saha, ses ve animasyon buna göre değişir)
+    const fk = S.t + '|' + (m.done ? m.feed.length : m.fi);
+    const feedNew = !!(U.sndFeed && U.sndFeed.t === S.t && U.sndFeed.k !== fk);
+    U.sndFeed = { t: S.t, k: fk };
+    const lf = !m.done && m.fi > 0 ? m.feed[m.fi - 1] : null;
+    // sıradaki an senin anınsa saha seni gösterir; değilse maçın akışını (top spikerin anlattığı yerde)
+    const pend = m.played && m.i < m.moments.length && (!m.feed[m.fi] || m.moments[m.i].minute <= m.feed[m.fi].minute);
+    const useFlow = !!lf && !pend && !(anim && last) && (!last || lf.minute >= last.minute);
+    const flow = useFlow ? { cur: lf, prev: m.fi > 1 ? m.feed[m.fi - 2] : null, n: m.fi } : null;
+    // animasyon: senin hamlen ya da akıştaki gol (senin dışındaki goller de ekranda belirir)
+    let mfx = anim && last ? momentFx(last) : '';
+    if (!mfx && feedNew && lf && lf.kind === 'goal') mfx = momentFx({ kind: lf.side === 'me' ? 'goal' : 'concede' });
+    if (F.SND) {
+      if (anim && last) F.SND.play(momentSnd(last));
+      else if (feedNew && lf) F.SND.play(lf.kind === 'goal' ? (lf.side === 'me' ? 'goal' : 'concede') : lf.kind === 'chance' ? (lf.side === 'me' ? 'chance' : 'lost') : lf.kind === 'half' ? 'half' : lf.kind === 'end' ? 'end' : lf.kind === 'whistle' ? 'whistle' : '');
     }
-    const pitch = (m.played || m.status === 'yedek') && !m.done ? `<div class="pitchwrap">${F.ART.pitch(m, last ? last.kind : null, m.log.length, me.colors, op.colors, anim && !!last)}</div>` : '';
+    const pitch = (m.played || m.status === 'yedek') && !m.done ? `<div class="pitchwrap">${F.ART.pitch(m, last ? last.kind : null, m.log.length, me.colors, op.colors, flow ? feedNew : anim && !!last, flow)}</div>` : '';
     // Spiker: açılan akış satırları ve senin anların; en yenisi üstte
     const shown = m.done ? m.feed.length : m.fi;
     // devre ve maç sonu satırında o ana kadarki skor

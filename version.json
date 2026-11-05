@@ -1,12 +1,9 @@
 {
-  "version": "1.23.0",
+  "version": "1.23.1",
   "date": "2026-11-05",
   "notes": [
-    "Maç haftası sırası: plan, plandan doğan olaylar, hocanın taktik toplantısı, maç, basın toplantısı, sonra haftanın diğer olayları ve haberler.",
-    "Taktik toplantısı: hoca rakibe ve kendi tarzına göre plan anlatır; planı uygularsan, soru sorarsan ya da kendi bildiğini oynarsan maçta farklı hareketler kolaylaşır.",
-    "Sahada artık 22 oyuncu kendi dizilişinde; yedekken kulübede oturursun, oyuna girince mevkine yürürsün.",
-    "Maç animasyonları: gol ve asistte top ağlarda, kurtarışta eldiven, müdahalede duvar, pasta PAS yazısı, kaçan kritik pozisyonda top auta gider.",
-    "Sesler: gol, düdük, kurtarış, kaçan pozisyon ve tribün. Ayarlar'dan açıp kapatabilir, sesini ayarlayabilirsin.",
-    "Yeni maç senaryoları: savunma arkasına koşu, sahte koşu, duvar pası, uzaktan şut, uzun pas, geri dönüş. Kazandığın faulün frikiğini, kazandığın penaltıyı sen kullanırsın."
+    "Saha artık maç boyunca canlı: spikerin her satırında top ve iki takım olayın olduğu yere gider (bizim fırsat, rakip atak, goller).",
+    "Senin dışındaki goller de ekranda gol animasyonu ve sesiyle görünür; yenen gollerde GOL YEDİK çıkar.",
+    "Formaları benzer takımlar sahada artık birbirinden ayırt edilir."
   ]
 }
