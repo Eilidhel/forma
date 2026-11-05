@@ -104,6 +104,13 @@
       else { F.fx({ moral: -1 }); F.relAdd('medya', -1); out.effects.push({ who: 'Medya', v: -1, t: 'kendine yazılan eleştiriyi beğenmeni haber yaptı' }); }
     }
     if (p.kind === 'club') F.relAdd('baskan', 0.3);
+    // tanıdığın birinin gönderisini beğenmek o kişiyi sevindirir
+    const au = F.postAuthor(p);
+    if (au && au !== 'club' && PERSONAL.includes(au) && F.npc(au)) {
+      F.relAdd(au, 1.5);
+      out.effects.push({ who: F.authorLabel(p), v: 1.5, t: 'beğenini gördü' });
+      if (FAMILY.includes(au) && F.chance(0.3)) F.addDM(F.npc(au).name, F.pick(['Beğenmişsin 🥹 Kurbanın olayım.', 'Gördüm beğenini, gözlerim doldu.', 'Beğendin mi? Sana yine yazarım o zaman ❤']));
+    }
     return out;
   };
 
@@ -121,6 +128,106 @@
   const DM_THANKS = ['Gördüm yazdığını. Arkamda durduğun için sağ ol, unutmam.', 'Beni savunduğun yorumu okudum. Eksik olma.'];
   const DM_ANGRY = ['O yoruma katılman çok ayıp oldu. Arkamdan değil, yüzüme konuş.', 'Hakkımdaki gönderiye yazdığın yorumu gördüm. Bunu konuşacağız.'];
 
+  /* ---------- Gönderiyi kim yazdı? Annen, baban, kardeşin, partnerin, yakın arkadaşın, kaptan, hoca, kulüp, gazeteci… ---------- */
+  const AUTHOR_ROLES = ['anne', 'baba', 'kardes', 'partner', 'dost', 'kanka', 'kaptan', 'hoca', 'baskan', 'menajer', 'rakip', 'gazeteci', 'magazinci'];
+  const PERSONAL = ['anne', 'baba', 'kardes', 'partner', 'dost', 'kanka', 'kaptan', 'hoca', 'baskan', 'club'];
+  const FAMILY = ['anne', 'baba', 'kardes'];
+  F.postAuthor = function (p) {
+    if (!p || p.me) return null;
+    if (p.authorRole !== undefined) return p.authorRole;
+    let r = null;
+    for (const role of AUTHOR_ROLES) { const n = F.npc(role); if (n && n.name === p.who) { r = role; break; } }
+    if (!r && p.kind === 'family') r = 'anne';
+    if (!r && p.kind === 'partner') r = 'partner';
+    if (!r && p.kind === 'club') r = 'club';
+    if (!r && (D.journalists || []).some((j) => j.name === p.who)) r = 'gazeteci';
+    p.authorRole = r;
+    return r;
+  };
+  F.authorLabel = function (p) {
+    const r = F.postAuthor(p);
+    if (!r) return null;
+    const female = r === 'kardes' && F.npc('kardes') && F.npc('kardes').female;
+    return { anne: 'Annen', baba: 'Baban', kardes: female ? 'Kız kardeşin' : 'Kardeşin', partner: 'Partnerin', dost: 'Yakın arkadaşın', kanka: 'Takım arkadaşın', kaptan: 'Kaptanın', hoca: 'Hocan', baskan: 'Kulüp başkanı', menajer: 'Menajerin', rakip: 'Mevki rakibin', gazeteci: 'Gazeteci', magazinci: 'Magazin muhabiri', club: 'Resmi hesap' }[r] || null;
+  };
+  // yorumuna verilen cevap: yazan kişiye ve yorumunun tonuna göre (sevgi, soğukluk, hakaret, espri, sıradan)
+  const AUTHOR_REPLY = {
+    anne: {
+      love: ['Kuzum benim 🥹 Yorumunu okuyunca gözlerim doldu.', 'Ben de seni çok seviyorum yavrum. Kendine iyi bak, yemeğini düzgün ye olur mu?', 'Ah oğlum… Bayramda gelemedin ama bu yazdığın bana yetti. Dualarım hep seninle ❤', 'Komşulara gösterdim yorumunu, hepsi "ne güzel evlat" dedi. Gururum sensin.', 'Canım oğlum, sesini duymak gibi oldu. Akşam bir ara, hasret kaldım.'],
+      cold: ['Oğlum neden böyle yazdın? Annenim ben…', 'Herkesin önünde annene bu şekilde mi cevap veriyorsun? Kalbimi kırdın.', 'Peki oğlum. Sen bilirsin.'],
+      insult: ['Bu ağız nereden çıktı? Ben seni böyle mi büyüttüm?', 'Yazıklar olsun. Bu yorumu hemen sil, babanın görmesini istemem.'],
+      wit: ['Hâlâ aynı yaramazsın 😄 Gel de bir kulağını çekeyim.', 'Seni gidi seni 😄 Bu espriyi kimden öğrendin?'],
+      neutral: ['Tamam oğlum. Yemek yedin mi, uyuyor musun düzgün?', 'Gördüm yavrum. Kendine dikkat et.']
+    },
+    baba: {
+      love: ['Eyvallah aslanım. Gururlandırıyorsun beni.', 'Sağ ol oğlum. Sen sahada alnının akıyla oyna, gerisini dert etme.', 'Kahvede herkese okudum yorumunu. Bizim oğlan, dedim.'],
+      cold: ['Babana böyle mi cevap verilir? Akşam konuşacağız.', 'Bu tavrı beğenmedim.'],
+      insult: ['Bir daha bu dili kullanırsan karşında beni bulursun.', 'Ünlü olunca terbiyeni de mi unuttun?'],
+      wit: ['Hah, espri anlayışı da bende çekmiş 😄', 'Güldürdün beni oğlum, eyvallah.'],
+      neutral: ['Tamam.', 'Hı hı. Sen maçına odaklan.']
+    },
+    kardes: {
+      love: ['Abiii 😍 Yorumunu herkese gösterdim!', 'Abi okulda havam bir başka şimdi 😎 Seni seviyorum.', 'Sen dünyanın en iyi abisisin, biliyorsun değil mi? 🥹'],
+      cold: ['Ya abi niye böyle yazıyorsun, herkes gördü 😑', 'Tamam abi, anladım. Bir daha yazmam.'],
+      insult: ['Abi bu ne ya? Silsene şunu, rezil oldum!'],
+      wit: ['😂😂 Abi tamam pes ettim.', 'Abi sen futbolu bırak komedyen ol 😂'],
+      neutral: ['👍', 'Tmm abi.']
+    },
+    partner: {
+      love: ['❤ Seni seviyorum. Akşam erken gel, yemek yaptım.', 'Herkesin önünde böyle yazman çok tatlı 🥰', 'İşte bu yüzden seninleyim ❤'],
+      cold: ['Bunu herkesin önünde yazmak zorunda mıydın?', 'Akşam konuşacağız.'],
+      insult: ['Bu yorumu sil. Hemen.', 'Bu ne cüret? Eve gelince görüşürüz.'],
+      wit: ['Çok komiksin 😂 Seni seviyorum ama.', 'Deli misin sen 😂❤'],
+      neutral: ['😘', 'Tamam aşkım.']
+    },
+    dost: {
+      love: ['Kardeşim benim 🤝 Ne olursa olsun yanındayım.', 'Eyvallah kanka, bu yorum çerçevelik. Çocukluğumuzu hatırladım.'],
+      cold: ['Kanka ne bu soğukluk? Bir şey mi oldu aramızda?', 'Tamam kanka, anladım.'],
+      insult: ['Oha kanka 😳 İyi misin sen? Ara beni.'],
+      wit: ['Hahaha kanka sen hep böyleydin 😂', 'Mahallede de aynı laflarla güldürürdün 😂'],
+      neutral: ['🤝', 'Eyv kanka.']
+    },
+    kanka: {
+      love: ['Eyvallah reis 🤝 Sahada da böyle olalım.', 'Sağ ol kanka, bu sezon bizim!'],
+      cold: ['Kanka antrenmanda konuşalım, burada değil.'],
+      insult: ['Kanka bu yazdığın soyunma odasında konuşulur, burada değil.'],
+      wit: ['😂 Antrenmanda göreceğiz bu espriyi.'],
+      neutral: ['🤝']
+    },
+    kaptan: {
+      love: ['Takım için yazman güzel. Sahada da göster.', 'Böyle devam. Soyunma odasında seninle gurur duyuyoruz.'],
+      cold: ['Bu ton bana uymaz. Yüz yüze konuşalım.'],
+      insult: ['Soyunma odasında görüşeceğiz.'],
+      wit: ['Ha ha. Antrenmanda da bu kadar hızlı ol.'],
+      neutral: ['👍']
+    },
+    hoca: {
+      love: ['Güzel. Şimdi bunu antrenmanda da göster.', 'Teşekkür ederim. Takım bu ruhla kazanır.'],
+      cold: ['Bunu sosyal medyada değil, odamda konuşalım.'],
+      insult: ['Yarın sabah ofisime gel.'],
+      wit: ['Espriyi sahada görelim.'],
+      neutral: ['Not ettim.']
+    },
+    baskan: {
+      love: ['Kulübümüzün değerli oyuncusuna teşekkürler. Kapımız sana hep açık.'],
+      cold: ['Yönetim bu üslubu not etti.'],
+      insult: ['Bu yorum yönetim kurulunda konuşulacak.'],
+      wit: ['😄 Esprinize güldük, sahada da güldürün.'],
+      neutral: ['Teşekkürler.']
+    },
+    club: {
+      love: ['Formamızı terleten oyuncumuza teşekkürler! 💪', 'Birlikte daha güçlüyüz ❤', 'İşte bu ruh! Hep birlikte! 🔥'],
+      cold: ['Yorumunuzu yönetimle paylaştık.'],
+      insult: ['Resmi hesabımızdaki bu yorum disiplin kuruluna iletildi.'],
+      wit: ['😄 Takımımızın şakacısı yine iş başında!'],
+      neutral: ['👍']
+    }
+  };
+  const AUTHOR_NOTE = {
+    love: (l) => l + ' yorumunu görünce çok sevindi.', cold: (l) => l + ' bu soğuk cevaba bozuldu.', insult: (l) => l + ' bu üsluba çok kızdı. Yorumun ekran görüntüsü dolaşıyor.',
+    wit: (l) => l + ' esprine güldü.', neutral: (l) => l + ' kısa bir cevap verdi.'
+  };
+  const LOVE = ['seviyorum', 'özledim', 'canım', 'annecim', 'babacım', 'kardeşim', 'yanındayım', 'öptüm', 'kucak', 'gurur', 'iyi ki', ' hep ', 'dua'];
   F.commentPost = function (id, text) {
     const S = F.S, P = S.P;
     const p = S.feed.find((x) => x.id === id);
@@ -137,7 +244,22 @@
     const person = isPerson(who);
     const target = F.aboutLabel(who);
     let cat, reply, note, good = 0;
-    if (n.ins) {
+    const author = F.postAuthor(p);
+    if (PERSONAL.includes(author)) {
+      // tanıdığın biri yazmış: cevabı da etkisi de o kişiye göre
+      const love = n.pos + n.thx + n.hum + n.def + count(t, LOVE);
+      const bucket = n.ins ? 'insult' : n.fun ? 'wit' : n.neg > love ? 'cold' : love > 0 ? 'love' : 'neutral';
+      const pool = AUTHOR_REPLY[author] || AUTHOR_REPLY.club;
+      reply = F.pick(pool[bucket] || pool.neutral);
+      cat = 'author-' + bucket;
+      good = { love: 2, wit: 1, neutral: 0, cold: -1, insult: -2 }[bucket];
+      const rel = author === 'club' ? 'baskan' : author;
+      add('r.' + rel, { love: 5, wit: 2, neutral: 1, cold: -5, insult: -10 }[bucket]);
+      if (FAMILY.includes(author)) add('r.aile', { love: 2, wit: 1, neutral: 0, cold: -2, insult: -5 }[bucket]);
+      if (bucket === 'love') { add('moral', 2); if (FAMILY.includes(author) || author === 'partner') add('r.taraftar', 1); }
+      if (bucket === 'insult') { add('r.medya', -3); add('t.asabi', 0.3); }
+      note = AUTHOR_NOTE[bucket](F.authorLabel(p) + (author !== 'club' && F.npc(rel) ? ' ' + F.npc(rel).name.split(' ')[0] : ''));
+    } else if (n.ins) {
       // hakaret her durumda geri teper
       cat = 'insult'; good = -2; reply = F.pick(REPLY.hateFight);
       add('r.medya', -4); add('r.taraftar', -2); add('t.asabi', 0.4);

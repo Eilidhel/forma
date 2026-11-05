@@ -1,8 +1,9 @@
 {
-  "version": "1.23.2",
+  "version": "1.23.3",
   "date": "2026-11-05",
   "notes": [
-    "Giriş ekranı artık gerçek sayıları gösteriyor (13 başlangıç, 23 lig, 2.100+ olay) ve hangi sürümde olduğunu yazıyor.",
-    "Oyun her açılışta GitHub'daki sürüme bakar; eski bir kopyadaysan giriş ekranında 'Şimdi güncelle' butonu çıkar."
+    "Sosyal medyada gönderiyi kim yazdıysa (annen, baban, kardeşin, partnerin, yakın arkadaşın, kaptan, hoca, kulüp) altında artık o yazıyor; 'Taraftar' yazmıyor.",
+    "Yorumlarına o kişi kendi ağzıyla cevap veriyor: annen 'kuzum benim', baban 'eyvallah aslanım' der; soğuk ya da kaba yazarsan kırılır, espri yaparsan güler. İlişkin de buna göre değişir.",
+    "Ailenin ya da sevdiklerinin gönderisini beğenmek onları sevindirir."
   ]
 }
