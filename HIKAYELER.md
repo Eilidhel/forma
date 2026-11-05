@@ -1,6 +1,6 @@
 # FORMA hikâye listesi
 
-Toplam **421** olay. Bu liste oyunun veri dosyalarından otomatik üretildi (`node tools/storylist.js`).
+Toplam **2101** olay. Bu liste oyunun veri dosyalarından otomatik üretildi (`node tools/storylist.js`).
 
 ## js/data/life2.js · Kariyer başlangıcı (5)
 
@@ -563,4 +563,1687 @@ Toplam **421** olay. Bu liste oyunun veri dosyalarından otomatik üretildi (`no
 - **mk_dua**: Kritik maç öncesi memleketindeki herkes kahvede toplanmış, maçını izlemek için dev ekran kurmuşlar.
 - **mk_eski_hoca**: Mahalle takımındaki ilk hocan hastanede. Seni görmek istiyor.
 - **mk_sokak_adi**: Doğduğun sokağa senin adın verildi. Tabelada adın yanlış yazılmış.
+
+## js/data/events_gen.js (1680)
+
+- **g_soylenti_0_0**: Bir haber sitesi {buyukkulup} kulübünün seni listesine aldığını yazdı. Taraftarlar şimdiden tesisin önünde "Gitme" pankartı açtı.
+- **g_soylenti_0_1**: Bir haber sitesi {buyukkulup} kulübünün seni listesine aldığını yazdı. Menajerin telefonu sabahtan beri susmuyor.
+- **g_soylenti_0_2**: Bir haber sitesi {buyukkulup} kulübünün seni listesine aldığını yazdı. Takım arkadaşların soyunma odasında seninle dalga geçiyor.
+- **g_soylenti_0_3**: Bir haber sitesi {buyukkulup} kulübünün seni listesine aldığını yazdı. Haber bir saatte yüz binlerce kez görüntülendi.
+- **g_soylenti_0_4**: Bir haber sitesi {buyukkulup} kulübünün seni listesine aldığını yazdı. Hoca antrenmandan önce "kafan burada olsun" dedi.
+- **g_soylenti_0_5**: Bir haber sitesi {buyukkulup} kulübünün seni listesine aldığını yazdı. Annen haberi görüp hemen aradı.
+- **g_soylenti_0_6**: Bir haber sitesi {buyukkulup} kulübünün seni listesine aldığını yazdı. Kulüp resmi bir açıklama yapmadı, sessizliği daha çok konuşuluyor.
+- **g_soylenti_1_0**: Gazeteciler {buyukkulup} scoutunun son maçında tribünde olduğunu iddia ediyor. Taraftarlar şimdiden tesisin önünde "Gitme" pankartı açtı.
+- **g_soylenti_1_1**: Gazeteciler {buyukkulup} scoutunun son maçında tribünde olduğunu iddia ediyor. Menajerin telefonu sabahtan beri susmuyor.
+- **g_soylenti_1_2**: Gazeteciler {buyukkulup} scoutunun son maçında tribünde olduğunu iddia ediyor. Takım arkadaşların soyunma odasında seninle dalga geçiyor.
+- **g_soylenti_1_3**: Gazeteciler {buyukkulup} scoutunun son maçında tribünde olduğunu iddia ediyor. Haber bir saatte yüz binlerce kez görüntülendi.
+- **g_soylenti_1_4**: Gazeteciler {buyukkulup} scoutunun son maçında tribünde olduğunu iddia ediyor. Hoca antrenmandan önce "kafan burada olsun" dedi.
+- **g_soylenti_1_5**: Gazeteciler {buyukkulup} scoutunun son maçında tribünde olduğunu iddia ediyor. Annen haberi görüp hemen aradı.
+- **g_soylenti_1_6**: Gazeteciler {buyukkulup} scoutunun son maçında tribünde olduğunu iddia ediyor. Kulüp resmi bir açıklama yapmadı, sessizliği daha çok konuşuluyor.
+- **g_soylenti_2_0**: Sosyal medyada "{ad} sezon sonunda ayrılıyor" etiketi gündemde. Taraftarlar şimdiden tesisin önünde "Gitme" pankartı açtı.
+- **g_soylenti_2_1**: Sosyal medyada "{ad} sezon sonunda ayrılıyor" etiketi gündemde. Menajerin telefonu sabahtan beri susmuyor.
+- **g_soylenti_2_2**: Sosyal medyada "{ad} sezon sonunda ayrılıyor" etiketi gündemde. Takım arkadaşların soyunma odasında seninle dalga geçiyor.
+- **g_soylenti_2_3**: Sosyal medyada "{ad} sezon sonunda ayrılıyor" etiketi gündemde. Haber bir saatte yüz binlerce kez görüntülendi.
+- **g_soylenti_2_4**: Sosyal medyada "{ad} sezon sonunda ayrılıyor" etiketi gündemde. Hoca antrenmandan önce "kafan burada olsun" dedi.
+- **g_soylenti_2_5**: Sosyal medyada "{ad} sezon sonunda ayrılıyor" etiketi gündemde. Annen haberi görüp hemen aradı.
+- **g_soylenti_2_6**: Sosyal medyada "{ad} sezon sonunda ayrılıyor" etiketi gündemde. Kulüp resmi bir açıklama yapmadı, sessizliği daha çok konuşuluyor.
+- **g_soylenti_3_0**: Bir transfer kulisi hesabı menajerinin {buyukkulup} yöneticileriyle yemekte görüldüğünü paylaştı. Taraftarlar şimdiden tesisin önünde "Gitme" panka…
+- **g_soylenti_3_1**: Bir transfer kulisi hesabı menajerinin {buyukkulup} yöneticileriyle yemekte görüldüğünü paylaştı. Menajerin telefonu sabahtan beri susmuyor.
+- **g_soylenti_3_2**: Bir transfer kulisi hesabı menajerinin {buyukkulup} yöneticileriyle yemekte görüldüğünü paylaştı. Takım arkadaşların soyunma odasında seninle dalga…
+- **g_soylenti_3_3**: Bir transfer kulisi hesabı menajerinin {buyukkulup} yöneticileriyle yemekte görüldüğünü paylaştı. Haber bir saatte yüz binlerce kez görüntülendi.
+- **g_soylenti_3_4**: Bir transfer kulisi hesabı menajerinin {buyukkulup} yöneticileriyle yemekte görüldüğünü paylaştı. Hoca antrenmandan önce "kafan burada olsun" dedi.
+- **g_soylenti_3_5**: Bir transfer kulisi hesabı menajerinin {buyukkulup} yöneticileriyle yemekte görüldüğünü paylaştı. Annen haberi görüp hemen aradı.
+- **g_soylenti_3_6**: Bir transfer kulisi hesabı menajerinin {buyukkulup} yöneticileriyle yemekte görüldüğünü paylaştı. Kulüp resmi bir açıklama yapmadı, sessizliği daha…
+- **g_soylenti_4_0**: Sabah programında yorumcular senin için "bu oyuncu bu ligde fazla kaldı" dedi. Taraftarlar şimdiden tesisin önünde "Gitme" pankartı açtı.
+- **g_soylenti_4_1**: Sabah programında yorumcular senin için "bu oyuncu bu ligde fazla kaldı" dedi. Menajerin telefonu sabahtan beri susmuyor.
+- **g_soylenti_4_2**: Sabah programında yorumcular senin için "bu oyuncu bu ligde fazla kaldı" dedi. Takım arkadaşların soyunma odasında seninle dalga geçiyor.
+- **g_soylenti_4_3**: Sabah programında yorumcular senin için "bu oyuncu bu ligde fazla kaldı" dedi. Haber bir saatte yüz binlerce kez görüntülendi.
+- **g_soylenti_4_4**: Sabah programında yorumcular senin için "bu oyuncu bu ligde fazla kaldı" dedi. Hoca antrenmandan önce "kafan burada olsun" dedi.
+- **g_soylenti_4_5**: Sabah programında yorumcular senin için "bu oyuncu bu ligde fazla kaldı" dedi. Annen haberi görüp hemen aradı.
+- **g_soylenti_4_6**: Sabah programında yorumcular senin için "bu oyuncu bu ligde fazla kaldı" dedi. Kulüp resmi bir açıklama yapmadı, sessizliği daha çok konuşuluyor.
+- **g_soylenti_5_0**: Yabancı bir spor gazetesi seni "izlenmesi gereken oyuncular" listesine koydu. Taraftarlar şimdiden tesisin önünde "Gitme" pankartı açtı.
+- **g_soylenti_5_1**: Yabancı bir spor gazetesi seni "izlenmesi gereken oyuncular" listesine koydu. Menajerin telefonu sabahtan beri susmuyor.
+- **g_soylenti_5_2**: Yabancı bir spor gazetesi seni "izlenmesi gereken oyuncular" listesine koydu. Takım arkadaşların soyunma odasında seninle dalga geçiyor.
+- **g_soylenti_5_3**: Yabancı bir spor gazetesi seni "izlenmesi gereken oyuncular" listesine koydu. Haber bir saatte yüz binlerce kez görüntülendi.
+- **g_soylenti_5_4**: Yabancı bir spor gazetesi seni "izlenmesi gereken oyuncular" listesine koydu. Hoca antrenmandan önce "kafan burada olsun" dedi.
+- **g_soylenti_5_5**: Yabancı bir spor gazetesi seni "izlenmesi gereken oyuncular" listesine koydu. Annen haberi görüp hemen aradı.
+- **g_soylenti_5_6**: Yabancı bir spor gazetesi seni "izlenmesi gereken oyuncular" listesine koydu. Kulüp resmi bir açıklama yapmadı, sessizliği daha çok konuşuluyor.
+- **g_soylenti_6_0**: Kulübünün başkanı bir televizyon programında senin için gelen teklifleri reddettiğini söyledi. Taraftarlar şimdiden tesisin önünde "Gitme" pankartı…
+- **g_soylenti_6_1**: Kulübünün başkanı bir televizyon programında senin için gelen teklifleri reddettiğini söyledi. Menajerin telefonu sabahtan beri susmuyor.
+- **g_soylenti_6_2**: Kulübünün başkanı bir televizyon programında senin için gelen teklifleri reddettiğini söyledi. Takım arkadaşların soyunma odasında seninle dalga ge…
+- **g_soylenti_6_3**: Kulübünün başkanı bir televizyon programında senin için gelen teklifleri reddettiğini söyledi. Haber bir saatte yüz binlerce kez görüntülendi.
+- **g_soylenti_6_4**: Kulübünün başkanı bir televizyon programında senin için gelen teklifleri reddettiğini söyledi. Hoca antrenmandan önce "kafan burada olsun" dedi.
+- **g_soylenti_6_5**: Kulübünün başkanı bir televizyon programında senin için gelen teklifleri reddettiğini söyledi. Annen haberi görüp hemen aradı.
+- **g_soylenti_6_6**: Kulübünün başkanı bir televizyon programında senin için gelen teklifleri reddettiğini söyledi. Kulüp resmi bir açıklama yapmadı, sessizliği daha ço…
+- **g_soylenti_7_0**: Rakip kulübün taraftar sayfası seni transfer etmeleri için kampanya başlattı. Taraftarlar şimdiden tesisin önünde "Gitme" pankartı açtı.
+- **g_soylenti_7_1**: Rakip kulübün taraftar sayfası seni transfer etmeleri için kampanya başlattı. Menajerin telefonu sabahtan beri susmuyor.
+- **g_soylenti_7_2**: Rakip kulübün taraftar sayfası seni transfer etmeleri için kampanya başlattı. Takım arkadaşların soyunma odasında seninle dalga geçiyor.
+- **g_soylenti_7_3**: Rakip kulübün taraftar sayfası seni transfer etmeleri için kampanya başlattı. Haber bir saatte yüz binlerce kez görüntülendi.
+- **g_soylenti_7_4**: Rakip kulübün taraftar sayfası seni transfer etmeleri için kampanya başlattı. Hoca antrenmandan önce "kafan burada olsun" dedi.
+- **g_soylenti_7_5**: Rakip kulübün taraftar sayfası seni transfer etmeleri için kampanya başlattı. Annen haberi görüp hemen aradı.
+- **g_soylenti_7_6**: Rakip kulübün taraftar sayfası seni transfer etmeleri için kampanya başlattı. Kulüp resmi bir açıklama yapmadı, sessizliği daha çok konuşuluyor.
+- **g_taraftar_0_0**: Antrenman çıkışında bir taraftar seni bekliyor. Senden imzalı bir forma istiyor.
+- **g_taraftar_0_1**: Antrenman çıkışında bir taraftar seni bekliyor. Sadece bir fotoğraf ve iki çift laf istiyor.
+- **g_taraftar_0_2**: Antrenman çıkışında bir taraftar seni bekliyor. Kameralar da orada, her şey kayıtta.
+- **g_taraftar_0_3**: Antrenman çıkışında bir taraftar seni bekliyor. Gözleri dolu dolu, sana teşekkür etmek istiyor.
+- **g_taraftar_0_4**: Antrenman çıkışında bir taraftar seni bekliyor. Biraz ısrarcı, hocanın seni beklediği saat yaklaşıyor.
+- **g_taraftar_0_5**: Antrenman çıkışında bir taraftar seni bekliyor. Yanında senin numaranı taşıyan formalı bir grup çocuk var.
+- **g_taraftar_0_6**: Antrenman çıkışında bir taraftar seni bekliyor. Kulüp basın sorumlusu da durumu izliyor.
+- **g_taraftar_1_0**: Bir taraftar sosyal medyadan uzun bir mesaj yazmış. Senden imzalı bir forma istiyor.
+- **g_taraftar_1_1**: Bir taraftar sosyal medyadan uzun bir mesaj yazmış. Sadece bir fotoğraf ve iki çift laf istiyor.
+- **g_taraftar_1_2**: Bir taraftar sosyal medyadan uzun bir mesaj yazmış. Kameralar da orada, her şey kayıtta.
+- **g_taraftar_1_3**: Bir taraftar sosyal medyadan uzun bir mesaj yazmış. Gözleri dolu dolu, sana teşekkür etmek istiyor.
+- **g_taraftar_1_4**: Bir taraftar sosyal medyadan uzun bir mesaj yazmış. Biraz ısrarcı, hocanın seni beklediği saat yaklaşıyor.
+- **g_taraftar_1_5**: Bir taraftar sosyal medyadan uzun bir mesaj yazmış. Yanında senin numaranı taşıyan formalı bir grup çocuk var.
+- **g_taraftar_1_6**: Bir taraftar sosyal medyadan uzun bir mesaj yazmış. Kulüp basın sorumlusu da durumu izliyor.
+- **g_taraftar_2_0**: Stadyum kapısında yaşlı bir taraftar elinde eski bir fotoğrafla duruyor. Senden imzalı bir forma istiyor.
+- **g_taraftar_2_1**: Stadyum kapısında yaşlı bir taraftar elinde eski bir fotoğrafla duruyor. Sadece bir fotoğraf ve iki çift laf istiyor.
+- **g_taraftar_2_2**: Stadyum kapısında yaşlı bir taraftar elinde eski bir fotoğrafla duruyor. Kameralar da orada, her şey kayıtta.
+- **g_taraftar_2_3**: Stadyum kapısında yaşlı bir taraftar elinde eski bir fotoğrafla duruyor. Gözleri dolu dolu, sana teşekkür etmek istiyor.
+- **g_taraftar_2_4**: Stadyum kapısında yaşlı bir taraftar elinde eski bir fotoğrafla duruyor. Biraz ısrarcı, hocanın seni beklediği saat yaklaşıyor.
+- **g_taraftar_2_5**: Stadyum kapısında yaşlı bir taraftar elinde eski bir fotoğrafla duruyor. Yanında senin numaranı taşıyan formalı bir grup çocuk var.
+- **g_taraftar_2_6**: Stadyum kapısında yaşlı bir taraftar elinde eski bir fotoğrafla duruyor. Kulüp basın sorumlusu da durumu izliyor.
+- **g_taraftar_3_0**: Küçük bir çocuk babasının omzunda adını bağırıyor. Senden imzalı bir forma istiyor.
+- **g_taraftar_3_1**: Küçük bir çocuk babasının omzunda adını bağırıyor. Sadece bir fotoğraf ve iki çift laf istiyor.
+- **g_taraftar_3_2**: Küçük bir çocuk babasının omzunda adını bağırıyor. Kameralar da orada, her şey kayıtta.
+- **g_taraftar_3_3**: Küçük bir çocuk babasının omzunda adını bağırıyor. Gözleri dolu dolu, sana teşekkür etmek istiyor.
+- **g_taraftar_3_4**: Küçük bir çocuk babasının omzunda adını bağırıyor. Biraz ısrarcı, hocanın seni beklediği saat yaklaşıyor.
+- **g_taraftar_3_5**: Küçük bir çocuk babasının omzunda adını bağırıyor. Yanında senin numaranı taşıyan formalı bir grup çocuk var.
+- **g_taraftar_3_6**: Küçük bir çocuk babasının omzunda adını bağırıyor. Kulüp basın sorumlusu da durumu izliyor.
+- **g_taraftar_4_0**: Taraftar grubunun genç bir üyesi seni yolda durdurdu. Senden imzalı bir forma istiyor.
+- **g_taraftar_4_1**: Taraftar grubunun genç bir üyesi seni yolda durdurdu. Sadece bir fotoğraf ve iki çift laf istiyor.
+- **g_taraftar_4_2**: Taraftar grubunun genç bir üyesi seni yolda durdurdu. Kameralar da orada, her şey kayıtta.
+- **g_taraftar_4_3**: Taraftar grubunun genç bir üyesi seni yolda durdurdu. Gözleri dolu dolu, sana teşekkür etmek istiyor.
+- **g_taraftar_4_4**: Taraftar grubunun genç bir üyesi seni yolda durdurdu. Biraz ısrarcı, hocanın seni beklediği saat yaklaşıyor.
+- **g_taraftar_4_5**: Taraftar grubunun genç bir üyesi seni yolda durdurdu. Yanında senin numaranı taşıyan formalı bir grup çocuk var.
+- **g_taraftar_4_6**: Taraftar grubunun genç bir üyesi seni yolda durdurdu. Kulüp basın sorumlusu da durumu izliyor.
+- **g_taraftar_5_0**: Hastanedeki bir taraftarın ailesi kulübe mektup göndermiş. Senden imzalı bir forma istiyor.
+- **g_taraftar_5_1**: Hastanedeki bir taraftarın ailesi kulübe mektup göndermiş. Sadece bir fotoğraf ve iki çift laf istiyor.
+- **g_taraftar_5_2**: Hastanedeki bir taraftarın ailesi kulübe mektup göndermiş. Kameralar da orada, her şey kayıtta.
+- **g_taraftar_5_3**: Hastanedeki bir taraftarın ailesi kulübe mektup göndermiş. Gözleri dolu dolu, sana teşekkür etmek istiyor.
+- **g_taraftar_5_4**: Hastanedeki bir taraftarın ailesi kulübe mektup göndermiş. Biraz ısrarcı, hocanın seni beklediği saat yaklaşıyor.
+- **g_taraftar_5_5**: Hastanedeki bir taraftarın ailesi kulübe mektup göndermiş. Yanında senin numaranı taşıyan formalı bir grup çocuk var.
+- **g_taraftar_5_6**: Hastanedeki bir taraftarın ailesi kulübe mektup göndermiş. Kulüp basın sorumlusu da durumu izliyor.
+- **g_taraftar_6_0**: Bir taraftar düğününe seni davet eden bir video çekmiş. Senden imzalı bir forma istiyor.
+- **g_taraftar_6_1**: Bir taraftar düğününe seni davet eden bir video çekmiş. Sadece bir fotoğraf ve iki çift laf istiyor.
+- **g_taraftar_6_2**: Bir taraftar düğününe seni davet eden bir video çekmiş. Kameralar da orada, her şey kayıtta.
+- **g_taraftar_6_3**: Bir taraftar düğününe seni davet eden bir video çekmiş. Gözleri dolu dolu, sana teşekkür etmek istiyor.
+- **g_taraftar_6_4**: Bir taraftar düğününe seni davet eden bir video çekmiş. Biraz ısrarcı, hocanın seni beklediği saat yaklaşıyor.
+- **g_taraftar_6_5**: Bir taraftar düğününe seni davet eden bir video çekmiş. Yanında senin numaranı taşıyan formalı bir grup çocuk var.
+- **g_taraftar_6_6**: Bir taraftar düğününe seni davet eden bir video çekmiş. Kulüp basın sorumlusu da durumu izliyor.
+- **g_taraftar_7_0**: Deplasman dönüşü havalimanında bir grup taraftar seni karşıladı. Senden imzalı bir forma istiyor.
+- **g_taraftar_7_1**: Deplasman dönüşü havalimanında bir grup taraftar seni karşıladı. Sadece bir fotoğraf ve iki çift laf istiyor.
+- **g_taraftar_7_2**: Deplasman dönüşü havalimanında bir grup taraftar seni karşıladı. Kameralar da orada, her şey kayıtta.
+- **g_taraftar_7_3**: Deplasman dönüşü havalimanında bir grup taraftar seni karşıladı. Gözleri dolu dolu, sana teşekkür etmek istiyor.
+- **g_taraftar_7_4**: Deplasman dönüşü havalimanında bir grup taraftar seni karşıladı. Biraz ısrarcı, hocanın seni beklediği saat yaklaşıyor.
+- **g_taraftar_7_5**: Deplasman dönüşü havalimanında bir grup taraftar seni karşıladı. Yanında senin numaranı taşıyan formalı bir grup çocuk var.
+- **g_taraftar_7_6**: Deplasman dönüşü havalimanında bir grup taraftar seni karşıladı. Kulüp basın sorumlusu da durumu izliyor.
+- **g_takim_0_0**: {takimarkadasi} antrenmandan sonra yanına geldi. Sözleşmesinin uzatılmayacağından korkuyor.
+- **g_takim_0_1**: {takimarkadasi} antrenmandan sonra yanına geldi. Sana kızgın: geçen maçta pas vermediğini düşünüyor.
+- **g_takim_0_2**: {takimarkadasi} antrenmandan sonra yanına geldi. Ailesiyle ilgili kötü bir haber almış.
+- **g_takim_0_3**: {takimarkadasi} antrenmandan sonra yanına geldi. Senden ekstra antrenman için eşlik etmeni istiyor.
+- **g_takim_0_4**: {takimarkadasi} antrenmandan sonra yanına geldi. Hocanın kendisini sevmediğini düşünüyor.
+- **g_takim_0_5**: {takimarkadasi} antrenmandan sonra yanına geldi. Yeni bir iş fikri var, ortak arıyor.
+- **g_takim_0_6**: {takimarkadasi} antrenmandan sonra yanına geldi. Sadece biriyle konuşmaya ihtiyacı var.
+- **g_takim_1_0**: Soyunma odasında {takimarkadasi} kimseyle konuşmuyor. Sözleşmesinin uzatılmayacağından korkuyor.
+- **g_takim_1_1**: Soyunma odasında {takimarkadasi} kimseyle konuşmuyor. Sana kızgın: geçen maçta pas vermediğini düşünüyor.
+- **g_takim_1_2**: Soyunma odasında {takimarkadasi} kimseyle konuşmuyor. Ailesiyle ilgili kötü bir haber almış.
+- **g_takim_1_3**: Soyunma odasında {takimarkadasi} kimseyle konuşmuyor. Senden ekstra antrenman için eşlik etmeni istiyor.
+- **g_takim_1_4**: Soyunma odasında {takimarkadasi} kimseyle konuşmuyor. Hocanın kendisini sevmediğini düşünüyor.
+- **g_takim_1_5**: Soyunma odasında {takimarkadasi} kimseyle konuşmuyor. Yeni bir iş fikri var, ortak arıyor.
+- **g_takim_1_6**: Soyunma odasında {takimarkadasi} kimseyle konuşmuyor. Sadece biriyle konuşmaya ihtiyacı var.
+- **g_takim_2_0**: Kamp otelinde {takimarkadasi} kapını çaldı. Sözleşmesinin uzatılmayacağından korkuyor.
+- **g_takim_2_1**: Kamp otelinde {takimarkadasi} kapını çaldı. Sana kızgın: geçen maçta pas vermediğini düşünüyor.
+- **g_takim_2_2**: Kamp otelinde {takimarkadasi} kapını çaldı. Ailesiyle ilgili kötü bir haber almış.
+- **g_takim_2_3**: Kamp otelinde {takimarkadasi} kapını çaldı. Senden ekstra antrenman için eşlik etmeni istiyor.
+- **g_takim_2_4**: Kamp otelinde {takimarkadasi} kapını çaldı. Hocanın kendisini sevmediğini düşünüyor.
+- **g_takim_2_5**: Kamp otelinde {takimarkadasi} kapını çaldı. Yeni bir iş fikri var, ortak arıyor.
+- **g_takim_2_6**: Kamp otelinde {takimarkadasi} kapını çaldı. Sadece biriyle konuşmaya ihtiyacı var.
+- **g_takim_3_0**: {takimarkadasi} takım otobüsünde yanına oturdu. Sözleşmesinin uzatılmayacağından korkuyor.
+- **g_takim_3_1**: {takimarkadasi} takım otobüsünde yanına oturdu. Sana kızgın: geçen maçta pas vermediğini düşünüyor.
+- **g_takim_3_2**: {takimarkadasi} takım otobüsünde yanına oturdu. Ailesiyle ilgili kötü bir haber almış.
+- **g_takim_3_3**: {takimarkadasi} takım otobüsünde yanına oturdu. Senden ekstra antrenman için eşlik etmeni istiyor.
+- **g_takim_3_4**: {takimarkadasi} takım otobüsünde yanına oturdu. Hocanın kendisini sevmediğini düşünüyor.
+- **g_takim_3_5**: {takimarkadasi} takım otobüsünde yanına oturdu. Yeni bir iş fikri var, ortak arıyor.
+- **g_takim_3_6**: {takimarkadasi} takım otobüsünde yanına oturdu. Sadece biriyle konuşmaya ihtiyacı var.
+- **g_takim_4_0**: Yemekte {takimarkadasi} herkesin önünde sana bir şey sordu. Sözleşmesinin uzatılmayacağından korkuyor.
+- **g_takim_4_1**: Yemekte {takimarkadasi} herkesin önünde sana bir şey sordu. Sana kızgın: geçen maçta pas vermediğini düşünüyor.
+- **g_takim_4_2**: Yemekte {takimarkadasi} herkesin önünde sana bir şey sordu. Ailesiyle ilgili kötü bir haber almış.
+- **g_takim_4_3**: Yemekte {takimarkadasi} herkesin önünde sana bir şey sordu. Senden ekstra antrenman için eşlik etmeni istiyor.
+- **g_takim_4_4**: Yemekte {takimarkadasi} herkesin önünde sana bir şey sordu. Hocanın kendisini sevmediğini düşünüyor.
+- **g_takim_4_5**: Yemekte {takimarkadasi} herkesin önünde sana bir şey sordu. Yeni bir iş fikri var, ortak arıyor.
+- **g_takim_4_6**: Yemekte {takimarkadasi} herkesin önünde sana bir şey sordu. Sadece biriyle konuşmaya ihtiyacı var.
+- **g_takim_5_0**: Isınma sırasında {takimarkadasi} sana garip garip bakıyor. Sözleşmesinin uzatılmayacağından korkuyor.
+- **g_takim_5_1**: Isınma sırasında {takimarkadasi} sana garip garip bakıyor. Sana kızgın: geçen maçta pas vermediğini düşünüyor.
+- **g_takim_5_2**: Isınma sırasında {takimarkadasi} sana garip garip bakıyor. Ailesiyle ilgili kötü bir haber almış.
+- **g_takim_5_3**: Isınma sırasında {takimarkadasi} sana garip garip bakıyor. Senden ekstra antrenman için eşlik etmeni istiyor.
+- **g_takim_5_4**: Isınma sırasında {takimarkadasi} sana garip garip bakıyor. Hocanın kendisini sevmediğini düşünüyor.
+- **g_takim_5_5**: Isınma sırasında {takimarkadasi} sana garip garip bakıyor. Yeni bir iş fikri var, ortak arıyor.
+- **g_takim_5_6**: Isınma sırasında {takimarkadasi} sana garip garip bakıyor. Sadece biriyle konuşmaya ihtiyacı var.
+- **g_takim_6_0**: {takimarkadasi} grup sohbetinde sana özel bir mesaj attı. Sözleşmesinin uzatılmayacağından korkuyor.
+- **g_takim_6_1**: {takimarkadasi} grup sohbetinde sana özel bir mesaj attı. Sana kızgın: geçen maçta pas vermediğini düşünüyor.
+- **g_takim_6_2**: {takimarkadasi} grup sohbetinde sana özel bir mesaj attı. Ailesiyle ilgili kötü bir haber almış.
+- **g_takim_6_3**: {takimarkadasi} grup sohbetinde sana özel bir mesaj attı. Senden ekstra antrenman için eşlik etmeni istiyor.
+- **g_takim_6_4**: {takimarkadasi} grup sohbetinde sana özel bir mesaj attı. Hocanın kendisini sevmediğini düşünüyor.
+- **g_takim_6_5**: {takimarkadasi} grup sohbetinde sana özel bir mesaj attı. Yeni bir iş fikri var, ortak arıyor.
+- **g_takim_6_6**: {takimarkadasi} grup sohbetinde sana özel bir mesaj attı. Sadece biriyle konuşmaya ihtiyacı var.
+- **g_takim_7_0**: Maçtan sonra {takimarkadasi} duşta seni bekledi. Sözleşmesinin uzatılmayacağından korkuyor.
+- **g_takim_7_1**: Maçtan sonra {takimarkadasi} duşta seni bekledi. Sana kızgın: geçen maçta pas vermediğini düşünüyor.
+- **g_takim_7_2**: Maçtan sonra {takimarkadasi} duşta seni bekledi. Ailesiyle ilgili kötü bir haber almış.
+- **g_takim_7_3**: Maçtan sonra {takimarkadasi} duşta seni bekledi. Senden ekstra antrenman için eşlik etmeni istiyor.
+- **g_takim_7_4**: Maçtan sonra {takimarkadasi} duşta seni bekledi. Hocanın kendisini sevmediğini düşünüyor.
+- **g_takim_7_5**: Maçtan sonra {takimarkadasi} duşta seni bekledi. Yeni bir iş fikri var, ortak arıyor.
+- **g_takim_7_6**: Maçtan sonra {takimarkadasi} duşta seni bekledi. Sadece biriyle konuşmaya ihtiyacı var.
+- **g_hoca_0_0**: Hoca seni ofisine çağırdı. Savunmaya yardım etmediğini düşünüyor.
+- **g_hoca_0_1**: Hoca seni ofisine çağırdı. Liderlik etmeni, gençlere örnek olmanı istiyor.
+- **g_hoca_0_2**: Hoca seni ofisine çağırdı. Son haftalardaki formundan memnun.
+- **g_hoca_0_3**: Hoca seni ofisine çağırdı. Disiplin konusunda uyarıyor.
+- **g_hoca_0_4**: Hoca seni ofisine çağırdı. Yeni bir taktik rol deneyecek.
+- **g_hoca_0_5**: Hoca seni ofisine çağırdı. Sosyal medyadaki bir paylaşımından rahatsız.
+- **g_hoca_0_6**: Hoca seni ofisine çağırdı. Senin için bir kulübün aradığını söylüyor.
+- **g_hoca_1_0**: Antrenmandan sonra hoca seni kenara aldı. Savunmaya yardım etmediğini düşünüyor.
+- **g_hoca_1_1**: Antrenmandan sonra hoca seni kenara aldı. Liderlik etmeni, gençlere örnek olmanı istiyor.
+- **g_hoca_1_2**: Antrenmandan sonra hoca seni kenara aldı. Son haftalardaki formundan memnun.
+- **g_hoca_1_3**: Antrenmandan sonra hoca seni kenara aldı. Disiplin konusunda uyarıyor.
+- **g_hoca_1_4**: Antrenmandan sonra hoca seni kenara aldı. Yeni bir taktik rol deneyecek.
+- **g_hoca_1_5**: Antrenmandan sonra hoca seni kenara aldı. Sosyal medyadaki bir paylaşımından rahatsız.
+- **g_hoca_1_6**: Antrenmandan sonra hoca seni kenara aldı. Senin için bir kulübün aradığını söylüyor.
+- **g_hoca_2_0**: Hoca takım toplantısında adını andı. Savunmaya yardım etmediğini düşünüyor.
+- **g_hoca_2_1**: Hoca takım toplantısında adını andı. Liderlik etmeni, gençlere örnek olmanı istiyor.
+- **g_hoca_2_2**: Hoca takım toplantısında adını andı. Son haftalardaki formundan memnun.
+- **g_hoca_2_3**: Hoca takım toplantısında adını andı. Disiplin konusunda uyarıyor.
+- **g_hoca_2_4**: Hoca takım toplantısında adını andı. Yeni bir taktik rol deneyecek.
+- **g_hoca_2_5**: Hoca takım toplantısında adını andı. Sosyal medyadaki bir paylaşımından rahatsız.
+- **g_hoca_2_6**: Hoca takım toplantısında adını andı. Senin için bir kulübün aradığını söylüyor.
+- **g_hoca_3_0**: Hoca sabah kahvaltısında yanına oturdu. Savunmaya yardım etmediğini düşünüyor.
+- **g_hoca_3_1**: Hoca sabah kahvaltısında yanına oturdu. Liderlik etmeni, gençlere örnek olmanı istiyor.
+- **g_hoca_3_2**: Hoca sabah kahvaltısında yanına oturdu. Son haftalardaki formundan memnun.
+- **g_hoca_3_3**: Hoca sabah kahvaltısında yanına oturdu. Disiplin konusunda uyarıyor.
+- **g_hoca_3_4**: Hoca sabah kahvaltısında yanına oturdu. Yeni bir taktik rol deneyecek.
+- **g_hoca_3_5**: Hoca sabah kahvaltısında yanına oturdu. Sosyal medyadaki bir paylaşımından rahatsız.
+- **g_hoca_3_6**: Hoca sabah kahvaltısında yanına oturdu. Senin için bir kulübün aradığını söylüyor.
+- **g_hoca_4_0**: Hoca video analizinde senin bir pozisyonunu durdurdu. Savunmaya yardım etmediğini düşünüyor.
+- **g_hoca_4_1**: Hoca video analizinde senin bir pozisyonunu durdurdu. Liderlik etmeni, gençlere örnek olmanı istiyor.
+- **g_hoca_4_2**: Hoca video analizinde senin bir pozisyonunu durdurdu. Son haftalardaki formundan memnun.
+- **g_hoca_4_3**: Hoca video analizinde senin bir pozisyonunu durdurdu. Disiplin konusunda uyarıyor.
+- **g_hoca_4_4**: Hoca video analizinde senin bir pozisyonunu durdurdu. Yeni bir taktik rol deneyecek.
+- **g_hoca_4_5**: Hoca video analizinde senin bir pozisyonunu durdurdu. Sosyal medyadaki bir paylaşımından rahatsız.
+- **g_hoca_4_6**: Hoca video analizinde senin bir pozisyonunu durdurdu. Senin için bir kulübün aradığını söylüyor.
+- **g_hoca_5_0**: Hoca otobüste arkadan seslendi: "Bir gel." Savunmaya yardım etmediğini düşünüyor.
+- **g_hoca_5_1**: Hoca otobüste arkadan seslendi: "Bir gel." Liderlik etmeni, gençlere örnek olmanı istiyor.
+- **g_hoca_5_2**: Hoca otobüste arkadan seslendi: "Bir gel." Son haftalardaki formundan memnun.
+- **g_hoca_5_3**: Hoca otobüste arkadan seslendi: "Bir gel." Disiplin konusunda uyarıyor.
+- **g_hoca_5_4**: Hoca otobüste arkadan seslendi: "Bir gel." Yeni bir taktik rol deneyecek.
+- **g_hoca_5_5**: Hoca otobüste arkadan seslendi: "Bir gel." Sosyal medyadaki bir paylaşımından rahatsız.
+- **g_hoca_5_6**: Hoca otobüste arkadan seslendi: "Bir gel." Senin için bir kulübün aradığını söylüyor.
+- **g_hoca_6_0**: Hoca antrenman sırasında oyunu durdurdu ve sana döndü. Savunmaya yardım etmediğini düşünüyor.
+- **g_hoca_6_1**: Hoca antrenman sırasında oyunu durdurdu ve sana döndü. Liderlik etmeni, gençlere örnek olmanı istiyor.
+- **g_hoca_6_2**: Hoca antrenman sırasında oyunu durdurdu ve sana döndü. Son haftalardaki formundan memnun.
+- **g_hoca_6_3**: Hoca antrenman sırasında oyunu durdurdu ve sana döndü. Disiplin konusunda uyarıyor.
+- **g_hoca_6_4**: Hoca antrenman sırasında oyunu durdurdu ve sana döndü. Yeni bir taktik rol deneyecek.
+- **g_hoca_6_5**: Hoca antrenman sırasında oyunu durdurdu ve sana döndü. Sosyal medyadaki bir paylaşımından rahatsız.
+- **g_hoca_6_6**: Hoca antrenman sırasında oyunu durdurdu ve sana döndü. Senin için bir kulübün aradığını söylüyor.
+- **g_hoca_7_0**: Hoca bir gazeteciye senin hakkında konuştu, sözleri sana iletildi. Savunmaya yardım etmediğini düşünüyor.
+- **g_hoca_7_1**: Hoca bir gazeteciye senin hakkında konuştu, sözleri sana iletildi. Liderlik etmeni, gençlere örnek olmanı istiyor.
+- **g_hoca_7_2**: Hoca bir gazeteciye senin hakkında konuştu, sözleri sana iletildi. Son haftalardaki formundan memnun.
+- **g_hoca_7_3**: Hoca bir gazeteciye senin hakkında konuştu, sözleri sana iletildi. Disiplin konusunda uyarıyor.
+- **g_hoca_7_4**: Hoca bir gazeteciye senin hakkında konuştu, sözleri sana iletildi. Yeni bir taktik rol deneyecek.
+- **g_hoca_7_5**: Hoca bir gazeteciye senin hakkında konuştu, sözleri sana iletildi. Sosyal medyadaki bir paylaşımından rahatsız.
+- **g_hoca_7_6**: Hoca bir gazeteciye senin hakkında konuştu, sözleri sana iletildi. Senin için bir kulübün aradığını söylüyor.
+- **g_menajer_0_0**: Menajerin arayıp "Bir dakikan var mı?" dedi. Bir sponsorun seninle çalışmak istediğini söylüyor.
+- **g_menajer_0_1**: Menajerin arayıp "Bir dakikan var mı?" dedi. Kulübün yeni sözleşme teklifini hazırladığını duymuş.
+- **g_menajer_0_2**: Menajerin arayıp "Bir dakikan var mı?" dedi. Komisyon oranını artırmak istiyor.
+- **g_menajer_0_3**: Menajerin arayıp "Bir dakikan var mı?" dedi. Bir yatırım fırsatından bahsediyor.
+- **g_menajer_0_4**: Menajerin arayıp "Bir dakikan var mı?" dedi. Senin için bir röportaj ayarladı.
+- **g_menajer_0_5**: Menajerin arayıp "Bir dakikan var mı?" dedi. Rakip bir menajerin seni ayartmaya çalıştığını duymuş.
+- **g_menajer_0_6**: Menajerin arayıp "Bir dakikan var mı?" dedi. Dil kursuna başlamanı öneriyor.
+- **g_menajer_1_0**: Menajerin seni bir otel lobisinde buluşmaya çağırdı. Bir sponsorun seninle çalışmak istediğini söylüyor.
+- **g_menajer_1_1**: Menajerin seni bir otel lobisinde buluşmaya çağırdı. Kulübün yeni sözleşme teklifini hazırladığını duymuş.
+- **g_menajer_1_2**: Menajerin seni bir otel lobisinde buluşmaya çağırdı. Komisyon oranını artırmak istiyor.
+- **g_menajer_1_3**: Menajerin seni bir otel lobisinde buluşmaya çağırdı. Bir yatırım fırsatından bahsediyor.
+- **g_menajer_1_4**: Menajerin seni bir otel lobisinde buluşmaya çağırdı. Senin için bir röportaj ayarladı.
+- **g_menajer_1_5**: Menajerin seni bir otel lobisinde buluşmaya çağırdı. Rakip bir menajerin seni ayartmaya çalıştığını duymuş.
+- **g_menajer_1_6**: Menajerin seni bir otel lobisinde buluşmaya çağırdı. Dil kursuna başlamanı öneriyor.
+- **g_menajer_2_0**: Menajerin sesli mesaj bıraktı. Bir sponsorun seninle çalışmak istediğini söylüyor.
+- **g_menajer_2_1**: Menajerin sesli mesaj bıraktı. Kulübün yeni sözleşme teklifini hazırladığını duymuş.
+- **g_menajer_2_2**: Menajerin sesli mesaj bıraktı. Komisyon oranını artırmak istiyor.
+- **g_menajer_2_3**: Menajerin sesli mesaj bıraktı. Bir yatırım fırsatından bahsediyor.
+- **g_menajer_2_4**: Menajerin sesli mesaj bıraktı. Senin için bir röportaj ayarladı.
+- **g_menajer_2_5**: Menajerin sesli mesaj bıraktı. Rakip bir menajerin seni ayartmaya çalıştığını duymuş.
+- **g_menajer_2_6**: Menajerin sesli mesaj bıraktı. Dil kursuna başlamanı öneriyor.
+- **g_menajer_3_0**: Menajerin maçtan hemen sonra soyunma odasının kapısında belirdi. Bir sponsorun seninle çalışmak istediğini söylüyor.
+- **g_menajer_3_1**: Menajerin maçtan hemen sonra soyunma odasının kapısında belirdi. Kulübün yeni sözleşme teklifini hazırladığını duymuş.
+- **g_menajer_3_2**: Menajerin maçtan hemen sonra soyunma odasının kapısında belirdi. Komisyon oranını artırmak istiyor.
+- **g_menajer_3_3**: Menajerin maçtan hemen sonra soyunma odasının kapısında belirdi. Bir yatırım fırsatından bahsediyor.
+- **g_menajer_3_4**: Menajerin maçtan hemen sonra soyunma odasının kapısında belirdi. Senin için bir röportaj ayarladı.
+- **g_menajer_3_5**: Menajerin maçtan hemen sonra soyunma odasının kapısında belirdi. Rakip bir menajerin seni ayartmaya çalıştığını duymuş.
+- **g_menajer_3_6**: Menajerin maçtan hemen sonra soyunma odasının kapısında belirdi. Dil kursuna başlamanı öneriyor.
+- **g_menajer_4_0**: Menajerin akşam yemeğinde ciddi bir yüzle konuşmaya başladı. Bir sponsorun seninle çalışmak istediğini söylüyor.
+- **g_menajer_4_1**: Menajerin akşam yemeğinde ciddi bir yüzle konuşmaya başladı. Kulübün yeni sözleşme teklifini hazırladığını duymuş.
+- **g_menajer_4_2**: Menajerin akşam yemeğinde ciddi bir yüzle konuşmaya başladı. Komisyon oranını artırmak istiyor.
+- **g_menajer_4_3**: Menajerin akşam yemeğinde ciddi bir yüzle konuşmaya başladı. Bir yatırım fırsatından bahsediyor.
+- **g_menajer_4_4**: Menajerin akşam yemeğinde ciddi bir yüzle konuşmaya başladı. Senin için bir röportaj ayarladı.
+- **g_menajer_4_5**: Menajerin akşam yemeğinde ciddi bir yüzle konuşmaya başladı. Rakip bir menajerin seni ayartmaya çalıştığını duymuş.
+- **g_menajer_4_6**: Menajerin akşam yemeğinde ciddi bir yüzle konuşmaya başladı. Dil kursuna başlamanı öneriyor.
+- **g_menajer_5_0**: Menajerin sana bir dosya gönderdi. Bir sponsorun seninle çalışmak istediğini söylüyor.
+- **g_menajer_5_1**: Menajerin sana bir dosya gönderdi. Kulübün yeni sözleşme teklifini hazırladığını duymuş.
+- **g_menajer_5_2**: Menajerin sana bir dosya gönderdi. Komisyon oranını artırmak istiyor.
+- **g_menajer_5_3**: Menajerin sana bir dosya gönderdi. Bir yatırım fırsatından bahsediyor.
+- **g_menajer_5_4**: Menajerin sana bir dosya gönderdi. Senin için bir röportaj ayarladı.
+- **g_menajer_5_5**: Menajerin sana bir dosya gönderdi. Rakip bir menajerin seni ayartmaya çalıştığını duymuş.
+- **g_menajer_5_6**: Menajerin sana bir dosya gönderdi. Dil kursuna başlamanı öneriyor.
+- **g_menajer_6_0**: Menajerin "Konuşmamız lazım" diye yazdı. Bir sponsorun seninle çalışmak istediğini söylüyor.
+- **g_menajer_6_1**: Menajerin "Konuşmamız lazım" diye yazdı. Kulübün yeni sözleşme teklifini hazırladığını duymuş.
+- **g_menajer_6_2**: Menajerin "Konuşmamız lazım" diye yazdı. Komisyon oranını artırmak istiyor.
+- **g_menajer_6_3**: Menajerin "Konuşmamız lazım" diye yazdı. Bir yatırım fırsatından bahsediyor.
+- **g_menajer_6_4**: Menajerin "Konuşmamız lazım" diye yazdı. Senin için bir röportaj ayarladı.
+- **g_menajer_6_5**: Menajerin "Konuşmamız lazım" diye yazdı. Rakip bir menajerin seni ayartmaya çalıştığını duymuş.
+- **g_menajer_6_6**: Menajerin "Konuşmamız lazım" diye yazdı. Dil kursuna başlamanı öneriyor.
+- **g_menajer_7_0**: Menajerin seni ofisine davet etti. Bir sponsorun seninle çalışmak istediğini söylüyor.
+- **g_menajer_7_1**: Menajerin seni ofisine davet etti. Kulübün yeni sözleşme teklifini hazırladığını duymuş.
+- **g_menajer_7_2**: Menajerin seni ofisine davet etti. Komisyon oranını artırmak istiyor.
+- **g_menajer_7_3**: Menajerin seni ofisine davet etti. Bir yatırım fırsatından bahsediyor.
+- **g_menajer_7_4**: Menajerin seni ofisine davet etti. Senin için bir röportaj ayarladı.
+- **g_menajer_7_5**: Menajerin seni ofisine davet etti. Rakip bir menajerin seni ayartmaya çalıştığını duymuş.
+- **g_menajer_7_6**: Menajerin seni ofisine davet etti. Dil kursuna başlamanı öneriyor.
+- **g_aile_0_0**: Annen akşam telefonda uzun uzun konuştu. Biraz para desteği gerekiyor.
+- **g_aile_0_1**: Annen akşam telefonda uzun uzun konuştu. Seni çok özlediklerini söylüyorlar.
+- **g_aile_0_2**: Annen akşam telefonda uzun uzun konuştu. Sağlıkla ilgili küçük bir endişe var.
+- **g_aile_0_3**: Annen akşam telefonda uzun uzun konuştu. Komşuların seninle övündüğünü anlatıyorlar.
+- **g_aile_0_4**: Annen akşam telefonda uzun uzun konuştu. Memlekette senin adına bir etkinlik düzenlemek istiyorlar.
+- **g_aile_0_5**: Annen akşam telefonda uzun uzun konuştu. Sana eski fotoğraflarını gönderdiler.
+- **g_aile_0_6**: Annen akşam telefonda uzun uzun konuştu. Kardeşinin okul masrafları konuşuluyor.
+- **g_aile_1_0**: Baban mesaj attı, kısa ama anlamlı. Biraz para desteği gerekiyor.
+- **g_aile_1_1**: Baban mesaj attı, kısa ama anlamlı. Seni çok özlediklerini söylüyorlar.
+- **g_aile_1_2**: Baban mesaj attı, kısa ama anlamlı. Sağlıkla ilgili küçük bir endişe var.
+- **g_aile_1_3**: Baban mesaj attı, kısa ama anlamlı. Komşuların seninle övündüğünü anlatıyorlar.
+- **g_aile_1_4**: Baban mesaj attı, kısa ama anlamlı. Memlekette senin adına bir etkinlik düzenlemek istiyorlar.
+- **g_aile_1_5**: Baban mesaj attı, kısa ama anlamlı. Sana eski fotoğraflarını gönderdiler.
+- **g_aile_1_6**: Baban mesaj attı, kısa ama anlamlı. Kardeşinin okul masrafları konuşuluyor.
+- **g_aile_2_0**: Kardeşin habersiz kapına geldi. Biraz para desteği gerekiyor.
+- **g_aile_2_1**: Kardeşin habersiz kapına geldi. Seni çok özlediklerini söylüyorlar.
+- **g_aile_2_2**: Kardeşin habersiz kapına geldi. Sağlıkla ilgili küçük bir endişe var.
+- **g_aile_2_3**: Kardeşin habersiz kapına geldi. Komşuların seninle övündüğünü anlatıyorlar.
+- **g_aile_2_4**: Kardeşin habersiz kapına geldi. Memlekette senin adına bir etkinlik düzenlemek istiyorlar.
+- **g_aile_2_5**: Kardeşin habersiz kapına geldi. Sana eski fotoğraflarını gönderdiler.
+- **g_aile_2_6**: Kardeşin habersiz kapına geldi. Kardeşinin okul masrafları konuşuluyor.
+- **g_aile_3_0**: Aile WhatsApp grubunda bir tartışma çıktı. Biraz para desteği gerekiyor.
+- **g_aile_3_1**: Aile WhatsApp grubunda bir tartışma çıktı. Seni çok özlediklerini söylüyorlar.
+- **g_aile_3_2**: Aile WhatsApp grubunda bir tartışma çıktı. Sağlıkla ilgili küçük bir endişe var.
+- **g_aile_3_3**: Aile WhatsApp grubunda bir tartışma çıktı. Komşuların seninle övündüğünü anlatıyorlar.
+- **g_aile_3_4**: Aile WhatsApp grubunda bir tartışma çıktı. Memlekette senin adına bir etkinlik düzenlemek istiyorlar.
+- **g_aile_3_5**: Aile WhatsApp grubunda bir tartışma çıktı. Sana eski fotoğraflarını gönderdiler.
+- **g_aile_3_6**: Aile WhatsApp grubunda bir tartışma çıktı. Kardeşinin okul masrafları konuşuluyor.
+- **g_aile_4_0**: Teyzen seni aile yemeğine çağırdı. Biraz para desteği gerekiyor.
+- **g_aile_4_1**: Teyzen seni aile yemeğine çağırdı. Seni çok özlediklerini söylüyorlar.
+- **g_aile_4_2**: Teyzen seni aile yemeğine çağırdı. Sağlıkla ilgili küçük bir endişe var.
+- **g_aile_4_3**: Teyzen seni aile yemeğine çağırdı. Komşuların seninle övündüğünü anlatıyorlar.
+- **g_aile_4_4**: Teyzen seni aile yemeğine çağırdı. Memlekette senin adına bir etkinlik düzenlemek istiyorlar.
+- **g_aile_4_5**: Teyzen seni aile yemeğine çağırdı. Sana eski fotoğraflarını gönderdiler.
+- **g_aile_4_6**: Teyzen seni aile yemeğine çağırdı. Kardeşinin okul masrafları konuşuluyor.
+- **g_aile_5_0**: Kuzenin evleniyor, düğün hazırlıkları başladı. Biraz para desteği gerekiyor.
+- **g_aile_5_1**: Kuzenin evleniyor, düğün hazırlıkları başladı. Seni çok özlediklerini söylüyorlar.
+- **g_aile_5_2**: Kuzenin evleniyor, düğün hazırlıkları başladı. Sağlıkla ilgili küçük bir endişe var.
+- **g_aile_5_3**: Kuzenin evleniyor, düğün hazırlıkları başladı. Komşuların seninle övündüğünü anlatıyorlar.
+- **g_aile_5_4**: Kuzenin evleniyor, düğün hazırlıkları başladı. Memlekette senin adına bir etkinlik düzenlemek istiyorlar.
+- **g_aile_5_5**: Kuzenin evleniyor, düğün hazırlıkları başladı. Sana eski fotoğraflarını gönderdiler.
+- **g_aile_5_6**: Kuzenin evleniyor, düğün hazırlıkları başladı. Kardeşinin okul masrafları konuşuluyor.
+- **g_aile_6_0**: Annenle baban maçını birlikte izlemeye geliyor. Biraz para desteği gerekiyor.
+- **g_aile_6_1**: Annenle baban maçını birlikte izlemeye geliyor. Seni çok özlediklerini söylüyorlar.
+- **g_aile_6_2**: Annenle baban maçını birlikte izlemeye geliyor. Sağlıkla ilgili küçük bir endişe var.
+- **g_aile_6_3**: Annenle baban maçını birlikte izlemeye geliyor. Komşuların seninle övündüğünü anlatıyorlar.
+- **g_aile_6_4**: Annenle baban maçını birlikte izlemeye geliyor. Memlekette senin adına bir etkinlik düzenlemek istiyorlar.
+- **g_aile_6_5**: Annenle baban maçını birlikte izlemeye geliyor. Sana eski fotoğraflarını gönderdiler.
+- **g_aile_6_6**: Annenle baban maçını birlikte izlemeye geliyor. Kardeşinin okul masrafları konuşuluyor.
+- **g_aile_7_0**: Ailenden biri seni televizyonda görüp aradı. Biraz para desteği gerekiyor.
+- **g_aile_7_1**: Ailenden biri seni televizyonda görüp aradı. Seni çok özlediklerini söylüyorlar.
+- **g_aile_7_2**: Ailenden biri seni televizyonda görüp aradı. Sağlıkla ilgili küçük bir endişe var.
+- **g_aile_7_3**: Ailenden biri seni televizyonda görüp aradı. Komşuların seninle övündüğünü anlatıyorlar.
+- **g_aile_7_4**: Ailenden biri seni televizyonda görüp aradı. Memlekette senin adına bir etkinlik düzenlemek istiyorlar.
+- **g_aile_7_5**: Ailenden biri seni televizyonda görüp aradı. Sana eski fotoğraflarını gönderdiler.
+- **g_aile_7_6**: Ailenden biri seni televizyonda görüp aradı. Kardeşinin okul masrafları konuşuluyor.
+- **g_sosyal_0_0**: Eski bir paylaşımın yeniden gündeme geldi. Rakip taraftarlar konuyu büyütüyor.
+- **g_sosyal_0_1**: Eski bir paylaşımın yeniden gündeme geldi. Kendi taraftarların seni savunuyor.
+- **g_sosyal_0_2**: Eski bir paylaşımın yeniden gündeme geldi. Bir spor programı konuyu canlı yayında konuştu.
+- **g_sosyal_0_3**: Eski bir paylaşımın yeniden gündeme geldi. Gazeteci Sabun Yağız konuyu haber yaptı.
+- **g_sosyal_0_4**: Eski bir paylaşımın yeniden gündeme geldi. Takım arkadaşların espri yapıyor.
+- **g_sosyal_0_5**: Eski bir paylaşımın yeniden gündeme geldi. Kulübün sosyal medya ekibi seni aradı.
+- **g_sosyal_0_6**: Eski bir paylaşımın yeniden gündeme geldi. Etkileşim rekor kırdı.
+- **g_sosyal_1_0**: Bir videoda yaptığın bir hareket yanlış anlaşıldı. Rakip taraftarlar konuyu büyütüyor.
+- **g_sosyal_1_1**: Bir videoda yaptığın bir hareket yanlış anlaşıldı. Kendi taraftarların seni savunuyor.
+- **g_sosyal_1_2**: Bir videoda yaptığın bir hareket yanlış anlaşıldı. Bir spor programı konuyu canlı yayında konuştu.
+- **g_sosyal_1_3**: Bir videoda yaptığın bir hareket yanlış anlaşıldı. Gazeteci Sabun Yağız konuyu haber yaptı.
+- **g_sosyal_1_4**: Bir videoda yaptığın bir hareket yanlış anlaşıldı. Takım arkadaşların espri yapıyor.
+- **g_sosyal_1_5**: Bir videoda yaptığın bir hareket yanlış anlaşıldı. Kulübün sosyal medya ekibi seni aradı.
+- **g_sosyal_1_6**: Bir videoda yaptığın bir hareket yanlış anlaşıldı. Etkileşim rekor kırdı.
+- **g_sosyal_2_0**: Hesabına binlerce yorum yağmaya başladı. Rakip taraftarlar konuyu büyütüyor.
+- **g_sosyal_2_1**: Hesabına binlerce yorum yağmaya başladı. Kendi taraftarların seni savunuyor.
+- **g_sosyal_2_2**: Hesabına binlerce yorum yağmaya başladı. Bir spor programı konuyu canlı yayında konuştu.
+- **g_sosyal_2_3**: Hesabına binlerce yorum yağmaya başladı. Gazeteci Sabun Yağız konuyu haber yaptı.
+- **g_sosyal_2_4**: Hesabına binlerce yorum yağmaya başladı. Takım arkadaşların espri yapıyor.
+- **g_sosyal_2_5**: Hesabına binlerce yorum yağmaya başladı. Kulübün sosyal medya ekibi seni aradı.
+- **g_sosyal_2_6**: Hesabına binlerce yorum yağmaya başladı. Etkileşim rekor kırdı.
+- **g_sosyal_3_0**: Bir fenomen seni bir videosunda taklit etti. Rakip taraftarlar konuyu büyütüyor.
+- **g_sosyal_3_1**: Bir fenomen seni bir videosunda taklit etti. Kendi taraftarların seni savunuyor.
+- **g_sosyal_3_2**: Bir fenomen seni bir videosunda taklit etti. Bir spor programı konuyu canlı yayında konuştu.
+- **g_sosyal_3_3**: Bir fenomen seni bir videosunda taklit etti. Gazeteci Sabun Yağız konuyu haber yaptı.
+- **g_sosyal_3_4**: Bir fenomen seni bir videosunda taklit etti. Takım arkadaşların espri yapıyor.
+- **g_sosyal_3_5**: Bir fenomen seni bir videosunda taklit etti. Kulübün sosyal medya ekibi seni aradı.
+- **g_sosyal_3_6**: Bir fenomen seni bir videosunda taklit etti. Etkileşim rekor kırdı.
+- **g_sosyal_4_0**: Bir story'nde arka planda görünen şey konuşuldu. Rakip taraftarlar konuyu büyütüyor.
+- **g_sosyal_4_1**: Bir story'nde arka planda görünen şey konuşuldu. Kendi taraftarların seni savunuyor.
+- **g_sosyal_4_2**: Bir story'nde arka planda görünen şey konuşuldu. Bir spor programı konuyu canlı yayında konuştu.
+- **g_sosyal_4_3**: Bir story'nde arka planda görünen şey konuşuldu. Gazeteci Sabun Yağız konuyu haber yaptı.
+- **g_sosyal_4_4**: Bir story'nde arka planda görünen şey konuşuldu. Takım arkadaşların espri yapıyor.
+- **g_sosyal_4_5**: Bir story'nde arka planda görünen şey konuşuldu. Kulübün sosyal medya ekibi seni aradı.
+- **g_sosyal_4_6**: Bir story'nde arka planda görünen şey konuşuldu. Etkileşim rekor kırdı.
+- **g_sosyal_5_0**: Hayran hesaplarından biri seninle ilgili bir iddia paylaştı. Rakip taraftarlar konuyu büyütüyor.
+- **g_sosyal_5_1**: Hayran hesaplarından biri seninle ilgili bir iddia paylaştı. Kendi taraftarların seni savunuyor.
+- **g_sosyal_5_2**: Hayran hesaplarından biri seninle ilgili bir iddia paylaştı. Bir spor programı konuyu canlı yayında konuştu.
+- **g_sosyal_5_3**: Hayran hesaplarından biri seninle ilgili bir iddia paylaştı. Gazeteci Sabun Yağız konuyu haber yaptı.
+- **g_sosyal_5_4**: Hayran hesaplarından biri seninle ilgili bir iddia paylaştı. Takım arkadaşların espri yapıyor.
+- **g_sosyal_5_5**: Hayran hesaplarından biri seninle ilgili bir iddia paylaştı. Kulübün sosyal medya ekibi seni aradı.
+- **g_sosyal_5_6**: Hayran hesaplarından biri seninle ilgili bir iddia paylaştı. Etkileşim rekor kırdı.
+- **g_sosyal_6_0**: Bir beğenin ekran görüntüsüyle yayıldı. Rakip taraftarlar konuyu büyütüyor.
+- **g_sosyal_6_1**: Bir beğenin ekran görüntüsüyle yayıldı. Kendi taraftarların seni savunuyor.
+- **g_sosyal_6_2**: Bir beğenin ekran görüntüsüyle yayıldı. Bir spor programı konuyu canlı yayında konuştu.
+- **g_sosyal_6_3**: Bir beğenin ekran görüntüsüyle yayıldı. Gazeteci Sabun Yağız konuyu haber yaptı.
+- **g_sosyal_6_4**: Bir beğenin ekran görüntüsüyle yayıldı. Takım arkadaşların espri yapıyor.
+- **g_sosyal_6_5**: Bir beğenin ekran görüntüsüyle yayıldı. Kulübün sosyal medya ekibi seni aradı.
+- **g_sosyal_6_6**: Bir beğenin ekran görüntüsüyle yayıldı. Etkileşim rekor kırdı.
+- **g_sosyal_7_0**: Yanlışlıkla gönderdiğin bir emoji tartışma çıkardı. Rakip taraftarlar konuyu büyütüyor.
+- **g_sosyal_7_1**: Yanlışlıkla gönderdiğin bir emoji tartışma çıkardı. Kendi taraftarların seni savunuyor.
+- **g_sosyal_7_2**: Yanlışlıkla gönderdiğin bir emoji tartışma çıkardı. Bir spor programı konuyu canlı yayında konuştu.
+- **g_sosyal_7_3**: Yanlışlıkla gönderdiğin bir emoji tartışma çıkardı. Gazeteci Sabun Yağız konuyu haber yaptı.
+- **g_sosyal_7_4**: Yanlışlıkla gönderdiğin bir emoji tartışma çıkardı. Takım arkadaşların espri yapıyor.
+- **g_sosyal_7_5**: Yanlışlıkla gönderdiğin bir emoji tartışma çıkardı. Kulübün sosyal medya ekibi seni aradı.
+- **g_sosyal_7_6**: Yanlışlıkla gönderdiğin bir emoji tartışma çıkardı. Etkileşim rekor kırdı.
+- **g_para_0_0**: Eski bir okul arkadaşın seni aradı. Kâr vaadi çok yüksek, belki fazla yüksek.
+- **g_para_0_1**: Eski bir okul arkadaşın seni aradı. Belgeler sağlam görünüyor.
+- **g_para_0_2**: Eski bir okul arkadaşın seni aradı. Acele etmeni istiyor, "yarın geç olur" diyor.
+- **g_para_0_3**: Eski bir okul arkadaşın seni aradı. Muhasebecin temkinli olmanı söyledi.
+- **g_para_0_4**: Eski bir okul arkadaşın seni aradı. Ailen bu işe çok sıcak bakıyor.
+- **g_para_0_5**: Eski bir okul arkadaşın seni aradı. İş memleketinde, oraya da faydası olacak.
+- **g_para_0_6**: Eski bir okul arkadaşın seni aradı. Daha önce başka futbolcular da yatırım yapmış.
+- **g_para_1_0**: Bir iş insanı tesise kadar gelip seni görmek istedi. Kâr vaadi çok yüksek, belki fazla yüksek.
+- **g_para_1_1**: Bir iş insanı tesise kadar gelip seni görmek istedi. Belgeler sağlam görünüyor.
+- **g_para_1_2**: Bir iş insanı tesise kadar gelip seni görmek istedi. Acele etmeni istiyor, "yarın geç olur" diyor.
+- **g_para_1_3**: Bir iş insanı tesise kadar gelip seni görmek istedi. Muhasebecin temkinli olmanı söyledi.
+- **g_para_1_4**: Bir iş insanı tesise kadar gelip seni görmek istedi. Ailen bu işe çok sıcak bakıyor.
+- **g_para_1_5**: Bir iş insanı tesise kadar gelip seni görmek istedi. İş memleketinde, oraya da faydası olacak.
+- **g_para_1_6**: Bir iş insanı tesise kadar gelip seni görmek istedi. Daha önce başka futbolcular da yatırım yapmış.
+- **g_para_2_0**: Bir akrabanın tanıdığı yatırım teklifiyle geldi. Kâr vaadi çok yüksek, belki fazla yüksek.
+- **g_para_2_1**: Bir akrabanın tanıdığı yatırım teklifiyle geldi. Belgeler sağlam görünüyor.
+- **g_para_2_2**: Bir akrabanın tanıdığı yatırım teklifiyle geldi. Acele etmeni istiyor, "yarın geç olur" diyor.
+- **g_para_2_3**: Bir akrabanın tanıdığı yatırım teklifiyle geldi. Muhasebecin temkinli olmanı söyledi.
+- **g_para_2_4**: Bir akrabanın tanıdığı yatırım teklifiyle geldi. Ailen bu işe çok sıcak bakıyor.
+- **g_para_2_5**: Bir akrabanın tanıdığı yatırım teklifiyle geldi. İş memleketinde, oraya da faydası olacak.
+- **g_para_2_6**: Bir akrabanın tanıdığı yatırım teklifiyle geldi. Daha önce başka futbolcular da yatırım yapmış.
+- **g_para_3_0**: Bankacın seni şubeye davet etti. Kâr vaadi çok yüksek, belki fazla yüksek.
+- **g_para_3_1**: Bankacın seni şubeye davet etti. Belgeler sağlam görünüyor.
+- **g_para_3_2**: Bankacın seni şubeye davet etti. Acele etmeni istiyor, "yarın geç olur" diyor.
+- **g_para_3_3**: Bankacın seni şubeye davet etti. Muhasebecin temkinli olmanı söyledi.
+- **g_para_3_4**: Bankacın seni şubeye davet etti. Ailen bu işe çok sıcak bakıyor.
+- **g_para_3_5**: Bankacın seni şubeye davet etti. İş memleketinde, oraya da faydası olacak.
+- **g_para_3_6**: Bankacın seni şubeye davet etti. Daha önce başka futbolcular da yatırım yapmış.
+- **g_para_4_0**: Bir takım arkadaşın ortak olduğu işten bahsetti. Kâr vaadi çok yüksek, belki fazla yüksek.
+- **g_para_4_1**: Bir takım arkadaşın ortak olduğu işten bahsetti. Belgeler sağlam görünüyor.
+- **g_para_4_2**: Bir takım arkadaşın ortak olduğu işten bahsetti. Acele etmeni istiyor, "yarın geç olur" diyor.
+- **g_para_4_3**: Bir takım arkadaşın ortak olduğu işten bahsetti. Muhasebecin temkinli olmanı söyledi.
+- **g_para_4_4**: Bir takım arkadaşın ortak olduğu işten bahsetti. Ailen bu işe çok sıcak bakıyor.
+- **g_para_4_5**: Bir takım arkadaşın ortak olduğu işten bahsetti. İş memleketinde, oraya da faydası olacak.
+- **g_para_4_6**: Bir takım arkadaşın ortak olduğu işten bahsetti. Daha önce başka futbolcular da yatırım yapmış.
+- **g_para_5_0**: Bir emlakçı sürekli mesaj atıyor. Kâr vaadi çok yüksek, belki fazla yüksek.
+- **g_para_5_1**: Bir emlakçı sürekli mesaj atıyor. Belgeler sağlam görünüyor.
+- **g_para_5_2**: Bir emlakçı sürekli mesaj atıyor. Acele etmeni istiyor, "yarın geç olur" diyor.
+- **g_para_5_3**: Bir emlakçı sürekli mesaj atıyor. Muhasebecin temkinli olmanı söyledi.
+- **g_para_5_4**: Bir emlakçı sürekli mesaj atıyor. Ailen bu işe çok sıcak bakıyor.
+- **g_para_5_5**: Bir emlakçı sürekli mesaj atıyor. İş memleketinde, oraya da faydası olacak.
+- **g_para_5_6**: Bir emlakçı sürekli mesaj atıyor. Daha önce başka futbolcular da yatırım yapmış.
+- **g_para_6_0**: Bir startup kurucusu sosyal medyadan yazdı. Kâr vaadi çok yüksek, belki fazla yüksek.
+- **g_para_6_1**: Bir startup kurucusu sosyal medyadan yazdı. Belgeler sağlam görünüyor.
+- **g_para_6_2**: Bir startup kurucusu sosyal medyadan yazdı. Acele etmeni istiyor, "yarın geç olur" diyor.
+- **g_para_6_3**: Bir startup kurucusu sosyal medyadan yazdı. Muhasebecin temkinli olmanı söyledi.
+- **g_para_6_4**: Bir startup kurucusu sosyal medyadan yazdı. Ailen bu işe çok sıcak bakıyor.
+- **g_para_6_5**: Bir startup kurucusu sosyal medyadan yazdı. İş memleketinde, oraya da faydası olacak.
+- **g_para_6_6**: Bir startup kurucusu sosyal medyadan yazdı. Daha önce başka futbolcular da yatırım yapmış.
+- **g_para_7_0**: Memleketten bir esnaf bir iş fırsatı anlattı. Kâr vaadi çok yüksek, belki fazla yüksek.
+- **g_para_7_1**: Memleketten bir esnaf bir iş fırsatı anlattı. Belgeler sağlam görünüyor.
+- **g_para_7_2**: Memleketten bir esnaf bir iş fırsatı anlattı. Acele etmeni istiyor, "yarın geç olur" diyor.
+- **g_para_7_3**: Memleketten bir esnaf bir iş fırsatı anlattı. Muhasebecin temkinli olmanı söyledi.
+- **g_para_7_4**: Memleketten bir esnaf bir iş fırsatı anlattı. Ailen bu işe çok sıcak bakıyor.
+- **g_para_7_5**: Memleketten bir esnaf bir iş fırsatı anlattı. İş memleketinde, oraya da faydası olacak.
+- **g_para_7_6**: Memleketten bir esnaf bir iş fırsatı anlattı. Daha önce başka futbolcular da yatırım yapmış.
+- **g_saglik_0_0**: Sabah kalktığında dizinde bir ağrı vardı. Doktor bir hafta dikkatli olmanı istiyor.
+- **g_saglik_0_1**: Sabah kalktığında dizinde bir ağrı vardı. Büyük bir maç yaklaşıyor.
+- **g_saglik_0_2**: Sabah kalktığında dizinde bir ağrı vardı. Hoca durumundan haberdar değil.
+- **g_saglik_0_3**: Sabah kalktığında dizinde bir ağrı vardı. Kulüp yeni bir tedavi yöntemi öneriyor.
+- **g_saglik_0_4**: Sabah kalktığında dizinde bir ağrı vardı. Takım arkadaşın da aynı şeyi yaşamış.
+- **g_saglik_0_5**: Sabah kalktığında dizinde bir ağrı vardı. Annen hemen bir doğal tarif gönderdi.
+- **g_saglik_0_6**: Sabah kalktığında dizinde bir ağrı vardı. Bu sezon zaten yoğun geçiyor.
+- **g_saglik_1_0**: Antrenmanda ayak bileğini biraz burktun. Doktor bir hafta dikkatli olmanı istiyor.
+- **g_saglik_1_1**: Antrenmanda ayak bileğini biraz burktun. Büyük bir maç yaklaşıyor.
+- **g_saglik_1_2**: Antrenmanda ayak bileğini biraz burktun. Hoca durumundan haberdar değil.
+- **g_saglik_1_3**: Antrenmanda ayak bileğini biraz burktun. Kulüp yeni bir tedavi yöntemi öneriyor.
+- **g_saglik_1_4**: Antrenmanda ayak bileğini biraz burktun. Takım arkadaşın da aynı şeyi yaşamış.
+- **g_saglik_1_5**: Antrenmanda ayak bileğini biraz burktun. Annen hemen bir doğal tarif gönderdi.
+- **g_saglik_1_6**: Antrenmanda ayak bileğini biraz burktun. Bu sezon zaten yoğun geçiyor.
+- **g_saglik_2_0**: Kulüp doktoru kan tahlillerine baktı. Doktor bir hafta dikkatli olmanı istiyor.
+- **g_saglik_2_1**: Kulüp doktoru kan tahlillerine baktı. Büyük bir maç yaklaşıyor.
+- **g_saglik_2_2**: Kulüp doktoru kan tahlillerine baktı. Hoca durumundan haberdar değil.
+- **g_saglik_2_3**: Kulüp doktoru kan tahlillerine baktı. Kulüp yeni bir tedavi yöntemi öneriyor.
+- **g_saglik_2_4**: Kulüp doktoru kan tahlillerine baktı. Takım arkadaşın da aynı şeyi yaşamış.
+- **g_saglik_2_5**: Kulüp doktoru kan tahlillerine baktı. Annen hemen bir doğal tarif gönderdi.
+- **g_saglik_2_6**: Kulüp doktoru kan tahlillerine baktı. Bu sezon zaten yoğun geçiyor.
+- **g_saglik_3_0**: Gece boyunca öksürdün, sabah halsizsin. Doktor bir hafta dikkatli olmanı istiyor.
+- **g_saglik_3_1**: Gece boyunca öksürdün, sabah halsizsin. Büyük bir maç yaklaşıyor.
+- **g_saglik_3_2**: Gece boyunca öksürdün, sabah halsizsin. Hoca durumundan haberdar değil.
+- **g_saglik_3_3**: Gece boyunca öksürdün, sabah halsizsin. Kulüp yeni bir tedavi yöntemi öneriyor.
+- **g_saglik_3_4**: Gece boyunca öksürdün, sabah halsizsin. Takım arkadaşın da aynı şeyi yaşamış.
+- **g_saglik_3_5**: Gece boyunca öksürdün, sabah halsizsin. Annen hemen bir doğal tarif gönderdi.
+- **g_saglik_3_6**: Gece boyunca öksürdün, sabah halsizsin. Bu sezon zaten yoğun geçiyor.
+- **g_saglik_4_0**: Fizyoterapist kaslarında yorgunluk tespit etti. Doktor bir hafta dikkatli olmanı istiyor.
+- **g_saglik_4_1**: Fizyoterapist kaslarında yorgunluk tespit etti. Büyük bir maç yaklaşıyor.
+- **g_saglik_4_2**: Fizyoterapist kaslarında yorgunluk tespit etti. Hoca durumundan haberdar değil.
+- **g_saglik_4_3**: Fizyoterapist kaslarında yorgunluk tespit etti. Kulüp yeni bir tedavi yöntemi öneriyor.
+- **g_saglik_4_4**: Fizyoterapist kaslarında yorgunluk tespit etti. Takım arkadaşın da aynı şeyi yaşamış.
+- **g_saglik_4_5**: Fizyoterapist kaslarında yorgunluk tespit etti. Annen hemen bir doğal tarif gönderdi.
+- **g_saglik_4_6**: Fizyoterapist kaslarında yorgunluk tespit etti. Bu sezon zaten yoğun geçiyor.
+- **g_saglik_5_0**: Bir maçtan sonra sırt ağrın geçmedi. Doktor bir hafta dikkatli olmanı istiyor.
+- **g_saglik_5_1**: Bir maçtan sonra sırt ağrın geçmedi. Büyük bir maç yaklaşıyor.
+- **g_saglik_5_2**: Bir maçtan sonra sırt ağrın geçmedi. Hoca durumundan haberdar değil.
+- **g_saglik_5_3**: Bir maçtan sonra sırt ağrın geçmedi. Kulüp yeni bir tedavi yöntemi öneriyor.
+- **g_saglik_5_4**: Bir maçtan sonra sırt ağrın geçmedi. Takım arkadaşın da aynı şeyi yaşamış.
+- **g_saglik_5_5**: Bir maçtan sonra sırt ağrın geçmedi. Annen hemen bir doğal tarif gönderdi.
+- **g_saglik_5_6**: Bir maçtan sonra sırt ağrın geçmedi. Bu sezon zaten yoğun geçiyor.
+- **g_saglik_6_0**: Uyku düzenin bozuldu, gözlerin kızarık. Doktor bir hafta dikkatli olmanı istiyor.
+- **g_saglik_6_1**: Uyku düzenin bozuldu, gözlerin kızarık. Büyük bir maç yaklaşıyor.
+- **g_saglik_6_2**: Uyku düzenin bozuldu, gözlerin kızarık. Hoca durumundan haberdar değil.
+- **g_saglik_6_3**: Uyku düzenin bozuldu, gözlerin kızarık. Kulüp yeni bir tedavi yöntemi öneriyor.
+- **g_saglik_6_4**: Uyku düzenin bozuldu, gözlerin kızarık. Takım arkadaşın da aynı şeyi yaşamış.
+- **g_saglik_6_5**: Uyku düzenin bozuldu, gözlerin kızarık. Annen hemen bir doğal tarif gönderdi.
+- **g_saglik_6_6**: Uyku düzenin bozuldu, gözlerin kızarık. Bu sezon zaten yoğun geçiyor.
+- **g_saglik_7_0**: Diş hekimi bir dolgu gerektiğini söyledi. Doktor bir hafta dikkatli olmanı istiyor.
+- **g_saglik_7_1**: Diş hekimi bir dolgu gerektiğini söyledi. Büyük bir maç yaklaşıyor.
+- **g_saglik_7_2**: Diş hekimi bir dolgu gerektiğini söyledi. Hoca durumundan haberdar değil.
+- **g_saglik_7_3**: Diş hekimi bir dolgu gerektiğini söyledi. Kulüp yeni bir tedavi yöntemi öneriyor.
+- **g_saglik_7_4**: Diş hekimi bir dolgu gerektiğini söyledi. Takım arkadaşın da aynı şeyi yaşamış.
+- **g_saglik_7_5**: Diş hekimi bir dolgu gerektiğini söyledi. Annen hemen bir doğal tarif gönderdi.
+- **g_saglik_7_6**: Diş hekimi bir dolgu gerektiğini söyledi. Bu sezon zaten yoğun geçiyor.
+- **g_memleket_0_0**: Memleketindeki belediye başkanı aradı. Bayram yaklaşıyor, herkes seni bekliyor.
+- **g_memleket_0_1**: Memleketindeki belediye başkanı aradı. Gençler seni örnek alıyor.
+- **g_memleket_0_2**: Memleketindeki belediye başkanı aradı. Küçük bir maddi destek bekleniyor.
+- **g_memleket_0_3**: Memleketindeki belediye başkanı aradı. Yerel televizyon da işin içinde.
+- **g_memleket_0_4**: Memleketindeki belediye başkanı aradı. Ailen bu daveti çok önemsiyor.
+- **g_memleket_0_5**: Memleketindeki belediye başkanı aradı. Sezonun en yoğun haftası.
+- **g_memleket_0_6**: Memleketindeki belediye başkanı aradı. Memleketin kulübü de seni izliyor.
+- **g_memleket_1_0**: Memleketten çocukluk arkadaşın yazdı. Bayram yaklaşıyor, herkes seni bekliyor.
+- **g_memleket_1_1**: Memleketten çocukluk arkadaşın yazdı. Gençler seni örnek alıyor.
+- **g_memleket_1_2**: Memleketten çocukluk arkadaşın yazdı. Küçük bir maddi destek bekleniyor.
+- **g_memleket_1_3**: Memleketten çocukluk arkadaşın yazdı. Yerel televizyon da işin içinde.
+- **g_memleket_1_4**: Memleketten çocukluk arkadaşın yazdı. Ailen bu daveti çok önemsiyor.
+- **g_memleket_1_5**: Memleketten çocukluk arkadaşın yazdı. Sezonun en yoğun haftası.
+- **g_memleket_1_6**: Memleketten çocukluk arkadaşın yazdı. Memleketin kulübü de seni izliyor.
+- **g_memleket_2_0**: Memleketin yerel gazetesi seninle röportaj istiyor. Bayram yaklaşıyor, herkes seni bekliyor.
+- **g_memleket_2_1**: Memleketin yerel gazetesi seninle röportaj istiyor. Gençler seni örnek alıyor.
+- **g_memleket_2_2**: Memleketin yerel gazetesi seninle röportaj istiyor. Küçük bir maddi destek bekleniyor.
+- **g_memleket_2_3**: Memleketin yerel gazetesi seninle röportaj istiyor. Yerel televizyon da işin içinde.
+- **g_memleket_2_4**: Memleketin yerel gazetesi seninle röportaj istiyor. Ailen bu daveti çok önemsiyor.
+- **g_memleket_2_5**: Memleketin yerel gazetesi seninle röportaj istiyor. Sezonun en yoğun haftası.
+- **g_memleket_2_6**: Memleketin yerel gazetesi seninle röportaj istiyor. Memleketin kulübü de seni izliyor.
+- **g_memleket_3_0**: Memleketteki eski okulunun müdürü bir davet gönderdi. Bayram yaklaşıyor, herkes seni bekliyor.
+- **g_memleket_3_1**: Memleketteki eski okulunun müdürü bir davet gönderdi. Gençler seni örnek alıyor.
+- **g_memleket_3_2**: Memleketteki eski okulunun müdürü bir davet gönderdi. Küçük bir maddi destek bekleniyor.
+- **g_memleket_3_3**: Memleketteki eski okulunun müdürü bir davet gönderdi. Yerel televizyon da işin içinde.
+- **g_memleket_3_4**: Memleketteki eski okulunun müdürü bir davet gönderdi. Ailen bu daveti çok önemsiyor.
+- **g_memleket_3_5**: Memleketteki eski okulunun müdürü bir davet gönderdi. Sezonun en yoğun haftası.
+- **g_memleket_3_6**: Memleketteki eski okulunun müdürü bir davet gönderdi. Memleketin kulübü de seni izliyor.
+- **g_memleket_4_0**: Memleketin amatör takımı yardım istiyor. Bayram yaklaşıyor, herkes seni bekliyor.
+- **g_memleket_4_1**: Memleketin amatör takımı yardım istiyor. Gençler seni örnek alıyor.
+- **g_memleket_4_2**: Memleketin amatör takımı yardım istiyor. Küçük bir maddi destek bekleniyor.
+- **g_memleket_4_3**: Memleketin amatör takımı yardım istiyor. Yerel televizyon da işin içinde.
+- **g_memleket_4_4**: Memleketin amatör takımı yardım istiyor. Ailen bu daveti çok önemsiyor.
+- **g_memleket_4_5**: Memleketin amatör takımı yardım istiyor. Sezonun en yoğun haftası.
+- **g_memleket_4_6**: Memleketin amatör takımı yardım istiyor. Memleketin kulübü de seni izliyor.
+- **g_memleket_5_0**: Memleketteki kahvede maçlarını dev ekranda izliyorlarmış. Bayram yaklaşıyor, herkes seni bekliyor.
+- **g_memleket_5_1**: Memleketteki kahvede maçlarını dev ekranda izliyorlarmış. Gençler seni örnek alıyor.
+- **g_memleket_5_2**: Memleketteki kahvede maçlarını dev ekranda izliyorlarmış. Küçük bir maddi destek bekleniyor.
+- **g_memleket_5_3**: Memleketteki kahvede maçlarını dev ekranda izliyorlarmış. Yerel televizyon da işin içinde.
+- **g_memleket_5_4**: Memleketteki kahvede maçlarını dev ekranda izliyorlarmış. Ailen bu daveti çok önemsiyor.
+- **g_memleket_5_5**: Memleketteki kahvede maçlarını dev ekranda izliyorlarmış. Sezonun en yoğun haftası.
+- **g_memleket_5_6**: Memleketteki kahvede maçlarını dev ekranda izliyorlarmış. Memleketin kulübü de seni izliyor.
+- **g_memleket_6_0**: Memleketinde bir sokağa adını verme fikri konuşuluyor. Bayram yaklaşıyor, herkes seni bekliyor.
+- **g_memleket_6_1**: Memleketinde bir sokağa adını verme fikri konuşuluyor. Gençler seni örnek alıyor.
+- **g_memleket_6_2**: Memleketinde bir sokağa adını verme fikri konuşuluyor. Küçük bir maddi destek bekleniyor.
+- **g_memleket_6_3**: Memleketinde bir sokağa adını verme fikri konuşuluyor. Yerel televizyon da işin içinde.
+- **g_memleket_6_4**: Memleketinde bir sokağa adını verme fikri konuşuluyor. Ailen bu daveti çok önemsiyor.
+- **g_memleket_6_5**: Memleketinde bir sokağa adını verme fikri konuşuluyor. Sezonun en yoğun haftası.
+- **g_memleket_6_6**: Memleketinde bir sokağa adını verme fikri konuşuluyor. Memleketin kulübü de seni izliyor.
+- **g_memleket_7_0**: Memleketten bir ihtiyar senin için türkü yazmış. Bayram yaklaşıyor, herkes seni bekliyor.
+- **g_memleket_7_1**: Memleketten bir ihtiyar senin için türkü yazmış. Gençler seni örnek alıyor.
+- **g_memleket_7_2**: Memleketten bir ihtiyar senin için türkü yazmış. Küçük bir maddi destek bekleniyor.
+- **g_memleket_7_3**: Memleketten bir ihtiyar senin için türkü yazmış. Yerel televizyon da işin içinde.
+- **g_memleket_7_4**: Memleketten bir ihtiyar senin için türkü yazmış. Ailen bu daveti çok önemsiyor.
+- **g_memleket_7_5**: Memleketten bir ihtiyar senin için türkü yazmış. Sezonun en yoğun haftası.
+- **g_memleket_7_6**: Memleketten bir ihtiyar senin için türkü yazmış. Memleketin kulübü de seni izliyor.
+- **g_hakem_0_0**: Geçen maçta hakemle tartışman görüntülere yansıdı. Para cezası ihtimali konuşuluyor.
+- **g_hakem_0_1**: Geçen maçta hakemle tartışman görüntülere yansıdı. Taraftarlar seni destekliyor.
+- **g_hakem_0_2**: Geçen maçta hakemle tartışman görüntülere yansıdı. Kulüp avukatı seninle görüşmek istiyor.
+- **g_hakem_0_3**: Geçen maçta hakemle tartışman görüntülere yansıdı. Rakip kulüp de açıklama yaptı.
+- **g_hakem_0_4**: Geçen maçta hakemle tartışman görüntülere yansıdı. Hoca konuyu kapatmanı istiyor.
+- **g_hakem_0_5**: Geçen maçta hakemle tartışman görüntülere yansıdı. Gazeteci Caprizio konuyu didikliyor.
+- **g_hakem_0_6**: Geçen maçta hakemle tartışman görüntülere yansıdı. Konu sosyal medyada trend oldu.
+- **g_hakem_1_0**: Federasyon disiplin kurulu bir maç olayını inceliyor. Para cezası ihtimali konuşuluyor.
+- **g_hakem_1_1**: Federasyon disiplin kurulu bir maç olayını inceliyor. Taraftarlar seni destekliyor.
+- **g_hakem_1_2**: Federasyon disiplin kurulu bir maç olayını inceliyor. Kulüp avukatı seninle görüşmek istiyor.
+- **g_hakem_1_3**: Federasyon disiplin kurulu bir maç olayını inceliyor. Rakip kulüp de açıklama yaptı.
+- **g_hakem_1_4**: Federasyon disiplin kurulu bir maç olayını inceliyor. Hoca konuyu kapatmanı istiyor.
+- **g_hakem_1_5**: Federasyon disiplin kurulu bir maç olayını inceliyor. Gazeteci Caprizio konuyu didikliyor.
+- **g_hakem_1_6**: Federasyon disiplin kurulu bir maç olayını inceliyor. Konu sosyal medyada trend oldu.
+- **g_hakem_2_0**: VAR kayıtları yayınlandı, senin pozisyonun da var. Para cezası ihtimali konuşuluyor.
+- **g_hakem_2_1**: VAR kayıtları yayınlandı, senin pozisyonun da var. Taraftarlar seni destekliyor.
+- **g_hakem_2_2**: VAR kayıtları yayınlandı, senin pozisyonun da var. Kulüp avukatı seninle görüşmek istiyor.
+- **g_hakem_2_3**: VAR kayıtları yayınlandı, senin pozisyonun da var. Rakip kulüp de açıklama yaptı.
+- **g_hakem_2_4**: VAR kayıtları yayınlandı, senin pozisyonun da var. Hoca konuyu kapatmanı istiyor.
+- **g_hakem_2_5**: VAR kayıtları yayınlandı, senin pozisyonun da var. Gazeteci Caprizio konuyu didikliyor.
+- **g_hakem_2_6**: VAR kayıtları yayınlandı, senin pozisyonun da var. Konu sosyal medyada trend oldu.
+- **g_hakem_3_0**: Bir hakem gazeteye senin hakkında konuştu. Para cezası ihtimali konuşuluyor.
+- **g_hakem_3_1**: Bir hakem gazeteye senin hakkında konuştu. Taraftarlar seni destekliyor.
+- **g_hakem_3_2**: Bir hakem gazeteye senin hakkında konuştu. Kulüp avukatı seninle görüşmek istiyor.
+- **g_hakem_3_3**: Bir hakem gazeteye senin hakkında konuştu. Rakip kulüp de açıklama yaptı.
+- **g_hakem_3_4**: Bir hakem gazeteye senin hakkında konuştu. Hoca konuyu kapatmanı istiyor.
+- **g_hakem_3_5**: Bir hakem gazeteye senin hakkında konuştu. Gazeteci Caprizio konuyu didikliyor.
+- **g_hakem_3_6**: Bir hakem gazeteye senin hakkında konuştu. Konu sosyal medyada trend oldu.
+- **g_hakem_4_0**: Takımın bir hakem kararına itiraz etti. Para cezası ihtimali konuşuluyor.
+- **g_hakem_4_1**: Takımın bir hakem kararına itiraz etti. Taraftarlar seni destekliyor.
+- **g_hakem_4_2**: Takımın bir hakem kararına itiraz etti. Kulüp avukatı seninle görüşmek istiyor.
+- **g_hakem_4_3**: Takımın bir hakem kararına itiraz etti. Rakip kulüp de açıklama yaptı.
+- **g_hakem_4_4**: Takımın bir hakem kararına itiraz etti. Hoca konuyu kapatmanı istiyor.
+- **g_hakem_4_5**: Takımın bir hakem kararına itiraz etti. Gazeteci Caprizio konuyu didikliyor.
+- **g_hakem_4_6**: Takımın bir hakem kararına itiraz etti. Konu sosyal medyada trend oldu.
+- **g_hakem_5_0**: Bir maç gözlemcisi raporuna adını yazmış. Para cezası ihtimali konuşuluyor.
+- **g_hakem_5_1**: Bir maç gözlemcisi raporuna adını yazmış. Taraftarlar seni destekliyor.
+- **g_hakem_5_2**: Bir maç gözlemcisi raporuna adını yazmış. Kulüp avukatı seninle görüşmek istiyor.
+- **g_hakem_5_3**: Bir maç gözlemcisi raporuna adını yazmış. Rakip kulüp de açıklama yaptı.
+- **g_hakem_5_4**: Bir maç gözlemcisi raporuna adını yazmış. Hoca konuyu kapatmanı istiyor.
+- **g_hakem_5_5**: Bir maç gözlemcisi raporuna adını yazmış. Gazeteci Caprizio konuyu didikliyor.
+- **g_hakem_5_6**: Bir maç gözlemcisi raporuna adını yazmış. Konu sosyal medyada trend oldu.
+- **g_hakem_6_0**: Hakemler birliği oyuncuların itirazlarından şikâyetçi. Para cezası ihtimali konuşuluyor.
+- **g_hakem_6_1**: Hakemler birliği oyuncuların itirazlarından şikâyetçi. Taraftarlar seni destekliyor.
+- **g_hakem_6_2**: Hakemler birliği oyuncuların itirazlarından şikâyetçi. Kulüp avukatı seninle görüşmek istiyor.
+- **g_hakem_6_3**: Hakemler birliği oyuncuların itirazlarından şikâyetçi. Rakip kulüp de açıklama yaptı.
+- **g_hakem_6_4**: Hakemler birliği oyuncuların itirazlarından şikâyetçi. Hoca konuyu kapatmanı istiyor.
+- **g_hakem_6_5**: Hakemler birliği oyuncuların itirazlarından şikâyetçi. Gazeteci Caprizio konuyu didikliyor.
+- **g_hakem_6_6**: Hakemler birliği oyuncuların itirazlarından şikâyetçi. Konu sosyal medyada trend oldu.
+- **g_hakem_7_0**: Bir televizyon yorumcusu senin hareketini "simülasyon" olarak yorumladı. Para cezası ihtimali konuşuluyor.
+- **g_hakem_7_1**: Bir televizyon yorumcusu senin hareketini "simülasyon" olarak yorumladı. Taraftarlar seni destekliyor.
+- **g_hakem_7_2**: Bir televizyon yorumcusu senin hareketini "simülasyon" olarak yorumladı. Kulüp avukatı seninle görüşmek istiyor.
+- **g_hakem_7_3**: Bir televizyon yorumcusu senin hareketini "simülasyon" olarak yorumladı. Rakip kulüp de açıklama yaptı.
+- **g_hakem_7_4**: Bir televizyon yorumcusu senin hareketini "simülasyon" olarak yorumladı. Hoca konuyu kapatmanı istiyor.
+- **g_hakem_7_5**: Bir televizyon yorumcusu senin hareketini "simülasyon" olarak yorumladı. Gazeteci Caprizio konuyu didikliyor.
+- **g_hakem_7_6**: Bir televizyon yorumcusu senin hareketini "simülasyon" olarak yorumladı. Konu sosyal medyada trend oldu.
+- **g_rakip_0_0**: Bir sonraki rakibin yıldızı seninle ilgili konuştu. Maç bu hafta sonu.
+- **g_rakip_0_1**: Bir sonraki rakibin yıldızı seninle ilgili konuştu. Taraftarlar sözleri pankarta yazmaya hazırlanıyor.
+- **g_rakip_0_2**: Bir sonraki rakibin yıldızı seninle ilgili konuştu. Gazeteciler cevabını bekliyor.
+- **g_rakip_0_3**: Bir sonraki rakibin yıldızı seninle ilgili konuştu. Takım arkadaşların seni kışkırtıyor.
+- **g_rakip_0_4**: Bir sonraki rakibin yıldızı seninle ilgili konuştu. Hoca "cevabı sahada ver" dedi.
+- **g_rakip_0_5**: Bir sonraki rakibin yıldızı seninle ilgili konuştu. Eski bir rekabetiniz var.
+- **g_rakip_0_6**: Bir sonraki rakibin yıldızı seninle ilgili konuştu. Konu milli takım çevresinde de konuşuluyor.
+- **g_rakip_1_0**: Eski takım arkadaşın şimdi rakip takımda ve sana mesaj attı. Maç bu hafta sonu.
+- **g_rakip_1_1**: Eski takım arkadaşın şimdi rakip takımda ve sana mesaj attı. Taraftarlar sözleri pankarta yazmaya hazırlanıyor.
+- **g_rakip_1_2**: Eski takım arkadaşın şimdi rakip takımda ve sana mesaj attı. Gazeteciler cevabını bekliyor.
+- **g_rakip_1_3**: Eski takım arkadaşın şimdi rakip takımda ve sana mesaj attı. Takım arkadaşların seni kışkırtıyor.
+- **g_rakip_1_4**: Eski takım arkadaşın şimdi rakip takımda ve sana mesaj attı. Hoca "cevabı sahada ver" dedi.
+- **g_rakip_1_5**: Eski takım arkadaşın şimdi rakip takımda ve sana mesaj attı. Eski bir rekabetiniz var.
+- **g_rakip_1_6**: Eski takım arkadaşın şimdi rakip takımda ve sana mesaj attı. Konu milli takım çevresinde de konuşuluyor.
+- **g_rakip_2_0**: Rakip takımın stoperi seni "abartılmış" olarak niteledi. Maç bu hafta sonu.
+- **g_rakip_2_1**: Rakip takımın stoperi seni "abartılmış" olarak niteledi. Taraftarlar sözleri pankarta yazmaya hazırlanıyor.
+- **g_rakip_2_2**: Rakip takımın stoperi seni "abartılmış" olarak niteledi. Gazeteciler cevabını bekliyor.
+- **g_rakip_2_3**: Rakip takımın stoperi seni "abartılmış" olarak niteledi. Takım arkadaşların seni kışkırtıyor.
+- **g_rakip_2_4**: Rakip takımın stoperi seni "abartılmış" olarak niteledi. Hoca "cevabı sahada ver" dedi.
+- **g_rakip_2_5**: Rakip takımın stoperi seni "abartılmış" olarak niteledi. Eski bir rekabetiniz var.
+- **g_rakip_2_6**: Rakip takımın stoperi seni "abartılmış" olarak niteledi. Konu milli takım çevresinde de konuşuluyor.
+- **g_rakip_3_0**: Bir rakip oyuncu sosyal medyada seni etiketleyip bir video paylaştı. Maç bu hafta sonu.
+- **g_rakip_3_1**: Bir rakip oyuncu sosyal medyada seni etiketleyip bir video paylaştı. Taraftarlar sözleri pankarta yazmaya hazırlanıyor.
+- **g_rakip_3_2**: Bir rakip oyuncu sosyal medyada seni etiketleyip bir video paylaştı. Gazeteciler cevabını bekliyor.
+- **g_rakip_3_3**: Bir rakip oyuncu sosyal medyada seni etiketleyip bir video paylaştı. Takım arkadaşların seni kışkırtıyor.
+- **g_rakip_3_4**: Bir rakip oyuncu sosyal medyada seni etiketleyip bir video paylaştı. Hoca "cevabı sahada ver" dedi.
+- **g_rakip_3_5**: Bir rakip oyuncu sosyal medyada seni etiketleyip bir video paylaştı. Eski bir rekabetiniz var.
+- **g_rakip_3_6**: Bir rakip oyuncu sosyal medyada seni etiketleyip bir video paylaştı. Konu milli takım çevresinde de konuşuluyor.
+- **g_rakip_4_0**: Milli takım kampında rakip kulübün oyuncusuyla aynı odadasın. Maç bu hafta sonu.
+- **g_rakip_4_1**: Milli takım kampında rakip kulübün oyuncusuyla aynı odadasın. Taraftarlar sözleri pankarta yazmaya hazırlanıyor.
+- **g_rakip_4_2**: Milli takım kampında rakip kulübün oyuncusuyla aynı odadasın. Gazeteciler cevabını bekliyor.
+- **g_rakip_4_3**: Milli takım kampında rakip kulübün oyuncusuyla aynı odadasın. Takım arkadaşların seni kışkırtıyor.
+- **g_rakip_4_4**: Milli takım kampında rakip kulübün oyuncusuyla aynı odadasın. Hoca "cevabı sahada ver" dedi.
+- **g_rakip_4_5**: Milli takım kampında rakip kulübün oyuncusuyla aynı odadasın. Eski bir rekabetiniz var.
+- **g_rakip_4_6**: Milli takım kampında rakip kulübün oyuncusuyla aynı odadasın. Konu milli takım çevresinde de konuşuluyor.
+- **g_rakip_5_0**: Rakip takımın kalecisi penaltı atışı için meydan okudu. Maç bu hafta sonu.
+- **g_rakip_5_1**: Rakip takımın kalecisi penaltı atışı için meydan okudu. Taraftarlar sözleri pankarta yazmaya hazırlanıyor.
+- **g_rakip_5_2**: Rakip takımın kalecisi penaltı atışı için meydan okudu. Gazeteciler cevabını bekliyor.
+- **g_rakip_5_3**: Rakip takımın kalecisi penaltı atışı için meydan okudu. Takım arkadaşların seni kışkırtıyor.
+- **g_rakip_5_4**: Rakip takımın kalecisi penaltı atışı için meydan okudu. Hoca "cevabı sahada ver" dedi.
+- **g_rakip_5_5**: Rakip takımın kalecisi penaltı atışı için meydan okudu. Eski bir rekabetiniz var.
+- **g_rakip_5_6**: Rakip takımın kalecisi penaltı atışı için meydan okudu. Konu milli takım çevresinde de konuşuluyor.
+- **g_rakip_6_0**: Bir rakip oyuncu maçtan sonra formanı istedi. Maç bu hafta sonu.
+- **g_rakip_6_1**: Bir rakip oyuncu maçtan sonra formanı istedi. Taraftarlar sözleri pankarta yazmaya hazırlanıyor.
+- **g_rakip_6_2**: Bir rakip oyuncu maçtan sonra formanı istedi. Gazeteciler cevabını bekliyor.
+- **g_rakip_6_3**: Bir rakip oyuncu maçtan sonra formanı istedi. Takım arkadaşların seni kışkırtıyor.
+- **g_rakip_6_4**: Bir rakip oyuncu maçtan sonra formanı istedi. Hoca "cevabı sahada ver" dedi.
+- **g_rakip_6_5**: Bir rakip oyuncu maçtan sonra formanı istedi. Eski bir rekabetiniz var.
+- **g_rakip_6_6**: Bir rakip oyuncu maçtan sonra formanı istedi. Konu milli takım çevresinde de konuşuluyor.
+- **g_rakip_7_0**: Rakip kulübün genç yeteneği seni idolü ilan etti. Maç bu hafta sonu.
+- **g_rakip_7_1**: Rakip kulübün genç yeteneği seni idolü ilan etti. Taraftarlar sözleri pankarta yazmaya hazırlanıyor.
+- **g_rakip_7_2**: Rakip kulübün genç yeteneği seni idolü ilan etti. Gazeteciler cevabını bekliyor.
+- **g_rakip_7_3**: Rakip kulübün genç yeteneği seni idolü ilan etti. Takım arkadaşların seni kışkırtıyor.
+- **g_rakip_7_4**: Rakip kulübün genç yeteneği seni idolü ilan etti. Hoca "cevabı sahada ver" dedi.
+- **g_rakip_7_5**: Rakip kulübün genç yeteneği seni idolü ilan etti. Eski bir rekabetiniz var.
+- **g_rakip_7_6**: Rakip kulübün genç yeteneği seni idolü ilan etti. Konu milli takım çevresinde de konuşuluyor.
+- **g_antrenman_0_0**: Antrenmanda hoca yeni bir çalışma başlattı. Herkes seni izliyor.
+- **g_antrenman_0_1**: Antrenmanda hoca yeni bir çalışma başlattı. Yorgunsun ama hoca yoğunluğu artırdı.
+- **g_antrenman_0_2**: Antrenmanda hoca yeni bir çalışma başlattı. Bir genç sana bir soru sormak istiyor.
+- **g_antrenman_0_3**: Antrenmanda hoca yeni bir çalışma başlattı. Rakibinle aynı grupta çalışıyorsun.
+- **g_antrenman_0_4**: Antrenmanda hoca yeni bir çalışma başlattı. Kamera ekipleri antrenmanı çekiyor.
+- **g_antrenman_0_5**: Antrenmanda hoca yeni bir çalışma başlattı. Sakatlıktan yeni dönen bir arkadaşın da var.
+- **g_antrenman_0_6**: Antrenmanda hoca yeni bir çalışma başlattı. Hoca sonunda en iyi oyuncuyu seçecek.
+- **g_antrenman_1_0**: Sabah antrenmanı yağmur altında yapıldı. Herkes seni izliyor.
+- **g_antrenman_1_1**: Sabah antrenmanı yağmur altında yapıldı. Yorgunsun ama hoca yoğunluğu artırdı.
+- **g_antrenman_1_2**: Sabah antrenmanı yağmur altında yapıldı. Bir genç sana bir soru sormak istiyor.
+- **g_antrenman_1_3**: Sabah antrenmanı yağmur altında yapıldı. Rakibinle aynı grupta çalışıyorsun.
+- **g_antrenman_1_4**: Sabah antrenmanı yağmur altında yapıldı. Kamera ekipleri antrenmanı çekiyor.
+- **g_antrenman_1_5**: Sabah antrenmanı yağmur altında yapıldı. Sakatlıktan yeni dönen bir arkadaşın da var.
+- **g_antrenman_1_6**: Sabah antrenmanı yağmur altında yapıldı. Hoca sonunda en iyi oyuncuyu seçecek.
+- **g_antrenman_2_0**: Kaleci antrenörü seninle özel çalışmak istiyor. Herkes seni izliyor.
+- **g_antrenman_2_1**: Kaleci antrenörü seninle özel çalışmak istiyor. Yorgunsun ama hoca yoğunluğu artırdı.
+- **g_antrenman_2_2**: Kaleci antrenörü seninle özel çalışmak istiyor. Bir genç sana bir soru sormak istiyor.
+- **g_antrenman_2_3**: Kaleci antrenörü seninle özel çalışmak istiyor. Rakibinle aynı grupta çalışıyorsun.
+- **g_antrenman_2_4**: Kaleci antrenörü seninle özel çalışmak istiyor. Kamera ekipleri antrenmanı çekiyor.
+- **g_antrenman_2_5**: Kaleci antrenörü seninle özel çalışmak istiyor. Sakatlıktan yeni dönen bir arkadaşın da var.
+- **g_antrenman_2_6**: Kaleci antrenörü seninle özel çalışmak istiyor. Hoca sonunda en iyi oyuncuyu seçecek.
+- **g_antrenman_3_0**: Takımın yeni kondisyonerinin programı çok sert. Herkes seni izliyor.
+- **g_antrenman_3_1**: Takımın yeni kondisyonerinin programı çok sert. Yorgunsun ama hoca yoğunluğu artırdı.
+- **g_antrenman_3_2**: Takımın yeni kondisyonerinin programı çok sert. Bir genç sana bir soru sormak istiyor.
+- **g_antrenman_3_3**: Takımın yeni kondisyonerinin programı çok sert. Rakibinle aynı grupta çalışıyorsun.
+- **g_antrenman_3_4**: Takımın yeni kondisyonerinin programı çok sert. Kamera ekipleri antrenmanı çekiyor.
+- **g_antrenman_3_5**: Takımın yeni kondisyonerinin programı çok sert. Sakatlıktan yeni dönen bir arkadaşın da var.
+- **g_antrenman_3_6**: Takımın yeni kondisyonerinin programı çok sert. Hoca sonunda en iyi oyuncuyu seçecek.
+- **g_antrenman_4_0**: Antrenmanda altyapıdan gençler de var. Herkes seni izliyor.
+- **g_antrenman_4_1**: Antrenmanda altyapıdan gençler de var. Yorgunsun ama hoca yoğunluğu artırdı.
+- **g_antrenman_4_2**: Antrenmanda altyapıdan gençler de var. Bir genç sana bir soru sormak istiyor.
+- **g_antrenman_4_3**: Antrenmanda altyapıdan gençler de var. Rakibinle aynı grupta çalışıyorsun.
+- **g_antrenman_4_4**: Antrenmanda altyapıdan gençler de var. Kamera ekipleri antrenmanı çekiyor.
+- **g_antrenman_4_5**: Antrenmanda altyapıdan gençler de var. Sakatlıktan yeni dönen bir arkadaşın da var.
+- **g_antrenman_4_6**: Antrenmanda altyapıdan gençler de var. Hoca sonunda en iyi oyuncuyu seçecek.
+- **g_antrenman_5_0**: Antrenman maçında takımlar ikiye ayrıldı. Herkes seni izliyor.
+- **g_antrenman_5_1**: Antrenman maçında takımlar ikiye ayrıldı. Yorgunsun ama hoca yoğunluğu artırdı.
+- **g_antrenman_5_2**: Antrenman maçında takımlar ikiye ayrıldı. Bir genç sana bir soru sormak istiyor.
+- **g_antrenman_5_3**: Antrenman maçında takımlar ikiye ayrıldı. Rakibinle aynı grupta çalışıyorsun.
+- **g_antrenman_5_4**: Antrenman maçında takımlar ikiye ayrıldı. Kamera ekipleri antrenmanı çekiyor.
+- **g_antrenman_5_5**: Antrenman maçında takımlar ikiye ayrıldı. Sakatlıktan yeni dönen bir arkadaşın da var.
+- **g_antrenman_5_6**: Antrenman maçında takımlar ikiye ayrıldı. Hoca sonunda en iyi oyuncuyu seçecek.
+- **g_antrenman_6_0**: Video analist yeni bir istatistik raporu getirdi. Herkes seni izliyor.
+- **g_antrenman_6_1**: Video analist yeni bir istatistik raporu getirdi. Yorgunsun ama hoca yoğunluğu artırdı.
+- **g_antrenman_6_2**: Video analist yeni bir istatistik raporu getirdi. Bir genç sana bir soru sormak istiyor.
+- **g_antrenman_6_3**: Video analist yeni bir istatistik raporu getirdi. Rakibinle aynı grupta çalışıyorsun.
+- **g_antrenman_6_4**: Video analist yeni bir istatistik raporu getirdi. Kamera ekipleri antrenmanı çekiyor.
+- **g_antrenman_6_5**: Video analist yeni bir istatistik raporu getirdi. Sakatlıktan yeni dönen bir arkadaşın da var.
+- **g_antrenman_6_6**: Video analist yeni bir istatistik raporu getirdi. Hoca sonunda en iyi oyuncuyu seçecek.
+- **g_antrenman_7_0**: Hoca antrenmanı seyircilere açtı. Herkes seni izliyor.
+- **g_antrenman_7_1**: Hoca antrenmanı seyircilere açtı. Yorgunsun ama hoca yoğunluğu artırdı.
+- **g_antrenman_7_2**: Hoca antrenmanı seyircilere açtı. Bir genç sana bir soru sormak istiyor.
+- **g_antrenman_7_3**: Hoca antrenmanı seyircilere açtı. Rakibinle aynı grupta çalışıyorsun.
+- **g_antrenman_7_4**: Hoca antrenmanı seyircilere açtı. Kamera ekipleri antrenmanı çekiyor.
+- **g_antrenman_7_5**: Hoca antrenmanı seyircilere açtı. Sakatlıktan yeni dönen bir arkadaşın da var.
+- **g_antrenman_7_6**: Hoca antrenmanı seyircilere açtı. Hoca sonunda en iyi oyuncuyu seçecek.
+- **g_deplasman_0_0**: Deplasman uçağı rötar yaptı. Herkesin morali biraz düşük.
+- **g_deplasman_0_1**: Deplasman uçağı rötar yaptı. Takımın en eğlenceli ismi ortamı canlandırıyor.
+- **g_deplasman_0_2**: Deplasman uçağı rötar yaptı. Hoca herkesin erken yatmasını istiyor.
+- **g_deplasman_0_3**: Deplasman uçağı rötar yaptı. Bir taraftar grubu sizi takip ediyor.
+- **g_deplasman_0_4**: Deplasman uçağı rötar yaptı. Telefonunun şarjı bitmek üzere.
+- **g_deplasman_0_5**: Deplasman uçağı rötar yaptı. Ertesi gün kritik bir maç var.
+- **g_deplasman_0_6**: Deplasman uçağı rötar yaptı. Kaptan küçük bir oyun önerdi.
+- **g_deplasman_1_0**: Takım otobüsü saatlerce yolda kaldı. Herkesin morali biraz düşük.
+- **g_deplasman_1_1**: Takım otobüsü saatlerce yolda kaldı. Takımın en eğlenceli ismi ortamı canlandırıyor.
+- **g_deplasman_1_2**: Takım otobüsü saatlerce yolda kaldı. Hoca herkesin erken yatmasını istiyor.
+- **g_deplasman_1_3**: Takım otobüsü saatlerce yolda kaldı. Bir taraftar grubu sizi takip ediyor.
+- **g_deplasman_1_4**: Takım otobüsü saatlerce yolda kaldı. Telefonunun şarjı bitmek üzere.
+- **g_deplasman_1_5**: Takım otobüsü saatlerce yolda kaldı. Ertesi gün kritik bir maç var.
+- **g_deplasman_1_6**: Takım otobüsü saatlerce yolda kaldı. Kaptan küçük bir oyun önerdi.
+- **g_deplasman_2_0**: Deplasmandaki otel beklenenden çok kötü. Herkesin morali biraz düşük.
+- **g_deplasman_2_1**: Deplasmandaki otel beklenenden çok kötü. Takımın en eğlenceli ismi ortamı canlandırıyor.
+- **g_deplasman_2_2**: Deplasmandaki otel beklenenden çok kötü. Hoca herkesin erken yatmasını istiyor.
+- **g_deplasman_2_3**: Deplasmandaki otel beklenenden çok kötü. Bir taraftar grubu sizi takip ediyor.
+- **g_deplasman_2_4**: Deplasmandaki otel beklenenden çok kötü. Telefonunun şarjı bitmek üzere.
+- **g_deplasman_2_5**: Deplasmandaki otel beklenenden çok kötü. Ertesi gün kritik bir maç var.
+- **g_deplasman_2_6**: Deplasmandaki otel beklenenden çok kötü. Kaptan küçük bir oyun önerdi.
+- **g_deplasman_3_0**: Deplasman şehrinde yerel bir lokantaya gittiniz. Herkesin morali biraz düşük.
+- **g_deplasman_3_1**: Deplasman şehrinde yerel bir lokantaya gittiniz. Takımın en eğlenceli ismi ortamı canlandırıyor.
+- **g_deplasman_3_2**: Deplasman şehrinde yerel bir lokantaya gittiniz. Hoca herkesin erken yatmasını istiyor.
+- **g_deplasman_3_3**: Deplasman şehrinde yerel bir lokantaya gittiniz. Bir taraftar grubu sizi takip ediyor.
+- **g_deplasman_3_4**: Deplasman şehrinde yerel bir lokantaya gittiniz. Telefonunun şarjı bitmek üzere.
+- **g_deplasman_3_5**: Deplasman şehrinde yerel bir lokantaya gittiniz. Ertesi gün kritik bir maç var.
+- **g_deplasman_3_6**: Deplasman şehrinde yerel bir lokantaya gittiniz. Kaptan küçük bir oyun önerdi.
+- **g_deplasman_4_0**: Rakip şehrin taraftarları otelin önünde toplandı. Herkesin morali biraz düşük.
+- **g_deplasman_4_1**: Rakip şehrin taraftarları otelin önünde toplandı. Takımın en eğlenceli ismi ortamı canlandırıyor.
+- **g_deplasman_4_2**: Rakip şehrin taraftarları otelin önünde toplandı. Hoca herkesin erken yatmasını istiyor.
+- **g_deplasman_4_3**: Rakip şehrin taraftarları otelin önünde toplandı. Bir taraftar grubu sizi takip ediyor.
+- **g_deplasman_4_4**: Rakip şehrin taraftarları otelin önünde toplandı. Telefonunun şarjı bitmek üzere.
+- **g_deplasman_4_5**: Rakip şehrin taraftarları otelin önünde toplandı. Ertesi gün kritik bir maç var.
+- **g_deplasman_4_6**: Rakip şehrin taraftarları otelin önünde toplandı. Kaptan küçük bir oyun önerdi.
+- **g_deplasman_5_0**: Deplasmanda oda arkadaşın sabaha kadar konuştu. Herkesin morali biraz düşük.
+- **g_deplasman_5_1**: Deplasmanda oda arkadaşın sabaha kadar konuştu. Takımın en eğlenceli ismi ortamı canlandırıyor.
+- **g_deplasman_5_2**: Deplasmanda oda arkadaşın sabaha kadar konuştu. Hoca herkesin erken yatmasını istiyor.
+- **g_deplasman_5_3**: Deplasmanda oda arkadaşın sabaha kadar konuştu. Bir taraftar grubu sizi takip ediyor.
+- **g_deplasman_5_4**: Deplasmanda oda arkadaşın sabaha kadar konuştu. Telefonunun şarjı bitmek üzere.
+- **g_deplasman_5_5**: Deplasmanda oda arkadaşın sabaha kadar konuştu. Ertesi gün kritik bir maç var.
+- **g_deplasman_5_6**: Deplasmanda oda arkadaşın sabaha kadar konuştu. Kaptan küçük bir oyun önerdi.
+- **g_deplasman_6_0**: Uçakta yanına tanınmış bir sanatçı oturdu. Herkesin morali biraz düşük.
+- **g_deplasman_6_1**: Uçakta yanına tanınmış bir sanatçı oturdu. Takımın en eğlenceli ismi ortamı canlandırıyor.
+- **g_deplasman_6_2**: Uçakta yanına tanınmış bir sanatçı oturdu. Hoca herkesin erken yatmasını istiyor.
+- **g_deplasman_6_3**: Uçakta yanına tanınmış bir sanatçı oturdu. Bir taraftar grubu sizi takip ediyor.
+- **g_deplasman_6_4**: Uçakta yanına tanınmış bir sanatçı oturdu. Telefonunun şarjı bitmek üzere.
+- **g_deplasman_6_5**: Uçakta yanına tanınmış bir sanatçı oturdu. Ertesi gün kritik bir maç var.
+- **g_deplasman_6_6**: Uçakta yanına tanınmış bir sanatçı oturdu. Kaptan küçük bir oyun önerdi.
+- **g_deplasman_7_0**: Deplasman dönüşü havalimanında bekleme uzadı. Herkesin morali biraz düşük.
+- **g_deplasman_7_1**: Deplasman dönüşü havalimanında bekleme uzadı. Takımın en eğlenceli ismi ortamı canlandırıyor.
+- **g_deplasman_7_2**: Deplasman dönüşü havalimanında bekleme uzadı. Hoca herkesin erken yatmasını istiyor.
+- **g_deplasman_7_3**: Deplasman dönüşü havalimanında bekleme uzadı. Bir taraftar grubu sizi takip ediyor.
+- **g_deplasman_7_4**: Deplasman dönüşü havalimanında bekleme uzadı. Telefonunun şarjı bitmek üzere.
+- **g_deplasman_7_5**: Deplasman dönüşü havalimanında bekleme uzadı. Ertesi gün kritik bir maç var.
+- **g_deplasman_7_6**: Deplasman dönüşü havalimanında bekleme uzadı. Kaptan küçük bir oyun önerdi.
+- **g_marka_0_0**: Bir spor markası seninle özel bir koleksiyon yapmak istiyor. Para iyi ama takvim yoğun.
+- **g_marka_0_1**: Bir spor markası seninle özel bir koleksiyon yapmak istiyor. Kulübün sponsoruyla çakışma riski var.
+- **g_marka_0_2**: Bir spor markası seninle özel bir koleksiyon yapmak istiyor. Menajerin çok heyecanlı.
+- **g_marka_0_3**: Bir spor markası seninle özel bir koleksiyon yapmak istiyor. Taraftarlar markayı pek sevmiyor.
+- **g_marka_0_4**: Bir spor markası seninle özel bir koleksiyon yapmak istiyor. Kampanyanın bir kısmı hayır işine gidecek.
+- **g_marka_0_5**: Bir spor markası seninle özel bir koleksiyon yapmak istiyor. Çekim sezonun ortasına denk geliyor.
+- **g_marka_0_6**: Bir spor markası seninle özel bir koleksiyon yapmak istiyor. Rakip bir futbolcu da aynı teklifi almış.
+- **g_marka_1_0**: Bir içecek firması reklam çekimi teklif etti. Para iyi ama takvim yoğun.
+- **g_marka_1_1**: Bir içecek firması reklam çekimi teklif etti. Kulübün sponsoruyla çakışma riski var.
+- **g_marka_1_2**: Bir içecek firması reklam çekimi teklif etti. Menajerin çok heyecanlı.
+- **g_marka_1_3**: Bir içecek firması reklam çekimi teklif etti. Taraftarlar markayı pek sevmiyor.
+- **g_marka_1_4**: Bir içecek firması reklam çekimi teklif etti. Kampanyanın bir kısmı hayır işine gidecek.
+- **g_marka_1_5**: Bir içecek firması reklam çekimi teklif etti. Çekim sezonun ortasına denk geliyor.
+- **g_marka_1_6**: Bir içecek firması reklam çekimi teklif etti. Rakip bir futbolcu da aynı teklifi almış.
+- **g_marka_2_0**: Bir otomobil markası seni etkinliğe davet etti. Para iyi ama takvim yoğun.
+- **g_marka_2_1**: Bir otomobil markası seni etkinliğe davet etti. Kulübün sponsoruyla çakışma riski var.
+- **g_marka_2_2**: Bir otomobil markası seni etkinliğe davet etti. Menajerin çok heyecanlı.
+- **g_marka_2_3**: Bir otomobil markası seni etkinliğe davet etti. Taraftarlar markayı pek sevmiyor.
+- **g_marka_2_4**: Bir otomobil markası seni etkinliğe davet etti. Kampanyanın bir kısmı hayır işine gidecek.
+- **g_marka_2_5**: Bir otomobil markası seni etkinliğe davet etti. Çekim sezonun ortasına denk geliyor.
+- **g_marka_2_6**: Bir otomobil markası seni etkinliğe davet etti. Rakip bir futbolcu da aynı teklifi almış.
+- **g_marka_3_0**: Bir teknoloji şirketi telefon reklamı için seni istiyor. Para iyi ama takvim yoğun.
+- **g_marka_3_1**: Bir teknoloji şirketi telefon reklamı için seni istiyor. Kulübün sponsoruyla çakışma riski var.
+- **g_marka_3_2**: Bir teknoloji şirketi telefon reklamı için seni istiyor. Menajerin çok heyecanlı.
+- **g_marka_3_3**: Bir teknoloji şirketi telefon reklamı için seni istiyor. Taraftarlar markayı pek sevmiyor.
+- **g_marka_3_4**: Bir teknoloji şirketi telefon reklamı için seni istiyor. Kampanyanın bir kısmı hayır işine gidecek.
+- **g_marka_3_5**: Bir teknoloji şirketi telefon reklamı için seni istiyor. Çekim sezonun ortasına denk geliyor.
+- **g_marka_3_6**: Bir teknoloji şirketi telefon reklamı için seni istiyor. Rakip bir futbolcu da aynı teklifi almış.
+- **g_marka_4_0**: Bir moda markası defilede yürümeni istiyor. Para iyi ama takvim yoğun.
+- **g_marka_4_1**: Bir moda markası defilede yürümeni istiyor. Kulübün sponsoruyla çakışma riski var.
+- **g_marka_4_2**: Bir moda markası defilede yürümeni istiyor. Menajerin çok heyecanlı.
+- **g_marka_4_3**: Bir moda markası defilede yürümeni istiyor. Taraftarlar markayı pek sevmiyor.
+- **g_marka_4_4**: Bir moda markası defilede yürümeni istiyor. Kampanyanın bir kısmı hayır işine gidecek.
+- **g_marka_4_5**: Bir moda markası defilede yürümeni istiyor. Çekim sezonun ortasına denk geliyor.
+- **g_marka_4_6**: Bir moda markası defilede yürümeni istiyor. Rakip bir futbolcu da aynı teklifi almış.
+- **g_marka_5_0**: Bir yemek uygulaması "maç günü menüsü" kampanyası öneriyor. Para iyi ama takvim yoğun.
+- **g_marka_5_1**: Bir yemek uygulaması "maç günü menüsü" kampanyası öneriyor. Kulübün sponsoruyla çakışma riski var.
+- **g_marka_5_2**: Bir yemek uygulaması "maç günü menüsü" kampanyası öneriyor. Menajerin çok heyecanlı.
+- **g_marka_5_3**: Bir yemek uygulaması "maç günü menüsü" kampanyası öneriyor. Taraftarlar markayı pek sevmiyor.
+- **g_marka_5_4**: Bir yemek uygulaması "maç günü menüsü" kampanyası öneriyor. Kampanyanın bir kısmı hayır işine gidecek.
+- **g_marka_5_5**: Bir yemek uygulaması "maç günü menüsü" kampanyası öneriyor. Çekim sezonun ortasına denk geliyor.
+- **g_marka_5_6**: Bir yemek uygulaması "maç günü menüsü" kampanyası öneriyor. Rakip bir futbolcu da aynı teklifi almış.
+- **g_marka_6_0**: Bir video oyunu şirketi kapak yüzü olmanı teklif etti. Para iyi ama takvim yoğun.
+- **g_marka_6_1**: Bir video oyunu şirketi kapak yüzü olmanı teklif etti. Kulübün sponsoruyla çakışma riski var.
+- **g_marka_6_2**: Bir video oyunu şirketi kapak yüzü olmanı teklif etti. Menajerin çok heyecanlı.
+- **g_marka_6_3**: Bir video oyunu şirketi kapak yüzü olmanı teklif etti. Taraftarlar markayı pek sevmiyor.
+- **g_marka_6_4**: Bir video oyunu şirketi kapak yüzü olmanı teklif etti. Kampanyanın bir kısmı hayır işine gidecek.
+- **g_marka_6_5**: Bir video oyunu şirketi kapak yüzü olmanı teklif etti. Çekim sezonun ortasına denk geliyor.
+- **g_marka_6_6**: Bir video oyunu şirketi kapak yüzü olmanı teklif etti. Rakip bir futbolcu da aynı teklifi almış.
+- **g_marka_7_0**: Bir banka genç futbolcular için kampanya yapıyor. Para iyi ama takvim yoğun.
+- **g_marka_7_1**: Bir banka genç futbolcular için kampanya yapıyor. Kulübün sponsoruyla çakışma riski var.
+- **g_marka_7_2**: Bir banka genç futbolcular için kampanya yapıyor. Menajerin çok heyecanlı.
+- **g_marka_7_3**: Bir banka genç futbolcular için kampanya yapıyor. Taraftarlar markayı pek sevmiyor.
+- **g_marka_7_4**: Bir banka genç futbolcular için kampanya yapıyor. Kampanyanın bir kısmı hayır işine gidecek.
+- **g_marka_7_5**: Bir banka genç futbolcular için kampanya yapıyor. Çekim sezonun ortasına denk geliyor.
+- **g_marka_7_6**: Bir banka genç futbolcular için kampanya yapıyor. Rakip bir futbolcu da aynı teklifi almış.
+- **g_altlig_0_0**: Kulübün kasasında para kalmadı. Oyuncular arasında homurtu başladı.
+- **g_altlig_0_1**: Kulübün kasasında para kalmadı. Taraftarlar yardım kampanyası başlattı.
+- **g_altlig_0_2**: Kulübün kasasında para kalmadı. Kaptan senden destek bekliyor.
+- **g_altlig_0_3**: Kulübün kasasında para kalmadı. Yerel gazete durumu haber yaptı.
+- **g_altlig_0_4**: Kulübün kasasında para kalmadı. Belediye yardım sözü verdi.
+- **g_altlig_0_5**: Kulübün kasasında para kalmadı. Hoca da çaresiz görünüyor.
+- **g_altlig_0_6**: Kulübün kasasında para kalmadı. Bir iş insanı kulübe sponsor olmayı düşünüyor.
+- **g_altlig_1_0**: Tesisteki duşlar yine bozuk. Oyuncular arasında homurtu başladı.
+- **g_altlig_1_1**: Tesisteki duşlar yine bozuk. Taraftarlar yardım kampanyası başlattı.
+- **g_altlig_1_2**: Tesisteki duşlar yine bozuk. Kaptan senden destek bekliyor.
+- **g_altlig_1_3**: Tesisteki duşlar yine bozuk. Yerel gazete durumu haber yaptı.
+- **g_altlig_1_4**: Tesisteki duşlar yine bozuk. Belediye yardım sözü verdi.
+- **g_altlig_1_5**: Tesisteki duşlar yine bozuk. Hoca da çaresiz görünüyor.
+- **g_altlig_1_6**: Tesisteki duşlar yine bozuk. Bir iş insanı kulübe sponsor olmayı düşünüyor.
+- **g_altlig_2_0**: Başkan oyuncuları kendi dükkânında toplantıya çağırdı. Oyuncular arasında homurtu başladı.
+- **g_altlig_2_1**: Başkan oyuncuları kendi dükkânında toplantıya çağırdı. Taraftarlar yardım kampanyası başlattı.
+- **g_altlig_2_2**: Başkan oyuncuları kendi dükkânında toplantıya çağırdı. Kaptan senden destek bekliyor.
+- **g_altlig_2_3**: Başkan oyuncuları kendi dükkânında toplantıya çağırdı. Yerel gazete durumu haber yaptı.
+- **g_altlig_2_4**: Başkan oyuncuları kendi dükkânında toplantıya çağırdı. Belediye yardım sözü verdi.
+- **g_altlig_2_5**: Başkan oyuncuları kendi dükkânında toplantıya çağırdı. Hoca da çaresiz görünüyor.
+- **g_altlig_2_6**: Başkan oyuncuları kendi dükkânında toplantıya çağırdı. Bir iş insanı kulübe sponsor olmayı düşünüyor.
+- **g_altlig_3_0**: Deplasmana minibüsle gidilecek. Oyuncular arasında homurtu başladı.
+- **g_altlig_3_1**: Deplasmana minibüsle gidilecek. Taraftarlar yardım kampanyası başlattı.
+- **g_altlig_3_2**: Deplasmana minibüsle gidilecek. Kaptan senden destek bekliyor.
+- **g_altlig_3_3**: Deplasmana minibüsle gidilecek. Yerel gazete durumu haber yaptı.
+- **g_altlig_3_4**: Deplasmana minibüsle gidilecek. Belediye yardım sözü verdi.
+- **g_altlig_3_5**: Deplasmana minibüsle gidilecek. Hoca da çaresiz görünüyor.
+- **g_altlig_3_6**: Deplasmana minibüsle gidilecek. Bir iş insanı kulübe sponsor olmayı düşünüyor.
+- **g_altlig_4_0**: Sahanın çimi kurumuş, top sekmiyor. Oyuncular arasında homurtu başladı.
+- **g_altlig_4_1**: Sahanın çimi kurumuş, top sekmiyor. Taraftarlar yardım kampanyası başlattı.
+- **g_altlig_4_2**: Sahanın çimi kurumuş, top sekmiyor. Kaptan senden destek bekliyor.
+- **g_altlig_4_3**: Sahanın çimi kurumuş, top sekmiyor. Yerel gazete durumu haber yaptı.
+- **g_altlig_4_4**: Sahanın çimi kurumuş, top sekmiyor. Belediye yardım sözü verdi.
+- **g_altlig_4_5**: Sahanın çimi kurumuş, top sekmiyor. Hoca da çaresiz görünüyor.
+- **g_altlig_4_6**: Sahanın çimi kurumuş, top sekmiyor. Bir iş insanı kulübe sponsor olmayı düşünüyor.
+- **g_altlig_5_0**: Kulübün tek fizyoterapisti istifa etti. Oyuncular arasında homurtu başladı.
+- **g_altlig_5_1**: Kulübün tek fizyoterapisti istifa etti. Taraftarlar yardım kampanyası başlattı.
+- **g_altlig_5_2**: Kulübün tek fizyoterapisti istifa etti. Kaptan senden destek bekliyor.
+- **g_altlig_5_3**: Kulübün tek fizyoterapisti istifa etti. Yerel gazete durumu haber yaptı.
+- **g_altlig_5_4**: Kulübün tek fizyoterapisti istifa etti. Belediye yardım sözü verdi.
+- **g_altlig_5_5**: Kulübün tek fizyoterapisti istifa etti. Hoca da çaresiz görünüyor.
+- **g_altlig_5_6**: Kulübün tek fizyoterapisti istifa etti. Bir iş insanı kulübe sponsor olmayı düşünüyor.
+- **g_altlig_6_0**: Kulüp formalarını taraftarlar diktirdi. Oyuncular arasında homurtu başladı.
+- **g_altlig_6_1**: Kulüp formalarını taraftarlar diktirdi. Taraftarlar yardım kampanyası başlattı.
+- **g_altlig_6_2**: Kulüp formalarını taraftarlar diktirdi. Kaptan senden destek bekliyor.
+- **g_altlig_6_3**: Kulüp formalarını taraftarlar diktirdi. Yerel gazete durumu haber yaptı.
+- **g_altlig_6_4**: Kulüp formalarını taraftarlar diktirdi. Belediye yardım sözü verdi.
+- **g_altlig_6_5**: Kulüp formalarını taraftarlar diktirdi. Hoca da çaresiz görünüyor.
+- **g_altlig_6_6**: Kulüp formalarını taraftarlar diktirdi. Bir iş insanı kulübe sponsor olmayı düşünüyor.
+- **g_altlig_7_0**: Maç günü stat görevlileri gelmedi. Oyuncular arasında homurtu başladı.
+- **g_altlig_7_1**: Maç günü stat görevlileri gelmedi. Taraftarlar yardım kampanyası başlattı.
+- **g_altlig_7_2**: Maç günü stat görevlileri gelmedi. Kaptan senden destek bekliyor.
+- **g_altlig_7_3**: Maç günü stat görevlileri gelmedi. Yerel gazete durumu haber yaptı.
+- **g_altlig_7_4**: Maç günü stat görevlileri gelmedi. Belediye yardım sözü verdi.
+- **g_altlig_7_5**: Maç günü stat görevlileri gelmedi. Hoca da çaresiz görünüyor.
+- **g_altlig_7_6**: Maç günü stat görevlileri gelmedi. Bir iş insanı kulübe sponsor olmayı düşünüyor.
+- **g_ustlig_0_0**: Büyük maç haftası başladı, şehir alev alev. Herkes senden fark yaratmanı bekliyor.
+- **g_ustlig_0_1**: Büyük maç haftası başladı, şehir alev alev. Gazeteci Roman kulisleri yazıyor.
+- **g_ustlig_0_2**: Büyük maç haftası başladı, şehir alev alev. Hoca baskıyı üstünden almak istiyor.
+- **g_ustlig_0_3**: Büyük maç haftası başladı, şehir alev alev. Ailen tribünde olacak.
+- **g_ustlig_0_4**: Büyük maç haftası başladı, şehir alev alev. Rakip takımın taraftarı sosyal medyada laf atıyor.
+- **g_ustlig_0_5**: Büyük maç haftası başladı, şehir alev alev. Takım arkadaşların sana güveniyor.
+- **g_ustlig_0_6**: Büyük maç haftası başladı, şehir alev alev. Kulüp başkanı soyunma odasına uğrayacak.
+- **g_ustlig_1_0**: Kulüp yönetimi bu hafta sonu için prim açıkladı. Herkes senden fark yaratmanı bekliyor.
+- **g_ustlig_1_1**: Kulüp yönetimi bu hafta sonu için prim açıkladı. Gazeteci Roman kulisleri yazıyor.
+- **g_ustlig_1_2**: Kulüp yönetimi bu hafta sonu için prim açıkladı. Hoca baskıyı üstünden almak istiyor.
+- **g_ustlig_1_3**: Kulüp yönetimi bu hafta sonu için prim açıkladı. Ailen tribünde olacak.
+- **g_ustlig_1_4**: Kulüp yönetimi bu hafta sonu için prim açıkladı. Rakip takımın taraftarı sosyal medyada laf atıyor.
+- **g_ustlig_1_5**: Kulüp yönetimi bu hafta sonu için prim açıkladı. Takım arkadaşların sana güveniyor.
+- **g_ustlig_1_6**: Kulüp yönetimi bu hafta sonu için prim açıkladı. Kulüp başkanı soyunma odasına uğrayacak.
+- **g_ustlig_2_0**: Basın toplantısında hoca senin adını özellikle verdi. Herkes senden fark yaratmanı bekliyor.
+- **g_ustlig_2_1**: Basın toplantısında hoca senin adını özellikle verdi. Gazeteci Roman kulisleri yazıyor.
+- **g_ustlig_2_2**: Basın toplantısında hoca senin adını özellikle verdi. Hoca baskıyı üstünden almak istiyor.
+- **g_ustlig_2_3**: Basın toplantısında hoca senin adını özellikle verdi. Ailen tribünde olacak.
+- **g_ustlig_2_4**: Basın toplantısında hoca senin adını özellikle verdi. Rakip takımın taraftarı sosyal medyada laf atıyor.
+- **g_ustlig_2_5**: Basın toplantısında hoca senin adını özellikle verdi. Takım arkadaşların sana güveniyor.
+- **g_ustlig_2_6**: Basın toplantısında hoca senin adını özellikle verdi. Kulüp başkanı soyunma odasına uğrayacak.
+- **g_ustlig_3_0**: Bir yayıncı kuruluş maç öncesi özel röportaj istiyor. Herkes senden fark yaratmanı bekliyor.
+- **g_ustlig_3_1**: Bir yayıncı kuruluş maç öncesi özel röportaj istiyor. Gazeteci Roman kulisleri yazıyor.
+- **g_ustlig_3_2**: Bir yayıncı kuruluş maç öncesi özel röportaj istiyor. Hoca baskıyı üstünden almak istiyor.
+- **g_ustlig_3_3**: Bir yayıncı kuruluş maç öncesi özel röportaj istiyor. Ailen tribünde olacak.
+- **g_ustlig_3_4**: Bir yayıncı kuruluş maç öncesi özel röportaj istiyor. Rakip takımın taraftarı sosyal medyada laf atıyor.
+- **g_ustlig_3_5**: Bir yayıncı kuruluş maç öncesi özel röportaj istiyor. Takım arkadaşların sana güveniyor.
+- **g_ustlig_3_6**: Bir yayıncı kuruluş maç öncesi özel röportaj istiyor. Kulüp başkanı soyunma odasına uğrayacak.
+- **g_ustlig_4_0**: Kulüp seni tanıtım filminde oynatmak istiyor. Herkes senden fark yaratmanı bekliyor.
+- **g_ustlig_4_1**: Kulüp seni tanıtım filminde oynatmak istiyor. Gazeteci Roman kulisleri yazıyor.
+- **g_ustlig_4_2**: Kulüp seni tanıtım filminde oynatmak istiyor. Hoca baskıyı üstünden almak istiyor.
+- **g_ustlig_4_3**: Kulüp seni tanıtım filminde oynatmak istiyor. Ailen tribünde olacak.
+- **g_ustlig_4_4**: Kulüp seni tanıtım filminde oynatmak istiyor. Rakip takımın taraftarı sosyal medyada laf atıyor.
+- **g_ustlig_4_5**: Kulüp seni tanıtım filminde oynatmak istiyor. Takım arkadaşların sana güveniyor.
+- **g_ustlig_4_6**: Kulüp seni tanıtım filminde oynatmak istiyor. Kulüp başkanı soyunma odasına uğrayacak.
+- **g_ustlig_5_0**: Şehrin dört bir yanında senin posterin asılmış. Herkes senden fark yaratmanı bekliyor.
+- **g_ustlig_5_1**: Şehrin dört bir yanında senin posterin asılmış. Gazeteci Roman kulisleri yazıyor.
+- **g_ustlig_5_2**: Şehrin dört bir yanında senin posterin asılmış. Hoca baskıyı üstünden almak istiyor.
+- **g_ustlig_5_3**: Şehrin dört bir yanında senin posterin asılmış. Ailen tribünde olacak.
+- **g_ustlig_5_4**: Şehrin dört bir yanında senin posterin asılmış. Rakip takımın taraftarı sosyal medyada laf atıyor.
+- **g_ustlig_5_5**: Şehrin dört bir yanında senin posterin asılmış. Takım arkadaşların sana güveniyor.
+- **g_ustlig_5_6**: Şehrin dört bir yanında senin posterin asılmış. Kulüp başkanı soyunma odasına uğrayacak.
+- **g_ustlig_6_0**: Avrupa kupası hesapları yapılıyor. Herkes senden fark yaratmanı bekliyor.
+- **g_ustlig_6_1**: Avrupa kupası hesapları yapılıyor. Gazeteci Roman kulisleri yazıyor.
+- **g_ustlig_6_2**: Avrupa kupası hesapları yapılıyor. Hoca baskıyı üstünden almak istiyor.
+- **g_ustlig_6_3**: Avrupa kupası hesapları yapılıyor. Ailen tribünde olacak.
+- **g_ustlig_6_4**: Avrupa kupası hesapları yapılıyor. Rakip takımın taraftarı sosyal medyada laf atıyor.
+- **g_ustlig_6_5**: Avrupa kupası hesapları yapılıyor. Takım arkadaşların sana güveniyor.
+- **g_ustlig_6_6**: Avrupa kupası hesapları yapılıyor. Kulüp başkanı soyunma odasına uğrayacak.
+- **g_ustlig_7_0**: Taraftar grubu kampa ziyarete geldi. Herkes senden fark yaratmanı bekliyor.
+- **g_ustlig_7_1**: Taraftar grubu kampa ziyarete geldi. Gazeteci Roman kulisleri yazıyor.
+- **g_ustlig_7_2**: Taraftar grubu kampa ziyarete geldi. Hoca baskıyı üstünden almak istiyor.
+- **g_ustlig_7_3**: Taraftar grubu kampa ziyarete geldi. Ailen tribünde olacak.
+- **g_ustlig_7_4**: Taraftar grubu kampa ziyarete geldi. Rakip takımın taraftarı sosyal medyada laf atıyor.
+- **g_ustlig_7_5**: Taraftar grubu kampa ziyarete geldi. Takım arkadaşların sana güveniyor.
+- **g_ustlig_7_6**: Taraftar grubu kampa ziyarete geldi. Kulüp başkanı soyunma odasına uğrayacak.
+- **g_yurtdisi_0_0**: Yaşadığın şehirde ilk kez kar yağdı. Biraz yalnız hissediyorsun.
+- **g_yurtdisi_0_1**: Yaşadığın şehirde ilk kez kar yağdı. Yeni bir arkadaş edinebilirsin.
+- **g_yurtdisi_0_2**: Yaşadığın şehirde ilk kez kar yağdı. Ailen seni çok özlediğini söyledi.
+- **g_yurtdisi_0_3**: Yaşadığın şehirde ilk kez kar yağdı. Bu senin için dili geliştirme fırsatı.
+- **g_yurtdisi_0_4**: Yaşadığın şehirde ilk kez kar yağdı. Kulüp kültürel uyum programı öneriyor.
+- **g_yurtdisi_0_5**: Yaşadığın şehirde ilk kez kar yağdı. Gurbetçi taraftarlar seni sahiplendi.
+- **g_yurtdisi_0_6**: Yaşadığın şehirde ilk kez kar yağdı. Takvim çok yoğun.
+- **g_yurtdisi_1_0**: Komşun seni yemeğe davet etti. Biraz yalnız hissediyorsun.
+- **g_yurtdisi_1_1**: Komşun seni yemeğe davet etti. Yeni bir arkadaş edinebilirsin.
+- **g_yurtdisi_1_2**: Komşun seni yemeğe davet etti. Ailen seni çok özlediğini söyledi.
+- **g_yurtdisi_1_3**: Komşun seni yemeğe davet etti. Bu senin için dili geliştirme fırsatı.
+- **g_yurtdisi_1_4**: Komşun seni yemeğe davet etti. Kulüp kültürel uyum programı öneriyor.
+- **g_yurtdisi_1_5**: Komşun seni yemeğe davet etti. Gurbetçi taraftarlar seni sahiplendi.
+- **g_yurtdisi_1_6**: Komşun seni yemeğe davet etti. Takvim çok yoğun.
+- **g_yurtdisi_2_0**: Takım arkadaşın sana yerel bir festivali anlattı. Biraz yalnız hissediyorsun.
+- **g_yurtdisi_2_1**: Takım arkadaşın sana yerel bir festivali anlattı. Yeni bir arkadaş edinebilirsin.
+- **g_yurtdisi_2_2**: Takım arkadaşın sana yerel bir festivali anlattı. Ailen seni çok özlediğini söyledi.
+- **g_yurtdisi_2_3**: Takım arkadaşın sana yerel bir festivali anlattı. Bu senin için dili geliştirme fırsatı.
+- **g_yurtdisi_2_4**: Takım arkadaşın sana yerel bir festivali anlattı. Kulüp kültürel uyum programı öneriyor.
+- **g_yurtdisi_2_5**: Takım arkadaşın sana yerel bir festivali anlattı. Gurbetçi taraftarlar seni sahiplendi.
+- **g_yurtdisi_2_6**: Takım arkadaşın sana yerel bir festivali anlattı. Takvim çok yoğun.
+- **g_yurtdisi_3_0**: Bir Türk derneği seni ziyarete çağırdı. Biraz yalnız hissediyorsun.
+- **g_yurtdisi_3_1**: Bir Türk derneği seni ziyarete çağırdı. Yeni bir arkadaş edinebilirsin.
+- **g_yurtdisi_3_2**: Bir Türk derneği seni ziyarete çağırdı. Ailen seni çok özlediğini söyledi.
+- **g_yurtdisi_3_3**: Bir Türk derneği seni ziyarete çağırdı. Bu senin için dili geliştirme fırsatı.
+- **g_yurtdisi_3_4**: Bir Türk derneği seni ziyarete çağırdı. Kulüp kültürel uyum programı öneriyor.
+- **g_yurtdisi_3_5**: Bir Türk derneği seni ziyarete çağırdı. Gurbetçi taraftarlar seni sahiplendi.
+- **g_yurtdisi_3_6**: Bir Türk derneği seni ziyarete çağırdı. Takvim çok yoğun.
+- **g_yurtdisi_4_0**: Yerel bir gazete senin hikâyeni yazdı. Biraz yalnız hissediyorsun.
+- **g_yurtdisi_4_1**: Yerel bir gazete senin hikâyeni yazdı. Yeni bir arkadaş edinebilirsin.
+- **g_yurtdisi_4_2**: Yerel bir gazete senin hikâyeni yazdı. Ailen seni çok özlediğini söyledi.
+- **g_yurtdisi_4_3**: Yerel bir gazete senin hikâyeni yazdı. Bu senin için dili geliştirme fırsatı.
+- **g_yurtdisi_4_4**: Yerel bir gazete senin hikâyeni yazdı. Kulüp kültürel uyum programı öneriyor.
+- **g_yurtdisi_4_5**: Yerel bir gazete senin hikâyeni yazdı. Gurbetçi taraftarlar seni sahiplendi.
+- **g_yurtdisi_4_6**: Yerel bir gazete senin hikâyeni yazdı. Takvim çok yoğun.
+- **g_yurtdisi_5_0**: Dil kursunda öğretmenin sana yeni bir kelime öğretti. Biraz yalnız hissediyorsun.
+- **g_yurtdisi_5_1**: Dil kursunda öğretmenin sana yeni bir kelime öğretti. Yeni bir arkadaş edinebilirsin.
+- **g_yurtdisi_5_2**: Dil kursunda öğretmenin sana yeni bir kelime öğretti. Ailen seni çok özlediğini söyledi.
+- **g_yurtdisi_5_3**: Dil kursunda öğretmenin sana yeni bir kelime öğretti. Bu senin için dili geliştirme fırsatı.
+- **g_yurtdisi_5_4**: Dil kursunda öğretmenin sana yeni bir kelime öğretti. Kulüp kültürel uyum programı öneriyor.
+- **g_yurtdisi_5_5**: Dil kursunda öğretmenin sana yeni bir kelime öğretti. Gurbetçi taraftarlar seni sahiplendi.
+- **g_yurtdisi_5_6**: Dil kursunda öğretmenin sana yeni bir kelime öğretti. Takvim çok yoğun.
+- **g_yurtdisi_6_0**: Bir restoranda garson seni tanıdı. Biraz yalnız hissediyorsun.
+- **g_yurtdisi_6_1**: Bir restoranda garson seni tanıdı. Yeni bir arkadaş edinebilirsin.
+- **g_yurtdisi_6_2**: Bir restoranda garson seni tanıdı. Ailen seni çok özlediğini söyledi.
+- **g_yurtdisi_6_3**: Bir restoranda garson seni tanıdı. Bu senin için dili geliştirme fırsatı.
+- **g_yurtdisi_6_4**: Bir restoranda garson seni tanıdı. Kulüp kültürel uyum programı öneriyor.
+- **g_yurtdisi_6_5**: Bir restoranda garson seni tanıdı. Gurbetçi taraftarlar seni sahiplendi.
+- **g_yurtdisi_6_6**: Bir restoranda garson seni tanıdı. Takvim çok yoğun.
+- **g_yurtdisi_7_0**: Vize işlemleri için konsolosluğa gitmen gerekiyor. Biraz yalnız hissediyorsun.
+- **g_yurtdisi_7_1**: Vize işlemleri için konsolosluğa gitmen gerekiyor. Yeni bir arkadaş edinebilirsin.
+- **g_yurtdisi_7_2**: Vize işlemleri için konsolosluğa gitmen gerekiyor. Ailen seni çok özlediğini söyledi.
+- **g_yurtdisi_7_3**: Vize işlemleri için konsolosluğa gitmen gerekiyor. Bu senin için dili geliştirme fırsatı.
+- **g_yurtdisi_7_4**: Vize işlemleri için konsolosluğa gitmen gerekiyor. Kulüp kültürel uyum programı öneriyor.
+- **g_yurtdisi_7_5**: Vize işlemleri için konsolosluğa gitmen gerekiyor. Gurbetçi taraftarlar seni sahiplendi.
+- **g_yurtdisi_7_6**: Vize işlemleri için konsolosluğa gitmen gerekiyor. Takvim çok yoğun.
+- **g_ask_0_0**: {partner} sana bir sürpriz hazırladığını söyledi. Aynı gün antrenmanın var.
+- **g_ask_0_1**: {partner} sana bir sürpriz hazırladığını söyledi. Magazin muhabirleri peşinizde.
+- **g_ask_0_2**: {partner} sana bir sürpriz hazırladığını söyledi. Senden destek bekliyor.
+- **g_ask_0_3**: {partner} sana bir sürpriz hazırladığını söyledi. Çok heyecanlı görünüyor.
+- **g_ask_0_4**: {partner} sana bir sürpriz hazırladığını söyledi. Biraz alıngan bir dönemde.
+- **g_ask_0_5**: {partner} sana bir sürpriz hazırladığını söyledi. Arkadaşları da orada olacak.
+- **g_ask_0_6**: {partner} sana bir sürpriz hazırladığını söyledi. İkiniz için önemli bir gün.
+- **g_ask_1_0**: {partner} işinden yorgun döndü. Aynı gün antrenmanın var.
+- **g_ask_1_1**: {partner} işinden yorgun döndü. Magazin muhabirleri peşinizde.
+- **g_ask_1_2**: {partner} işinden yorgun döndü. Senden destek bekliyor.
+- **g_ask_1_3**: {partner} işinden yorgun döndü. Çok heyecanlı görünüyor.
+- **g_ask_1_4**: {partner} işinden yorgun döndü. Biraz alıngan bir dönemde.
+- **g_ask_1_5**: {partner} işinden yorgun döndü. Arkadaşları da orada olacak.
+- **g_ask_1_6**: {partner} işinden yorgun döndü. İkiniz için önemli bir gün.
+- **g_ask_2_0**: {partner} ailesiyle tanışma yemeğini planlıyor. Aynı gün antrenmanın var.
+- **g_ask_2_1**: {partner} ailesiyle tanışma yemeğini planlıyor. Magazin muhabirleri peşinizde.
+- **g_ask_2_2**: {partner} ailesiyle tanışma yemeğini planlıyor. Senden destek bekliyor.
+- **g_ask_2_3**: {partner} ailesiyle tanışma yemeğini planlıyor. Çok heyecanlı görünüyor.
+- **g_ask_2_4**: {partner} ailesiyle tanışma yemeğini planlıyor. Biraz alıngan bir dönemde.
+- **g_ask_2_5**: {partner} ailesiyle tanışma yemeğini planlıyor. Arkadaşları da orada olacak.
+- **g_ask_2_6**: {partner} ailesiyle tanışma yemeğini planlıyor. İkiniz için önemli bir gün.
+- **g_ask_3_0**: {partner} seninle tatil planı yapmak istiyor. Aynı gün antrenmanın var.
+- **g_ask_3_1**: {partner} seninle tatil planı yapmak istiyor. Magazin muhabirleri peşinizde.
+- **g_ask_3_2**: {partner} seninle tatil planı yapmak istiyor. Senden destek bekliyor.
+- **g_ask_3_3**: {partner} seninle tatil planı yapmak istiyor. Çok heyecanlı görünüyor.
+- **g_ask_3_4**: {partner} seninle tatil planı yapmak istiyor. Biraz alıngan bir dönemde.
+- **g_ask_3_5**: {partner} seninle tatil planı yapmak istiyor. Arkadaşları da orada olacak.
+- **g_ask_3_6**: {partner} seninle tatil planı yapmak istiyor. İkiniz için önemli bir gün.
+- **g_ask_4_0**: {partner} yeni bir iş teklifi aldı. Aynı gün antrenmanın var.
+- **g_ask_4_1**: {partner} yeni bir iş teklifi aldı. Magazin muhabirleri peşinizde.
+- **g_ask_4_2**: {partner} yeni bir iş teklifi aldı. Senden destek bekliyor.
+- **g_ask_4_3**: {partner} yeni bir iş teklifi aldı. Çok heyecanlı görünüyor.
+- **g_ask_4_4**: {partner} yeni bir iş teklifi aldı. Biraz alıngan bir dönemde.
+- **g_ask_4_5**: {partner} yeni bir iş teklifi aldı. Arkadaşları da orada olacak.
+- **g_ask_4_6**: {partner} yeni bir iş teklifi aldı. İkiniz için önemli bir gün.
+- **g_ask_5_0**: {partner} maçını tribünden izleyecek. Aynı gün antrenmanın var.
+- **g_ask_5_1**: {partner} maçını tribünden izleyecek. Magazin muhabirleri peşinizde.
+- **g_ask_5_2**: {partner} maçını tribünden izleyecek. Senden destek bekliyor.
+- **g_ask_5_3**: {partner} maçını tribünden izleyecek. Çok heyecanlı görünüyor.
+- **g_ask_5_4**: {partner} maçını tribünden izleyecek. Biraz alıngan bir dönemde.
+- **g_ask_5_5**: {partner} maçını tribünden izleyecek. Arkadaşları da orada olacak.
+- **g_ask_5_6**: {partner} maçını tribünden izleyecek. İkiniz için önemli bir gün.
+- **g_ask_6_0**: {partner} sosyal medyada bir yorumdan rahatsız oldu. Aynı gün antrenmanın var.
+- **g_ask_6_1**: {partner} sosyal medyada bir yorumdan rahatsız oldu. Magazin muhabirleri peşinizde.
+- **g_ask_6_2**: {partner} sosyal medyada bir yorumdan rahatsız oldu. Senden destek bekliyor.
+- **g_ask_6_3**: {partner} sosyal medyada bir yorumdan rahatsız oldu. Çok heyecanlı görünüyor.
+- **g_ask_6_4**: {partner} sosyal medyada bir yorumdan rahatsız oldu. Biraz alıngan bir dönemde.
+- **g_ask_6_5**: {partner} sosyal medyada bir yorumdan rahatsız oldu. Arkadaşları da orada olacak.
+- **g_ask_6_6**: {partner} sosyal medyada bir yorumdan rahatsız oldu. İkiniz için önemli bir gün.
+- **g_ask_7_0**: {partner} hafta sonu için bir etkinlik ayarladı. Aynı gün antrenmanın var.
+- **g_ask_7_1**: {partner} hafta sonu için bir etkinlik ayarladı. Magazin muhabirleri peşinizde.
+- **g_ask_7_2**: {partner} hafta sonu için bir etkinlik ayarladı. Senden destek bekliyor.
+- **g_ask_7_3**: {partner} hafta sonu için bir etkinlik ayarladı. Çok heyecanlı görünüyor.
+- **g_ask_7_4**: {partner} hafta sonu için bir etkinlik ayarladı. Biraz alıngan bir dönemde.
+- **g_ask_7_5**: {partner} hafta sonu için bir etkinlik ayarladı. Arkadaşları da orada olacak.
+- **g_ask_7_6**: {partner} hafta sonu için bir etkinlik ayarladı. İkiniz için önemli bir gün.
+- **g_hayir_0_0**: Bir çocuk hastanesi ziyaret için seni bekliyor. Kulüp de destek vermek istiyor.
+- **g_hayir_0_1**: Bir çocuk hastanesi ziyaret için seni bekliyor. Kameralar orada olacak.
+- **g_hayir_0_2**: Bir çocuk hastanesi ziyaret için seni bekliyor. Sadece birkaç saatini istiyorlar.
+- **g_hayir_0_3**: Bir çocuk hastanesi ziyaret için seni bekliyor. Takım arkadaşların da katılmak istiyor.
+- **g_hayir_0_4**: Bir çocuk hastanesi ziyaret için seni bekliyor. Ailen bu işe çok önem veriyor.
+- **g_hayir_0_5**: Bir çocuk hastanesi ziyaret için seni bekliyor. Memleketinden insanlar da var.
+- **g_hayir_0_6**: Bir çocuk hastanesi ziyaret için seni bekliyor. Kimse bilmeden yapmayı tercih edebilirsin.
+- **g_hayir_1_0**: Bir köy okulu spor malzemesi istiyor. Kulüp de destek vermek istiyor.
+- **g_hayir_1_1**: Bir köy okulu spor malzemesi istiyor. Kameralar orada olacak.
+- **g_hayir_1_2**: Bir köy okulu spor malzemesi istiyor. Sadece birkaç saatini istiyorlar.
+- **g_hayir_1_3**: Bir köy okulu spor malzemesi istiyor. Takım arkadaşların da katılmak istiyor.
+- **g_hayir_1_4**: Bir köy okulu spor malzemesi istiyor. Ailen bu işe çok önem veriyor.
+- **g_hayir_1_5**: Bir köy okulu spor malzemesi istiyor. Memleketinden insanlar da var.
+- **g_hayir_1_6**: Bir köy okulu spor malzemesi istiyor. Kimse bilmeden yapmayı tercih edebilirsin.
+- **g_hayir_2_0**: Engelli sporcular derneği bir etkinliğe davet etti. Kulüp de destek vermek istiyor.
+- **g_hayir_2_1**: Engelli sporcular derneği bir etkinliğe davet etti. Kameralar orada olacak.
+- **g_hayir_2_2**: Engelli sporcular derneği bir etkinliğe davet etti. Sadece birkaç saatini istiyorlar.
+- **g_hayir_2_3**: Engelli sporcular derneği bir etkinliğe davet etti. Takım arkadaşların da katılmak istiyor.
+- **g_hayir_2_4**: Engelli sporcular derneği bir etkinliğe davet etti. Ailen bu işe çok önem veriyor.
+- **g_hayir_2_5**: Engelli sporcular derneği bir etkinliğe davet etti. Memleketinden insanlar da var.
+- **g_hayir_2_6**: Engelli sporcular derneği bir etkinliğe davet etti. Kimse bilmeden yapmayı tercih edebilirsin.
+- **g_hayir_3_0**: Bir hayvan barınağı yardım kampanyası başlattı. Kulüp de destek vermek istiyor.
+- **g_hayir_3_1**: Bir hayvan barınağı yardım kampanyası başlattı. Kameralar orada olacak.
+- **g_hayir_3_2**: Bir hayvan barınağı yardım kampanyası başlattı. Sadece birkaç saatini istiyorlar.
+- **g_hayir_3_3**: Bir hayvan barınağı yardım kampanyası başlattı. Takım arkadaşların da katılmak istiyor.
+- **g_hayir_3_4**: Bir hayvan barınağı yardım kampanyası başlattı. Ailen bu işe çok önem veriyor.
+- **g_hayir_3_5**: Bir hayvan barınağı yardım kampanyası başlattı. Memleketinden insanlar da var.
+- **g_hayir_3_6**: Bir hayvan barınağı yardım kampanyası başlattı. Kimse bilmeden yapmayı tercih edebilirsin.
+- **g_hayir_4_0**: Deprem bölgesindeki bir okul için kampanya var. Kulüp de destek vermek istiyor.
+- **g_hayir_4_1**: Deprem bölgesindeki bir okul için kampanya var. Kameralar orada olacak.
+- **g_hayir_4_2**: Deprem bölgesindeki bir okul için kampanya var. Sadece birkaç saatini istiyorlar.
+- **g_hayir_4_3**: Deprem bölgesindeki bir okul için kampanya var. Takım arkadaşların da katılmak istiyor.
+- **g_hayir_4_4**: Deprem bölgesindeki bir okul için kampanya var. Ailen bu işe çok önem veriyor.
+- **g_hayir_4_5**: Deprem bölgesindeki bir okul için kampanya var. Memleketinden insanlar da var.
+- **g_hayir_4_6**: Deprem bölgesindeki bir okul için kampanya var. Kimse bilmeden yapmayı tercih edebilirsin.
+- **g_hayir_5_0**: Huzurevi sakinleri maçlarını izliyormuş, bir ziyaret istiyorlar. Kulüp de destek vermek istiyor.
+- **g_hayir_5_1**: Huzurevi sakinleri maçlarını izliyormuş, bir ziyaret istiyorlar. Kameralar orada olacak.
+- **g_hayir_5_2**: Huzurevi sakinleri maçlarını izliyormuş, bir ziyaret istiyorlar. Sadece birkaç saatini istiyorlar.
+- **g_hayir_5_3**: Huzurevi sakinleri maçlarını izliyormuş, bir ziyaret istiyorlar. Takım arkadaşların da katılmak istiyor.
+- **g_hayir_5_4**: Huzurevi sakinleri maçlarını izliyormuş, bir ziyaret istiyorlar. Ailen bu işe çok önem veriyor.
+- **g_hayir_5_5**: Huzurevi sakinleri maçlarını izliyormuş, bir ziyaret istiyorlar. Memleketinden insanlar da var.
+- **g_hayir_5_6**: Huzurevi sakinleri maçlarını izliyormuş, bir ziyaret istiyorlar. Kimse bilmeden yapmayı tercih edebilirsin.
+- **g_hayir_6_0**: Bir kan bağışı kampanyası seni yüz olarak istiyor. Kulüp de destek vermek istiyor.
+- **g_hayir_6_1**: Bir kan bağışı kampanyası seni yüz olarak istiyor. Kameralar orada olacak.
+- **g_hayir_6_2**: Bir kan bağışı kampanyası seni yüz olarak istiyor. Sadece birkaç saatini istiyorlar.
+- **g_hayir_6_3**: Bir kan bağışı kampanyası seni yüz olarak istiyor. Takım arkadaşların da katılmak istiyor.
+- **g_hayir_6_4**: Bir kan bağışı kampanyası seni yüz olarak istiyor. Ailen bu işe çok önem veriyor.
+- **g_hayir_6_5**: Bir kan bağışı kampanyası seni yüz olarak istiyor. Memleketinden insanlar da var.
+- **g_hayir_6_6**: Bir kan bağışı kampanyası seni yüz olarak istiyor. Kimse bilmeden yapmayı tercih edebilirsin.
+- **g_hayir_7_0**: Kadın futbolu için bir turnuva destek arıyor. Kulüp de destek vermek istiyor.
+- **g_hayir_7_1**: Kadın futbolu için bir turnuva destek arıyor. Kameralar orada olacak.
+- **g_hayir_7_2**: Kadın futbolu için bir turnuva destek arıyor. Sadece birkaç saatini istiyorlar.
+- **g_hayir_7_3**: Kadın futbolu için bir turnuva destek arıyor. Takım arkadaşların da katılmak istiyor.
+- **g_hayir_7_4**: Kadın futbolu için bir turnuva destek arıyor. Ailen bu işe çok önem veriyor.
+- **g_hayir_7_5**: Kadın futbolu için bir turnuva destek arıyor. Memleketinden insanlar da var.
+- **g_hayir_7_6**: Kadın futbolu için bir turnuva destek arıyor. Kimse bilmeden yapmayı tercih edebilirsin.
+- **g_sehir_0_0**: Şehrin en kalabalık caddesinde yürüyordun. İnsanlar seni tanıdı.
+- **g_sehir_0_1**: Şehrin en kalabalık caddesinde yürüyordun. Kimse seni tanımadı, ilginç bir duygu.
+- **g_sehir_0_2**: Şehrin en kalabalık caddesinde yürüyordun. Bir çocuk topunu sana attı.
+- **g_sehir_0_3**: Şehrin en kalabalık caddesinde yürüyordun. Biri seni gizlice videoya çekiyor.
+- **g_sehir_0_4**: Şehrin en kalabalık caddesinde yürüyordun. Bir yaşlı amca maçları anlatmaya başladı.
+- **g_sehir_0_5**: Şehrin en kalabalık caddesinde yürüyordun. Yağmur başladı.
+- **g_sehir_0_6**: Şehrin en kalabalık caddesinde yürüyordun. Telefonun çaldı, hoca arıyor.
+- **g_sehir_1_0**: Yeni taşındığın semtte market alışverişindesin. İnsanlar seni tanıdı.
+- **g_sehir_1_1**: Yeni taşındığın semtte market alışverişindesin. Kimse seni tanımadı, ilginç bir duygu.
+- **g_sehir_1_2**: Yeni taşındığın semtte market alışverişindesin. Bir çocuk topunu sana attı.
+- **g_sehir_1_3**: Yeni taşındığın semtte market alışverişindesin. Biri seni gizlice videoya çekiyor.
+- **g_sehir_1_4**: Yeni taşındığın semtte market alışverişindesin. Bir yaşlı amca maçları anlatmaya başladı.
+- **g_sehir_1_5**: Yeni taşındığın semtte market alışverişindesin. Yağmur başladı.
+- **g_sehir_1_6**: Yeni taşındığın semtte market alışverişindesin. Telefonun çaldı, hoca arıyor.
+- **g_sehir_2_0**: Bir kafede kitap okuyordun. İnsanlar seni tanıdı.
+- **g_sehir_2_1**: Bir kafede kitap okuyordun. Kimse seni tanımadı, ilginç bir duygu.
+- **g_sehir_2_2**: Bir kafede kitap okuyordun. Bir çocuk topunu sana attı.
+- **g_sehir_2_3**: Bir kafede kitap okuyordun. Biri seni gizlice videoya çekiyor.
+- **g_sehir_2_4**: Bir kafede kitap okuyordun. Bir yaşlı amca maçları anlatmaya başladı.
+- **g_sehir_2_5**: Bir kafede kitap okuyordun. Yağmur başladı.
+- **g_sehir_2_6**: Bir kafede kitap okuyordun. Telefonun çaldı, hoca arıyor.
+- **g_sehir_3_0**: Trafikte uzun süre bekliyorsun. İnsanlar seni tanıdı.
+- **g_sehir_3_1**: Trafikte uzun süre bekliyorsun. Kimse seni tanımadı, ilginç bir duygu.
+- **g_sehir_3_2**: Trafikte uzun süre bekliyorsun. Bir çocuk topunu sana attı.
+- **g_sehir_3_3**: Trafikte uzun süre bekliyorsun. Biri seni gizlice videoya çekiyor.
+- **g_sehir_3_4**: Trafikte uzun süre bekliyorsun. Bir yaşlı amca maçları anlatmaya başladı.
+- **g_sehir_3_5**: Trafikte uzun süre bekliyorsun. Yağmur başladı.
+- **g_sehir_3_6**: Trafikte uzun süre bekliyorsun. Telefonun çaldı, hoca arıyor.
+- **g_sehir_4_0**: Akşam yürüyüşünde parka gittin. İnsanlar seni tanıdı.
+- **g_sehir_4_1**: Akşam yürüyüşünde parka gittin. Kimse seni tanımadı, ilginç bir duygu.
+- **g_sehir_4_2**: Akşam yürüyüşünde parka gittin. Bir çocuk topunu sana attı.
+- **g_sehir_4_3**: Akşam yürüyüşünde parka gittin. Biri seni gizlice videoya çekiyor.
+- **g_sehir_4_4**: Akşam yürüyüşünde parka gittin. Bir yaşlı amca maçları anlatmaya başladı.
+- **g_sehir_4_5**: Akşam yürüyüşünde parka gittin. Yağmur başladı.
+- **g_sehir_4_6**: Akşam yürüyüşünde parka gittin. Telefonun çaldı, hoca arıyor.
+- **g_sehir_5_0**: Sinemaya gitmeye karar verdin. İnsanlar seni tanıdı.
+- **g_sehir_5_1**: Sinemaya gitmeye karar verdin. Kimse seni tanımadı, ilginç bir duygu.
+- **g_sehir_5_2**: Sinemaya gitmeye karar verdin. Bir çocuk topunu sana attı.
+- **g_sehir_5_3**: Sinemaya gitmeye karar verdin. Biri seni gizlice videoya çekiyor.
+- **g_sehir_5_4**: Sinemaya gitmeye karar verdin. Bir yaşlı amca maçları anlatmaya başladı.
+- **g_sehir_5_5**: Sinemaya gitmeye karar verdin. Yağmur başladı.
+- **g_sehir_5_6**: Sinemaya gitmeye karar verdin. Telefonun çaldı, hoca arıyor.
+- **g_sehir_6_0**: Bir mahalle maçına rastladın. İnsanlar seni tanıdı.
+- **g_sehir_6_1**: Bir mahalle maçına rastladın. Kimse seni tanımadı, ilginç bir duygu.
+- **g_sehir_6_2**: Bir mahalle maçına rastladın. Bir çocuk topunu sana attı.
+- **g_sehir_6_3**: Bir mahalle maçına rastladın. Biri seni gizlice videoya çekiyor.
+- **g_sehir_6_4**: Bir mahalle maçına rastladın. Bir yaşlı amca maçları anlatmaya başladı.
+- **g_sehir_6_5**: Bir mahalle maçına rastladın. Yağmur başladı.
+- **g_sehir_6_6**: Bir mahalle maçına rastladın. Telefonun çaldı, hoca arıyor.
+- **g_sehir_7_0**: Bir esnaf dükkânının önünden geçiyordun. İnsanlar seni tanıdı.
+- **g_sehir_7_1**: Bir esnaf dükkânının önünden geçiyordun. Kimse seni tanımadı, ilginç bir duygu.
+- **g_sehir_7_2**: Bir esnaf dükkânının önünden geçiyordun. Bir çocuk topunu sana attı.
+- **g_sehir_7_3**: Bir esnaf dükkânının önünden geçiyordun. Biri seni gizlice videoya çekiyor.
+- **g_sehir_7_4**: Bir esnaf dükkânının önünden geçiyordun. Bir yaşlı amca maçları anlatmaya başladı.
+- **g_sehir_7_5**: Bir esnaf dükkânının önünden geçiyordun. Yağmur başladı.
+- **g_sehir_7_6**: Bir esnaf dükkânının önünden geçiyordun. Telefonun çaldı, hoca arıyor.
+- **g_milli_0_0**: Milli takım kampı başladı. Ülkenin gözü üstünde.
+- **g_milli_0_1**: Milli takım kampı başladı. Kulüp hocan seni korumasını istiyor.
+- **g_milli_0_2**: Milli takım kampı başladı. Gazeteci Analizci Ozan senin rolünü sorguluyor.
+- **g_milli_0_3**: Milli takım kampı başladı. Ailen çok gururlu.
+- **g_milli_0_4**: Milli takım kampı başladı. Bir genç oyuncu ilk kez kadroda.
+- **g_milli_0_5**: Milli takım kampı başladı. Rakip ülkenin yıldızı seninle ilgili konuştu.
+- **g_milli_0_6**: Milli takım kampı başladı. Kamp kuralları sıkı.
+- **g_milli_1_0**: Milli takım hocası seni aradı. Ülkenin gözü üstünde.
+- **g_milli_1_1**: Milli takım hocası seni aradı. Kulüp hocan seni korumasını istiyor.
+- **g_milli_1_2**: Milli takım hocası seni aradı. Gazeteci Analizci Ozan senin rolünü sorguluyor.
+- **g_milli_1_3**: Milli takım hocası seni aradı. Ailen çok gururlu.
+- **g_milli_1_4**: Milli takım hocası seni aradı. Bir genç oyuncu ilk kez kadroda.
+- **g_milli_1_5**: Milli takım hocası seni aradı. Rakip ülkenin yıldızı seninle ilgili konuştu.
+- **g_milli_1_6**: Milli takım hocası seni aradı. Kamp kuralları sıkı.
+- **g_milli_2_0**: Milli takımda yeni bir kaptan seçimi konuşuluyor. Ülkenin gözü üstünde.
+- **g_milli_2_1**: Milli takımda yeni bir kaptan seçimi konuşuluyor. Kulüp hocan seni korumasını istiyor.
+- **g_milli_2_2**: Milli takımda yeni bir kaptan seçimi konuşuluyor. Gazeteci Analizci Ozan senin rolünü sorguluyor.
+- **g_milli_2_3**: Milli takımda yeni bir kaptan seçimi konuşuluyor. Ailen çok gururlu.
+- **g_milli_2_4**: Milli takımda yeni bir kaptan seçimi konuşuluyor. Bir genç oyuncu ilk kez kadroda.
+- **g_milli_2_5**: Milli takımda yeni bir kaptan seçimi konuşuluyor. Rakip ülkenin yıldızı seninle ilgili konuştu.
+- **g_milli_2_6**: Milli takımda yeni bir kaptan seçimi konuşuluyor. Kamp kuralları sıkı.
+- **g_milli_3_0**: Milli maç öncesi basın toplantısına çıkacaksın. Ülkenin gözü üstünde.
+- **g_milli_3_1**: Milli maç öncesi basın toplantısına çıkacaksın. Kulüp hocan seni korumasını istiyor.
+- **g_milli_3_2**: Milli maç öncesi basın toplantısına çıkacaksın. Gazeteci Analizci Ozan senin rolünü sorguluyor.
+- **g_milli_3_3**: Milli maç öncesi basın toplantısına çıkacaksın. Ailen çok gururlu.
+- **g_milli_3_4**: Milli maç öncesi basın toplantısına çıkacaksın. Bir genç oyuncu ilk kez kadroda.
+- **g_milli_3_5**: Milli maç öncesi basın toplantısına çıkacaksın. Rakip ülkenin yıldızı seninle ilgili konuştu.
+- **g_milli_3_6**: Milli maç öncesi basın toplantısına çıkacaksın. Kamp kuralları sıkı.
+- **g_milli_4_0**: Milli takımda oda arkadaşın değişti. Ülkenin gözü üstünde.
+- **g_milli_4_1**: Milli takımda oda arkadaşın değişti. Kulüp hocan seni korumasını istiyor.
+- **g_milli_4_2**: Milli takımda oda arkadaşın değişti. Gazeteci Analizci Ozan senin rolünü sorguluyor.
+- **g_milli_4_3**: Milli takımda oda arkadaşın değişti. Ailen çok gururlu.
+- **g_milli_4_4**: Milli takımda oda arkadaşın değişti. Bir genç oyuncu ilk kez kadroda.
+- **g_milli_4_5**: Milli takımda oda arkadaşın değişti. Rakip ülkenin yıldızı seninle ilgili konuştu.
+- **g_milli_4_6**: Milli takımda oda arkadaşın değişti. Kamp kuralları sıkı.
+- **g_milli_5_0**: Milli takım formasının yeni tasarımı tanıtılıyor. Ülkenin gözü üstünde.
+- **g_milli_5_1**: Milli takım formasının yeni tasarımı tanıtılıyor. Kulüp hocan seni korumasını istiyor.
+- **g_milli_5_2**: Milli takım formasının yeni tasarımı tanıtılıyor. Gazeteci Analizci Ozan senin rolünü sorguluyor.
+- **g_milli_5_3**: Milli takım formasının yeni tasarımı tanıtılıyor. Ailen çok gururlu.
+- **g_milli_5_4**: Milli takım formasının yeni tasarımı tanıtılıyor. Bir genç oyuncu ilk kez kadroda.
+- **g_milli_5_5**: Milli takım formasının yeni tasarımı tanıtılıyor. Rakip ülkenin yıldızı seninle ilgili konuştu.
+- **g_milli_5_6**: Milli takım formasının yeni tasarımı tanıtılıyor. Kamp kuralları sıkı.
+- **g_milli_6_0**: Milli takımın deplasman yolculuğu başladı. Ülkenin gözü üstünde.
+- **g_milli_6_1**: Milli takımın deplasman yolculuğu başladı. Kulüp hocan seni korumasını istiyor.
+- **g_milli_6_2**: Milli takımın deplasman yolculuğu başladı. Gazeteci Analizci Ozan senin rolünü sorguluyor.
+- **g_milli_6_3**: Milli takımın deplasman yolculuğu başladı. Ailen çok gururlu.
+- **g_milli_6_4**: Milli takımın deplasman yolculuğu başladı. Bir genç oyuncu ilk kez kadroda.
+- **g_milli_6_5**: Milli takımın deplasman yolculuğu başladı. Rakip ülkenin yıldızı seninle ilgili konuştu.
+- **g_milli_6_6**: Milli takımın deplasman yolculuğu başladı. Kamp kuralları sıkı.
+- **g_milli_7_0**: Milli takım taraftar grubu otelin önünde. Ülkenin gözü üstünde.
+- **g_milli_7_1**: Milli takım taraftar grubu otelin önünde. Kulüp hocan seni korumasını istiyor.
+- **g_milli_7_2**: Milli takım taraftar grubu otelin önünde. Gazeteci Analizci Ozan senin rolünü sorguluyor.
+- **g_milli_7_3**: Milli takım taraftar grubu otelin önünde. Ailen çok gururlu.
+- **g_milli_7_4**: Milli takım taraftar grubu otelin önünde. Bir genç oyuncu ilk kez kadroda.
+- **g_milli_7_5**: Milli takım taraftar grubu otelin önünde. Rakip ülkenin yıldızı seninle ilgili konuştu.
+- **g_milli_7_6**: Milli takım taraftar grubu otelin önünde. Kamp kuralları sıkı.
+- **g_veteran_0_0**: Sabah aynaya baktığında ilk beyaz saçını gördün. İçinde bir burukluk var.
+- **g_veteran_0_1**: Sabah aynaya baktığında ilk beyaz saçını gördün. Hâlâ sahada fark yaratabileceğini hissediyorsun.
+- **g_veteran_0_2**: Sabah aynaya baktığında ilk beyaz saçını gördün. Ailen artık daha çok vakit geçirmek istiyor.
+- **g_veteran_0_3**: Sabah aynaya baktığında ilk beyaz saçını gördün. Taraftarlar seni seviyor.
+- **g_veteran_0_4**: Sabah aynaya baktığında ilk beyaz saçını gördün. Gelecek planı yapmanın zamanı geldi.
+- **g_veteran_0_5**: Sabah aynaya baktığında ilk beyaz saçını gördün. Vücudun yorgun ama ruhun genç.
+- **g_veteran_0_6**: Sabah aynaya baktığında ilk beyaz saçını gördün. Kulüp yönetimi seninle konuşmak istiyor.
+- **g_veteran_1_0**: Genç bir takım arkadaşın seni çocukluğundaki posterden tanıdığını söyledi. İçinde bir burukluk var.
+- **g_veteran_1_1**: Genç bir takım arkadaşın seni çocukluğundaki posterden tanıdığını söyledi. Hâlâ sahada fark yaratabileceğini hissediyorsun.
+- **g_veteran_1_2**: Genç bir takım arkadaşın seni çocukluğundaki posterden tanıdığını söyledi. Ailen artık daha çok vakit geçirmek istiyor.
+- **g_veteran_1_3**: Genç bir takım arkadaşın seni çocukluğundaki posterden tanıdığını söyledi. Taraftarlar seni seviyor.
+- **g_veteran_1_4**: Genç bir takım arkadaşın seni çocukluğundaki posterden tanıdığını söyledi. Gelecek planı yapmanın zamanı geldi.
+- **g_veteran_1_5**: Genç bir takım arkadaşın seni çocukluğundaki posterden tanıdığını söyledi. Vücudun yorgun ama ruhun genç.
+- **g_veteran_1_6**: Genç bir takım arkadaşın seni çocukluğundaki posterden tanıdığını söyledi. Kulüp yönetimi seninle konuşmak istiyor.
+- **g_veteran_2_0**: Kulüp sana antrenörlük kursu teklif etti. İçinde bir burukluk var.
+- **g_veteran_2_1**: Kulüp sana antrenörlük kursu teklif etti. Hâlâ sahada fark yaratabileceğini hissediyorsun.
+- **g_veteran_2_2**: Kulüp sana antrenörlük kursu teklif etti. Ailen artık daha çok vakit geçirmek istiyor.
+- **g_veteran_2_3**: Kulüp sana antrenörlük kursu teklif etti. Taraftarlar seni seviyor.
+- **g_veteran_2_4**: Kulüp sana antrenörlük kursu teklif etti. Gelecek planı yapmanın zamanı geldi.
+- **g_veteran_2_5**: Kulüp sana antrenörlük kursu teklif etti. Vücudun yorgun ama ruhun genç.
+- **g_veteran_2_6**: Kulüp sana antrenörlük kursu teklif etti. Kulüp yönetimi seninle konuşmak istiyor.
+- **g_veteran_3_0**: Eski bir takım arkadaşın futbolu bıraktığını açıkladı. İçinde bir burukluk var.
+- **g_veteran_3_1**: Eski bir takım arkadaşın futbolu bıraktığını açıkladı. Hâlâ sahada fark yaratabileceğini hissediyorsun.
+- **g_veteran_3_2**: Eski bir takım arkadaşın futbolu bıraktığını açıkladı. Ailen artık daha çok vakit geçirmek istiyor.
+- **g_veteran_3_3**: Eski bir takım arkadaşın futbolu bıraktığını açıkladı. Taraftarlar seni seviyor.
+- **g_veteran_3_4**: Eski bir takım arkadaşın futbolu bıraktığını açıkladı. Gelecek planı yapmanın zamanı geldi.
+- **g_veteran_3_5**: Eski bir takım arkadaşın futbolu bıraktığını açıkladı. Vücudun yorgun ama ruhun genç.
+- **g_veteran_3_6**: Eski bir takım arkadaşın futbolu bıraktığını açıkladı. Kulüp yönetimi seninle konuşmak istiyor.
+- **g_veteran_4_0**: Bir gazeteci "son sezonun mu?" diye sordu. İçinde bir burukluk var.
+- **g_veteran_4_1**: Bir gazeteci "son sezonun mu?" diye sordu. Hâlâ sahada fark yaratabileceğini hissediyorsun.
+- **g_veteran_4_2**: Bir gazeteci "son sezonun mu?" diye sordu. Ailen artık daha çok vakit geçirmek istiyor.
+- **g_veteran_4_3**: Bir gazeteci "son sezonun mu?" diye sordu. Taraftarlar seni seviyor.
+- **g_veteran_4_4**: Bir gazeteci "son sezonun mu?" diye sordu. Gelecek planı yapmanın zamanı geldi.
+- **g_veteran_4_5**: Bir gazeteci "son sezonun mu?" diye sordu. Vücudun yorgun ama ruhun genç.
+- **g_veteran_4_6**: Bir gazeteci "son sezonun mu?" diye sordu. Kulüp yönetimi seninle konuşmak istiyor.
+- **g_veteran_5_0**: Fizyoterapist toparlanma sürenin uzadığını söyledi. İçinde bir burukluk var.
+- **g_veteran_5_1**: Fizyoterapist toparlanma sürenin uzadığını söyledi. Hâlâ sahada fark yaratabileceğini hissediyorsun.
+- **g_veteran_5_2**: Fizyoterapist toparlanma sürenin uzadığını söyledi. Ailen artık daha çok vakit geçirmek istiyor.
+- **g_veteran_5_3**: Fizyoterapist toparlanma sürenin uzadığını söyledi. Taraftarlar seni seviyor.
+- **g_veteran_5_4**: Fizyoterapist toparlanma sürenin uzadığını söyledi. Gelecek planı yapmanın zamanı geldi.
+- **g_veteran_5_5**: Fizyoterapist toparlanma sürenin uzadığını söyledi. Vücudun yorgun ama ruhun genç.
+- **g_veteran_5_6**: Fizyoterapist toparlanma sürenin uzadığını söyledi. Kulüp yönetimi seninle konuşmak istiyor.
+- **g_veteran_6_0**: Hoca seni gençlere mentor olarak düşünüyor. İçinde bir burukluk var.
+- **g_veteran_6_1**: Hoca seni gençlere mentor olarak düşünüyor. Hâlâ sahada fark yaratabileceğini hissediyorsun.
+- **g_veteran_6_2**: Hoca seni gençlere mentor olarak düşünüyor. Ailen artık daha çok vakit geçirmek istiyor.
+- **g_veteran_6_3**: Hoca seni gençlere mentor olarak düşünüyor. Taraftarlar seni seviyor.
+- **g_veteran_6_4**: Hoca seni gençlere mentor olarak düşünüyor. Gelecek planı yapmanın zamanı geldi.
+- **g_veteran_6_5**: Hoca seni gençlere mentor olarak düşünüyor. Vücudun yorgun ama ruhun genç.
+- **g_veteran_6_6**: Hoca seni gençlere mentor olarak düşünüyor. Kulüp yönetimi seninle konuşmak istiyor.
+- **g_veteran_7_0**: Bir belgesel ekibi kariyer hikâyeni çekmek istiyor. İçinde bir burukluk var.
+- **g_veteran_7_1**: Bir belgesel ekibi kariyer hikâyeni çekmek istiyor. Hâlâ sahada fark yaratabileceğini hissediyorsun.
+- **g_veteran_7_2**: Bir belgesel ekibi kariyer hikâyeni çekmek istiyor. Ailen artık daha çok vakit geçirmek istiyor.
+- **g_veteran_7_3**: Bir belgesel ekibi kariyer hikâyeni çekmek istiyor. Taraftarlar seni seviyor.
+- **g_veteran_7_4**: Bir belgesel ekibi kariyer hikâyeni çekmek istiyor. Gelecek planı yapmanın zamanı geldi.
+- **g_veteran_7_5**: Bir belgesel ekibi kariyer hikâyeni çekmek istiyor. Vücudun yorgun ama ruhun genç.
+- **g_veteran_7_6**: Bir belgesel ekibi kariyer hikâyeni çekmek istiyor. Kulüp yönetimi seninle konuşmak istiyor.
+- **g_genc_0_0**: Okuldan arkadaşların seni bir doğum günü partisine çağırdı. Hoca erken yatmanı istiyor.
+- **g_genc_0_1**: Okuldan arkadaşların seni bir doğum günü partisine çağırdı. Arkadaşların seni özlemiş.
+- **g_genc_0_2**: Okuldan arkadaşların seni bir doğum günü partisine çağırdı. Ailen senin adına çok heyecanlı.
+- **g_genc_0_3**: Okuldan arkadaşların seni bir doğum günü partisine çağırdı. Bir menajer seninle tanışmak istiyor.
+- **g_genc_0_4**: Okuldan arkadaşların seni bir doğum günü partisine çağırdı. Gelecek hafta önemli bir maç var.
+- **g_genc_0_5**: Okuldan arkadaşların seni bir doğum günü partisine çağırdı. Yaşıtların seni kıskanıyor.
+- **g_genc_0_6**: Okuldan arkadaşların seni bir doğum günü partisine çağırdı. Kafan biraz karışık.
+- **g_genc_1_0**: Ehliyet kursundan arama geldi. Hoca erken yatmanı istiyor.
+- **g_genc_1_1**: Ehliyet kursundan arama geldi. Arkadaşların seni özlemiş.
+- **g_genc_1_2**: Ehliyet kursundan arama geldi. Ailen senin adına çok heyecanlı.
+- **g_genc_1_3**: Ehliyet kursundan arama geldi. Bir menajer seninle tanışmak istiyor.
+- **g_genc_1_4**: Ehliyet kursundan arama geldi. Gelecek hafta önemli bir maç var.
+- **g_genc_1_5**: Ehliyet kursundan arama geldi. Yaşıtların seni kıskanıyor.
+- **g_genc_1_6**: Ehliyet kursundan arama geldi. Kafan biraz karışık.
+- **g_genc_2_0**: Annen ders çalışmanı hatırlattı. Hoca erken yatmanı istiyor.
+- **g_genc_2_1**: Annen ders çalışmanı hatırlattı. Arkadaşların seni özlemiş.
+- **g_genc_2_2**: Annen ders çalışmanı hatırlattı. Ailen senin adına çok heyecanlı.
+- **g_genc_2_3**: Annen ders çalışmanı hatırlattı. Bir menajer seninle tanışmak istiyor.
+- **g_genc_2_4**: Annen ders çalışmanı hatırlattı. Gelecek hafta önemli bir maç var.
+- **g_genc_2_5**: Annen ders çalışmanı hatırlattı. Yaşıtların seni kıskanıyor.
+- **g_genc_2_6**: Annen ders çalışmanı hatırlattı. Kafan biraz karışık.
+- **g_genc_3_0**: İlk maaşının bir kısmıyla ne yapacağını düşünüyorsun. Hoca erken yatmanı istiyor.
+- **g_genc_3_1**: İlk maaşının bir kısmıyla ne yapacağını düşünüyorsun. Arkadaşların seni özlemiş.
+- **g_genc_3_2**: İlk maaşının bir kısmıyla ne yapacağını düşünüyorsun. Ailen senin adına çok heyecanlı.
+- **g_genc_3_3**: İlk maaşının bir kısmıyla ne yapacağını düşünüyorsun. Bir menajer seninle tanışmak istiyor.
+- **g_genc_3_4**: İlk maaşının bir kısmıyla ne yapacağını düşünüyorsun. Gelecek hafta önemli bir maç var.
+- **g_genc_3_5**: İlk maaşının bir kısmıyla ne yapacağını düşünüyorsun. Yaşıtların seni kıskanıyor.
+- **g_genc_3_6**: İlk maaşının bir kısmıyla ne yapacağını düşünüyorsun. Kafan biraz karışık.
+- **g_genc_4_0**: Takımın tecrübeli oyuncusu sana bir tavsiye verdi. Hoca erken yatmanı istiyor.
+- **g_genc_4_1**: Takımın tecrübeli oyuncusu sana bir tavsiye verdi. Arkadaşların seni özlemiş.
+- **g_genc_4_2**: Takımın tecrübeli oyuncusu sana bir tavsiye verdi. Ailen senin adına çok heyecanlı.
+- **g_genc_4_3**: Takımın tecrübeli oyuncusu sana bir tavsiye verdi. Bir menajer seninle tanışmak istiyor.
+- **g_genc_4_4**: Takımın tecrübeli oyuncusu sana bir tavsiye verdi. Gelecek hafta önemli bir maç var.
+- **g_genc_4_5**: Takımın tecrübeli oyuncusu sana bir tavsiye verdi. Yaşıtların seni kıskanıyor.
+- **g_genc_4_6**: Takımın tecrübeli oyuncusu sana bir tavsiye verdi. Kafan biraz karışık.
+- **g_genc_5_0**: Sosyal medyada takipçin hızla artıyor. Hoca erken yatmanı istiyor.
+- **g_genc_5_1**: Sosyal medyada takipçin hızla artıyor. Arkadaşların seni özlemiş.
+- **g_genc_5_2**: Sosyal medyada takipçin hızla artıyor. Ailen senin adına çok heyecanlı.
+- **g_genc_5_3**: Sosyal medyada takipçin hızla artıyor. Bir menajer seninle tanışmak istiyor.
+- **g_genc_5_4**: Sosyal medyada takipçin hızla artıyor. Gelecek hafta önemli bir maç var.
+- **g_genc_5_5**: Sosyal medyada takipçin hızla artıyor. Yaşıtların seni kıskanıyor.
+- **g_genc_5_6**: Sosyal medyada takipçin hızla artıyor. Kafan biraz karışık.
+- **g_genc_6_0**: Bir alt yaş milli takımı seni izliyor. Hoca erken yatmanı istiyor.
+- **g_genc_6_1**: Bir alt yaş milli takımı seni izliyor. Arkadaşların seni özlemiş.
+- **g_genc_6_2**: Bir alt yaş milli takımı seni izliyor. Ailen senin adına çok heyecanlı.
+- **g_genc_6_3**: Bir alt yaş milli takımı seni izliyor. Bir menajer seninle tanışmak istiyor.
+- **g_genc_6_4**: Bir alt yaş milli takımı seni izliyor. Gelecek hafta önemli bir maç var.
+- **g_genc_6_5**: Bir alt yaş milli takımı seni izliyor. Yaşıtların seni kıskanıyor.
+- **g_genc_6_6**: Bir alt yaş milli takımı seni izliyor. Kafan biraz karışık.
+- **g_genc_7_0**: Mahalleden eski arkadaşın seni bir maça çağırdı. Hoca erken yatmanı istiyor.
+- **g_genc_7_1**: Mahalleden eski arkadaşın seni bir maça çağırdı. Arkadaşların seni özlemiş.
+- **g_genc_7_2**: Mahalleden eski arkadaşın seni bir maça çağırdı. Ailen senin adına çok heyecanlı.
+- **g_genc_7_3**: Mahalleden eski arkadaşın seni bir maça çağırdı. Bir menajer seninle tanışmak istiyor.
+- **g_genc_7_4**: Mahalleden eski arkadaşın seni bir maça çağırdı. Gelecek hafta önemli bir maç var.
+- **g_genc_7_5**: Mahalleden eski arkadaşın seni bir maça çağırdı. Yaşıtların seni kıskanıyor.
+- **g_genc_7_6**: Mahalleden eski arkadaşın seni bir maça çağırdı. Kafan biraz karışık.
+- **g_basin_0_0**: Bir gazeteci telefonla röportaj istedi. Soruların bir kısmı özel hayatınla ilgili.
+- **g_basin_0_1**: Bir gazeteci telefonla röportaj istedi. Gazeteci Kulisçi Ferda soruları hazırlamış.
+- **g_basin_0_2**: Bir gazeteci telefonla röportaj istedi. Kulüp basın sorumlusu yanında olacak.
+- **g_basin_0_3**: Bir gazeteci telefonla röportaj istedi. Program çok izleniyor.
+- **g_basin_0_4**: Bir gazeteci telefonla röportaj istedi. Hoca röportajlardan pek hoşlanmıyor.
+- **g_basin_0_5**: Bir gazeteci telefonla röportaj istedi. Bir önceki konuğun sözleri olay olmuştu.
+- **g_basin_0_6**: Bir gazeteci telefonla röportaj istedi. Röportaj kısa sürecek.
+- **g_basin_1_0**: Bir podcast programı konuk olmanı istiyor. Soruların bir kısmı özel hayatınla ilgili.
+- **g_basin_1_1**: Bir podcast programı konuk olmanı istiyor. Gazeteci Kulisçi Ferda soruları hazırlamış.
+- **g_basin_1_2**: Bir podcast programı konuk olmanı istiyor. Kulüp basın sorumlusu yanında olacak.
+- **g_basin_1_3**: Bir podcast programı konuk olmanı istiyor. Program çok izleniyor.
+- **g_basin_1_4**: Bir podcast programı konuk olmanı istiyor. Hoca röportajlardan pek hoşlanmıyor.
+- **g_basin_1_5**: Bir podcast programı konuk olmanı istiyor. Bir önceki konuğun sözleri olay olmuştu.
+- **g_basin_1_6**: Bir podcast programı konuk olmanı istiyor. Röportaj kısa sürecek.
+- **g_basin_2_0**: Bir spor dergisi seninle kapak röportajı yapmak istiyor. Soruların bir kısmı özel hayatınla ilgili.
+- **g_basin_2_1**: Bir spor dergisi seninle kapak röportajı yapmak istiyor. Gazeteci Kulisçi Ferda soruları hazırlamış.
+- **g_basin_2_2**: Bir spor dergisi seninle kapak röportajı yapmak istiyor. Kulüp basın sorumlusu yanında olacak.
+- **g_basin_2_3**: Bir spor dergisi seninle kapak röportajı yapmak istiyor. Program çok izleniyor.
+- **g_basin_2_4**: Bir spor dergisi seninle kapak röportajı yapmak istiyor. Hoca röportajlardan pek hoşlanmıyor.
+- **g_basin_2_5**: Bir spor dergisi seninle kapak röportajı yapmak istiyor. Bir önceki konuğun sözleri olay olmuştu.
+- **g_basin_2_6**: Bir spor dergisi seninle kapak röportajı yapmak istiyor. Röportaj kısa sürecek.
+- **g_basin_3_0**: Bir YouTube kanalı "bir günün" videosunu çekmek istiyor. Soruların bir kısmı özel hayatınla ilgili.
+- **g_basin_3_1**: Bir YouTube kanalı "bir günün" videosunu çekmek istiyor. Gazeteci Kulisçi Ferda soruları hazırlamış.
+- **g_basin_3_2**: Bir YouTube kanalı "bir günün" videosunu çekmek istiyor. Kulüp basın sorumlusu yanında olacak.
+- **g_basin_3_3**: Bir YouTube kanalı "bir günün" videosunu çekmek istiyor. Program çok izleniyor.
+- **g_basin_3_4**: Bir YouTube kanalı "bir günün" videosunu çekmek istiyor. Hoca röportajlardan pek hoşlanmıyor.
+- **g_basin_3_5**: Bir YouTube kanalı "bir günün" videosunu çekmek istiyor. Bir önceki konuğun sözleri olay olmuştu.
+- **g_basin_3_6**: Bir YouTube kanalı "bir günün" videosunu çekmek istiyor. Röportaj kısa sürecek.
+- **g_basin_4_0**: Bir radyo programı canlı bağlanmak istiyor. Soruların bir kısmı özel hayatınla ilgili.
+- **g_basin_4_1**: Bir radyo programı canlı bağlanmak istiyor. Gazeteci Kulisçi Ferda soruları hazırlamış.
+- **g_basin_4_2**: Bir radyo programı canlı bağlanmak istiyor. Kulüp basın sorumlusu yanında olacak.
+- **g_basin_4_3**: Bir radyo programı canlı bağlanmak istiyor. Program çok izleniyor.
+- **g_basin_4_4**: Bir radyo programı canlı bağlanmak istiyor. Hoca röportajlardan pek hoşlanmıyor.
+- **g_basin_4_5**: Bir radyo programı canlı bağlanmak istiyor. Bir önceki konuğun sözleri olay olmuştu.
+- **g_basin_4_6**: Bir radyo programı canlı bağlanmak istiyor. Röportaj kısa sürecek.
+- **g_basin_5_0**: Bir gazete "en iyi 11" listesine seni koydu ve yorum istiyor. Soruların bir kısmı özel hayatınla ilgili.
+- **g_basin_5_1**: Bir gazete "en iyi 11" listesine seni koydu ve yorum istiyor. Gazeteci Kulisçi Ferda soruları hazırlamış.
+- **g_basin_5_2**: Bir gazete "en iyi 11" listesine seni koydu ve yorum istiyor. Kulüp basın sorumlusu yanında olacak.
+- **g_basin_5_3**: Bir gazete "en iyi 11" listesine seni koydu ve yorum istiyor. Program çok izleniyor.
+- **g_basin_5_4**: Bir gazete "en iyi 11" listesine seni koydu ve yorum istiyor. Hoca röportajlardan pek hoşlanmıyor.
+- **g_basin_5_5**: Bir gazete "en iyi 11" listesine seni koydu ve yorum istiyor. Bir önceki konuğun sözleri olay olmuştu.
+- **g_basin_5_6**: Bir gazete "en iyi 11" listesine seni koydu ve yorum istiyor. Röportaj kısa sürecek.
+- **g_basin_6_0**: Bir belgesel ekibi takımı takip ediyor. Soruların bir kısmı özel hayatınla ilgili.
+- **g_basin_6_1**: Bir belgesel ekibi takımı takip ediyor. Gazeteci Kulisçi Ferda soruları hazırlamış.
+- **g_basin_6_2**: Bir belgesel ekibi takımı takip ediyor. Kulüp basın sorumlusu yanında olacak.
+- **g_basin_6_3**: Bir belgesel ekibi takımı takip ediyor. Program çok izleniyor.
+- **g_basin_6_4**: Bir belgesel ekibi takımı takip ediyor. Hoca röportajlardan pek hoşlanmıyor.
+- **g_basin_6_5**: Bir belgesel ekibi takımı takip ediyor. Bir önceki konuğun sözleri olay olmuştu.
+- **g_basin_6_6**: Bir belgesel ekibi takımı takip ediyor. Röportaj kısa sürecek.
+- **g_basin_7_0**: Yerel televizyon maç sonu seninle konuşmak istiyor. Soruların bir kısmı özel hayatınla ilgili.
+- **g_basin_7_1**: Yerel televizyon maç sonu seninle konuşmak istiyor. Gazeteci Kulisçi Ferda soruları hazırlamış.
+- **g_basin_7_2**: Yerel televizyon maç sonu seninle konuşmak istiyor. Kulüp basın sorumlusu yanında olacak.
+- **g_basin_7_3**: Yerel televizyon maç sonu seninle konuşmak istiyor. Program çok izleniyor.
+- **g_basin_7_4**: Yerel televizyon maç sonu seninle konuşmak istiyor. Hoca röportajlardan pek hoşlanmıyor.
+- **g_basin_7_5**: Yerel televizyon maç sonu seninle konuşmak istiyor. Bir önceki konuğun sözleri olay olmuştu.
+- **g_basin_7_6**: Yerel televizyon maç sonu seninle konuşmak istiyor. Röportaj kısa sürecek.
+- **g_ugur_0_0**: Uğurlu kramponunun bağcığı koptu. İçinde garip bir his var.
+- **g_ugur_0_1**: Uğurlu kramponunun bağcığı koptu. Takım arkadaşların gülüyor.
+- **g_ugur_0_2**: Uğurlu kramponunun bağcığı koptu. Malzemeci bir çözüm bulmaya çalışıyor.
+- **g_ugur_0_3**: Uğurlu kramponunun bağcığı koptu. Maç büyük bir maç.
+- **g_ugur_0_4**: Uğurlu kramponunun bağcığı koptu. Annen telefonda dua ediyor.
+- **g_ugur_0_5**: Uğurlu kramponunun bağcığı koptu. Kimse fark etmedi.
+- **g_ugur_0_6**: Uğurlu kramponunun bağcığı koptu. Kaleci de aynı şeyi yaşamış.
+- **g_ugur_1_0**: Maç öncesi her zaman yediğin makarna bu sefer yoktu. İçinde garip bir his var.
+- **g_ugur_1_1**: Maç öncesi her zaman yediğin makarna bu sefer yoktu. Takım arkadaşların gülüyor.
+- **g_ugur_1_2**: Maç öncesi her zaman yediğin makarna bu sefer yoktu. Malzemeci bir çözüm bulmaya çalışıyor.
+- **g_ugur_1_3**: Maç öncesi her zaman yediğin makarna bu sefer yoktu. Maç büyük bir maç.
+- **g_ugur_1_4**: Maç öncesi her zaman yediğin makarna bu sefer yoktu. Annen telefonda dua ediyor.
+- **g_ugur_1_5**: Maç öncesi her zaman yediğin makarna bu sefer yoktu. Kimse fark etmedi.
+- **g_ugur_1_6**: Maç öncesi her zaman yediğin makarna bu sefer yoktu. Kaleci de aynı şeyi yaşamış.
+- **g_ugur_2_0**: Formanı ters giydiğini fark ettin. İçinde garip bir his var.
+- **g_ugur_2_1**: Formanı ters giydiğini fark ettin. Takım arkadaşların gülüyor.
+- **g_ugur_2_2**: Formanı ters giydiğini fark ettin. Malzemeci bir çözüm bulmaya çalışıyor.
+- **g_ugur_2_3**: Formanı ters giydiğini fark ettin. Maç büyük bir maç.
+- **g_ugur_2_4**: Formanı ters giydiğini fark ettin. Annen telefonda dua ediyor.
+- **g_ugur_2_5**: Formanı ters giydiğini fark ettin. Kimse fark etmedi.
+- **g_ugur_2_6**: Formanı ters giydiğini fark ettin. Kaleci de aynı şeyi yaşamış.
+- **g_ugur_3_0**: Sahaya sol ayağınla girdin. İçinde garip bir his var.
+- **g_ugur_3_1**: Sahaya sol ayağınla girdin. Takım arkadaşların gülüyor.
+- **g_ugur_3_2**: Sahaya sol ayağınla girdin. Malzemeci bir çözüm bulmaya çalışıyor.
+- **g_ugur_3_3**: Sahaya sol ayağınla girdin. Maç büyük bir maç.
+- **g_ugur_3_4**: Sahaya sol ayağınla girdin. Annen telefonda dua ediyor.
+- **g_ugur_3_5**: Sahaya sol ayağınla girdin. Kimse fark etmedi.
+- **g_ugur_3_6**: Sahaya sol ayağınla girdin. Kaleci de aynı şeyi yaşamış.
+- **g_ugur_4_0**: Uğurlu bilekliğini evde unuttun. İçinde garip bir his var.
+- **g_ugur_4_1**: Uğurlu bilekliğini evde unuttun. Takım arkadaşların gülüyor.
+- **g_ugur_4_2**: Uğurlu bilekliğini evde unuttun. Malzemeci bir çözüm bulmaya çalışıyor.
+- **g_ugur_4_3**: Uğurlu bilekliğini evde unuttun. Maç büyük bir maç.
+- **g_ugur_4_4**: Uğurlu bilekliğini evde unuttun. Annen telefonda dua ediyor.
+- **g_ugur_4_5**: Uğurlu bilekliğini evde unuttun. Kimse fark etmedi.
+- **g_ugur_4_6**: Uğurlu bilekliğini evde unuttun. Kaleci de aynı şeyi yaşamış.
+- **g_ugur_5_0**: Isınmaya her zamankinden geç çıktın. İçinde garip bir his var.
+- **g_ugur_5_1**: Isınmaya her zamankinden geç çıktın. Takım arkadaşların gülüyor.
+- **g_ugur_5_2**: Isınmaya her zamankinden geç çıktın. Malzemeci bir çözüm bulmaya çalışıyor.
+- **g_ugur_5_3**: Isınmaya her zamankinden geç çıktın. Maç büyük bir maç.
+- **g_ugur_5_4**: Isınmaya her zamankinden geç çıktın. Annen telefonda dua ediyor.
+- **g_ugur_5_5**: Isınmaya her zamankinden geç çıktın. Kimse fark etmedi.
+- **g_ugur_5_6**: Isınmaya her zamankinden geç çıktın. Kaleci de aynı şeyi yaşamış.
+- **g_ugur_6_0**: Otobüste her zamanki koltuğun dolu. İçinde garip bir his var.
+- **g_ugur_6_1**: Otobüste her zamanki koltuğun dolu. Takım arkadaşların gülüyor.
+- **g_ugur_6_2**: Otobüste her zamanki koltuğun dolu. Malzemeci bir çözüm bulmaya çalışıyor.
+- **g_ugur_6_3**: Otobüste her zamanki koltuğun dolu. Maç büyük bir maç.
+- **g_ugur_6_4**: Otobüste her zamanki koltuğun dolu. Annen telefonda dua ediyor.
+- **g_ugur_6_5**: Otobüste her zamanki koltuğun dolu. Kimse fark etmedi.
+- **g_ugur_6_6**: Otobüste her zamanki koltuğun dolu. Kaleci de aynı şeyi yaşamış.
+- **g_ugur_7_0**: Maç öncesi şarkı listen silinmiş. İçinde garip bir his var.
+- **g_ugur_7_1**: Maç öncesi şarkı listen silinmiş. Takım arkadaşların gülüyor.
+- **g_ugur_7_2**: Maç öncesi şarkı listen silinmiş. Malzemeci bir çözüm bulmaya çalışıyor.
+- **g_ugur_7_3**: Maç öncesi şarkı listen silinmiş. Maç büyük bir maç.
+- **g_ugur_7_4**: Maç öncesi şarkı listen silinmiş. Annen telefonda dua ediyor.
+- **g_ugur_7_5**: Maç öncesi şarkı listen silinmiş. Kimse fark etmedi.
+- **g_ugur_7_6**: Maç öncesi şarkı listen silinmiş. Kaleci de aynı şeyi yaşamış.
+- **g_kariyer_0_0**: Bu sezon kariyerinin en çok maç oynadığı sezon olabilir. Bunu duymak sana iyi geldi.
+- **g_kariyer_0_1**: Bu sezon kariyerinin en çok maç oynadığı sezon olabilir. Ama önünde daha uzun bir yol var.
+- **g_kariyer_0_2**: Bu sezon kariyerinin en çok maç oynadığı sezon olabilir. Ailen haberi herkese gönderdi.
+- **g_kariyer_0_3**: Bu sezon kariyerinin en çok maç oynadığı sezon olabilir. Takım arkadaşların seni tebrik etti.
+- **g_kariyer_0_4**: Bu sezon kariyerinin en çok maç oynadığı sezon olabilir. Menajerin bunu pazarlıkta kullanacak.
+- **g_kariyer_0_5**: Bu sezon kariyerinin en çok maç oynadığı sezon olabilir. Hoca "rehavete kapılma" dedi.
+- **g_kariyer_0_6**: Bu sezon kariyerinin en çok maç oynadığı sezon olabilir. Sosyal medyada bolca paylaşıldı.
+- **g_kariyer_1_0**: Bir istatistik sitesi seni ligin en çok gelişen oyuncuları arasında gösterdi. Bunu duymak sana iyi geldi.
+- **g_kariyer_1_1**: Bir istatistik sitesi seni ligin en çok gelişen oyuncuları arasında gösterdi. Ama önünde daha uzun bir yol var.
+- **g_kariyer_1_2**: Bir istatistik sitesi seni ligin en çok gelişen oyuncuları arasında gösterdi. Ailen haberi herkese gönderdi.
+- **g_kariyer_1_3**: Bir istatistik sitesi seni ligin en çok gelişen oyuncuları arasında gösterdi. Takım arkadaşların seni tebrik etti.
+- **g_kariyer_1_4**: Bir istatistik sitesi seni ligin en çok gelişen oyuncuları arasında gösterdi. Menajerin bunu pazarlıkta kullanacak.
+- **g_kariyer_1_5**: Bir istatistik sitesi seni ligin en çok gelişen oyuncuları arasında gösterdi. Hoca "rehavete kapılma" dedi.
+- **g_kariyer_1_6**: Bir istatistik sitesi seni ligin en çok gelişen oyuncuları arasında gösterdi. Sosyal medyada bolca paylaşıldı.
+- **g_kariyer_2_0**: Eski hocan seni bir röportajda övdü. Bunu duymak sana iyi geldi.
+- **g_kariyer_2_1**: Eski hocan seni bir röportajda övdü. Ama önünde daha uzun bir yol var.
+- **g_kariyer_2_2**: Eski hocan seni bir röportajda övdü. Ailen haberi herkese gönderdi.
+- **g_kariyer_2_3**: Eski hocan seni bir röportajda övdü. Takım arkadaşların seni tebrik etti.
+- **g_kariyer_2_4**: Eski hocan seni bir röportajda övdü. Menajerin bunu pazarlıkta kullanacak.
+- **g_kariyer_2_5**: Eski hocan seni bir röportajda övdü. Hoca "rehavete kapılma" dedi.
+- **g_kariyer_2_6**: Eski hocan seni bir röportajda övdü. Sosyal medyada bolca paylaşıldı.
+- **g_kariyer_3_0**: Kariyerinin ilk kulübü seni bir etkinliğe davet etti. Bunu duymak sana iyi geldi.
+- **g_kariyer_3_1**: Kariyerinin ilk kulübü seni bir etkinliğe davet etti. Ama önünde daha uzun bir yol var.
+- **g_kariyer_3_2**: Kariyerinin ilk kulübü seni bir etkinliğe davet etti. Ailen haberi herkese gönderdi.
+- **g_kariyer_3_3**: Kariyerinin ilk kulübü seni bir etkinliğe davet etti. Takım arkadaşların seni tebrik etti.
+- **g_kariyer_3_4**: Kariyerinin ilk kulübü seni bir etkinliğe davet etti. Menajerin bunu pazarlıkta kullanacak.
+- **g_kariyer_3_5**: Kariyerinin ilk kulübü seni bir etkinliğe davet etti. Hoca "rehavete kapılma" dedi.
+- **g_kariyer_3_6**: Kariyerinin ilk kulübü seni bir etkinliğe davet etti. Sosyal medyada bolca paylaşıldı.
+- **g_kariyer_4_0**: Bir futbol akademisi seni rol model olarak afişine koydu. Bunu duymak sana iyi geldi.
+- **g_kariyer_4_1**: Bir futbol akademisi seni rol model olarak afişine koydu. Ama önünde daha uzun bir yol var.
+- **g_kariyer_4_2**: Bir futbol akademisi seni rol model olarak afişine koydu. Ailen haberi herkese gönderdi.
+- **g_kariyer_4_3**: Bir futbol akademisi seni rol model olarak afişine koydu. Takım arkadaşların seni tebrik etti.
+- **g_kariyer_4_4**: Bir futbol akademisi seni rol model olarak afişine koydu. Menajerin bunu pazarlıkta kullanacak.
+- **g_kariyer_4_5**: Bir futbol akademisi seni rol model olarak afişine koydu. Hoca "rehavete kapılma" dedi.
+- **g_kariyer_4_6**: Bir futbol akademisi seni rol model olarak afişine koydu. Sosyal medyada bolca paylaşıldı.
+- **g_kariyer_5_0**: Kulübün seni sözleşme uzatma listesine aldığı konuşuluyor. Bunu duymak sana iyi geldi.
+- **g_kariyer_5_1**: Kulübün seni sözleşme uzatma listesine aldığı konuşuluyor. Ama önünde daha uzun bir yol var.
+- **g_kariyer_5_2**: Kulübün seni sözleşme uzatma listesine aldığı konuşuluyor. Ailen haberi herkese gönderdi.
+- **g_kariyer_5_3**: Kulübün seni sözleşme uzatma listesine aldığı konuşuluyor. Takım arkadaşların seni tebrik etti.
+- **g_kariyer_5_4**: Kulübün seni sözleşme uzatma listesine aldığı konuşuluyor. Menajerin bunu pazarlıkta kullanacak.
+- **g_kariyer_5_5**: Kulübün seni sözleşme uzatma listesine aldığı konuşuluyor. Hoca "rehavete kapılma" dedi.
+- **g_kariyer_5_6**: Kulübün seni sözleşme uzatma listesine aldığı konuşuluyor. Sosyal medyada bolca paylaşıldı.
+- **g_kariyer_6_0**: Bir futbol oyunu seni yeni sürümünde güçlendirdi. Bunu duymak sana iyi geldi.
+- **g_kariyer_6_1**: Bir futbol oyunu seni yeni sürümünde güçlendirdi. Ama önünde daha uzun bir yol var.
+- **g_kariyer_6_2**: Bir futbol oyunu seni yeni sürümünde güçlendirdi. Ailen haberi herkese gönderdi.
+- **g_kariyer_6_3**: Bir futbol oyunu seni yeni sürümünde güçlendirdi. Takım arkadaşların seni tebrik etti.
+- **g_kariyer_6_4**: Bir futbol oyunu seni yeni sürümünde güçlendirdi. Menajerin bunu pazarlıkta kullanacak.
+- **g_kariyer_6_5**: Bir futbol oyunu seni yeni sürümünde güçlendirdi. Hoca "rehavete kapılma" dedi.
+- **g_kariyer_6_6**: Bir futbol oyunu seni yeni sürümünde güçlendirdi. Sosyal medyada bolca paylaşıldı.
+- **g_kariyer_7_0**: Taraftar dergisi senin kariyerini anlatan bir yazı yayınladı. Bunu duymak sana iyi geldi.
+- **g_kariyer_7_1**: Taraftar dergisi senin kariyerini anlatan bir yazı yayınladı. Ama önünde daha uzun bir yol var.
+- **g_kariyer_7_2**: Taraftar dergisi senin kariyerini anlatan bir yazı yayınladı. Ailen haberi herkese gönderdi.
+- **g_kariyer_7_3**: Taraftar dergisi senin kariyerini anlatan bir yazı yayınladı. Takım arkadaşların seni tebrik etti.
+- **g_kariyer_7_4**: Taraftar dergisi senin kariyerini anlatan bir yazı yayınladı. Menajerin bunu pazarlıkta kullanacak.
+- **g_kariyer_7_5**: Taraftar dergisi senin kariyerini anlatan bir yazı yayınladı. Hoca "rehavete kapılma" dedi.
+- **g_kariyer_7_6**: Taraftar dergisi senin kariyerini anlatan bir yazı yayınladı. Sosyal medyada bolca paylaşıldı.
+- **g_ev_0_0**: Evin su tesisatı arızalandı. Akşam maç var.
+- **g_ev_0_1**: Evin su tesisatı arızalandı. Annen telefonda talimat veriyor.
+- **g_ev_0_2**: Evin su tesisatı arızalandı. Kanka yardıma geldi.
+- **g_ev_0_3**: Evin su tesisatı arızalandı. Biraz para harcaman gerekecek.
+- **g_ev_0_4**: Evin su tesisatı arızalandı. Sosyal medyada paylaşmak istiyorsun.
+- **g_ev_0_5**: Evin su tesisatı arızalandı. Komşunun çocuğu senin hayranın.
+- **g_ev_0_6**: Evin su tesisatı arızalandı. Sinirlerin biraz gergin.
+- **g_ev_1_0**: Yeni bir mobilya almaya karar verdin. Akşam maç var.
+- **g_ev_1_1**: Yeni bir mobilya almaya karar verdin. Annen telefonda talimat veriyor.
+- **g_ev_1_2**: Yeni bir mobilya almaya karar verdin. Kanka yardıma geldi.
+- **g_ev_1_3**: Yeni bir mobilya almaya karar verdin. Biraz para harcaman gerekecek.
+- **g_ev_1_4**: Yeni bir mobilya almaya karar verdin. Sosyal medyada paylaşmak istiyorsun.
+- **g_ev_1_5**: Yeni bir mobilya almaya karar verdin. Komşunun çocuğu senin hayranın.
+- **g_ev_1_6**: Yeni bir mobilya almaya karar verdin. Sinirlerin biraz gergin.
+- **g_ev_2_0**: Komşular seni apartman toplantısına çağırdı. Akşam maç var.
+- **g_ev_2_1**: Komşular seni apartman toplantısına çağırdı. Annen telefonda talimat veriyor.
+- **g_ev_2_2**: Komşular seni apartman toplantısına çağırdı. Kanka yardıma geldi.
+- **g_ev_2_3**: Komşular seni apartman toplantısına çağırdı. Biraz para harcaman gerekecek.
+- **g_ev_2_4**: Komşular seni apartman toplantısına çağırdı. Sosyal medyada paylaşmak istiyorsun.
+- **g_ev_2_5**: Komşular seni apartman toplantısına çağırdı. Komşunun çocuğu senin hayranın.
+- **g_ev_2_6**: Komşular seni apartman toplantısına çağırdı. Sinirlerin biraz gergin.
+- **g_ev_3_0**: Evde kendi yemeğini yapmaya çalıştın. Akşam maç var.
+- **g_ev_3_1**: Evde kendi yemeğini yapmaya çalıştın. Annen telefonda talimat veriyor.
+- **g_ev_3_2**: Evde kendi yemeğini yapmaya çalıştın. Kanka yardıma geldi.
+- **g_ev_3_3**: Evde kendi yemeğini yapmaya çalıştın. Biraz para harcaman gerekecek.
+- **g_ev_3_4**: Evde kendi yemeğini yapmaya çalıştın. Sosyal medyada paylaşmak istiyorsun.
+- **g_ev_3_5**: Evde kendi yemeğini yapmaya çalıştın. Komşunun çocuğu senin hayranın.
+- **g_ev_3_6**: Evde kendi yemeğini yapmaya çalıştın. Sinirlerin biraz gergin.
+- **g_ev_4_0**: Çamaşır makinesi formalarını boyadı. Akşam maç var.
+- **g_ev_4_1**: Çamaşır makinesi formalarını boyadı. Annen telefonda talimat veriyor.
+- **g_ev_4_2**: Çamaşır makinesi formalarını boyadı. Kanka yardıma geldi.
+- **g_ev_4_3**: Çamaşır makinesi formalarını boyadı. Biraz para harcaman gerekecek.
+- **g_ev_4_4**: Çamaşır makinesi formalarını boyadı. Sosyal medyada paylaşmak istiyorsun.
+- **g_ev_4_5**: Çamaşır makinesi formalarını boyadı. Komşunun çocuğu senin hayranın.
+- **g_ev_4_6**: Çamaşır makinesi formalarını boyadı. Sinirlerin biraz gergin.
+- **g_ev_5_0**: Evde bir oyun gecesi düzenlemeyi düşünüyorsun. Akşam maç var.
+- **g_ev_5_1**: Evde bir oyun gecesi düzenlemeyi düşünüyorsun. Annen telefonda talimat veriyor.
+- **g_ev_5_2**: Evde bir oyun gecesi düzenlemeyi düşünüyorsun. Kanka yardıma geldi.
+- **g_ev_5_3**: Evde bir oyun gecesi düzenlemeyi düşünüyorsun. Biraz para harcaman gerekecek.
+- **g_ev_5_4**: Evde bir oyun gecesi düzenlemeyi düşünüyorsun. Sosyal medyada paylaşmak istiyorsun.
+- **g_ev_5_5**: Evde bir oyun gecesi düzenlemeyi düşünüyorsun. Komşunun çocuğu senin hayranın.
+- **g_ev_5_6**: Evde bir oyun gecesi düzenlemeyi düşünüyorsun. Sinirlerin biraz gergin.
+- **g_ev_6_0**: Kapıcı seninle maç sohbeti yapmak istiyor. Akşam maç var.
+- **g_ev_6_1**: Kapıcı seninle maç sohbeti yapmak istiyor. Annen telefonda talimat veriyor.
+- **g_ev_6_2**: Kapıcı seninle maç sohbeti yapmak istiyor. Kanka yardıma geldi.
+- **g_ev_6_3**: Kapıcı seninle maç sohbeti yapmak istiyor. Biraz para harcaman gerekecek.
+- **g_ev_6_4**: Kapıcı seninle maç sohbeti yapmak istiyor. Sosyal medyada paylaşmak istiyorsun.
+- **g_ev_6_5**: Kapıcı seninle maç sohbeti yapmak istiyor. Komşunun çocuğu senin hayranın.
+- **g_ev_6_6**: Kapıcı seninle maç sohbeti yapmak istiyor. Sinirlerin biraz gergin.
+- **g_ev_7_0**: Ev arkadaşın taşınıyor. Akşam maç var.
+- **g_ev_7_1**: Ev arkadaşın taşınıyor. Annen telefonda talimat veriyor.
+- **g_ev_7_2**: Ev arkadaşın taşınıyor. Kanka yardıma geldi.
+- **g_ev_7_3**: Ev arkadaşın taşınıyor. Biraz para harcaman gerekecek.
+- **g_ev_7_4**: Ev arkadaşın taşınıyor. Sosyal medyada paylaşmak istiyorsun.
+- **g_ev_7_5**: Ev arkadaşın taşınıyor. Komşunun çocuğu senin hayranın.
+- **g_ev_7_6**: Ev arkadaşın taşınıyor. Sinirlerin biraz gergin.
+- **g_yonetim_0_0**: Başkan kulüp tesisinde seninle karşılaştı. Senden de görüş istiyorlar.
+- **g_yonetim_0_1**: Başkan kulüp tesisinde seninle karşılaştı. Kameralar orada olacak.
+- **g_yonetim_0_2**: Başkan kulüp tesisinde seninle karşılaştı. Taraftarlar yönetime öfkeli.
+- **g_yonetim_0_3**: Başkan kulüp tesisinde seninle karşılaştı. Kaptan oyuncuların adına konuşacak.
+- **g_yonetim_0_4**: Başkan kulüp tesisinde seninle karşılaştı. Prim konusu da açılabilir.
+- **g_yonetim_0_5**: Başkan kulüp tesisinde seninle karşılaştı. Hoca toplantıdan rahatsız.
+- **g_yonetim_0_6**: Başkan kulüp tesisinde seninle karşılaştı. Bu senin için iyi bir fırsat olabilir.
+- **g_yonetim_1_0**: Yönetim kurulu oyuncularla toplantı yapacak. Senden de görüş istiyorlar.
+- **g_yonetim_1_1**: Yönetim kurulu oyuncularla toplantı yapacak. Kameralar orada olacak.
+- **g_yonetim_1_2**: Yönetim kurulu oyuncularla toplantı yapacak. Taraftarlar yönetime öfkeli.
+- **g_yonetim_1_3**: Yönetim kurulu oyuncularla toplantı yapacak. Kaptan oyuncuların adına konuşacak.
+- **g_yonetim_1_4**: Yönetim kurulu oyuncularla toplantı yapacak. Prim konusu da açılabilir.
+- **g_yonetim_1_5**: Yönetim kurulu oyuncularla toplantı yapacak. Hoca toplantıdan rahatsız.
+- **g_yonetim_1_6**: Yönetim kurulu oyuncularla toplantı yapacak. Bu senin için iyi bir fırsat olabilir.
+- **g_yonetim_2_0**: Başkan bir gala yemeğine davet etti. Senden de görüş istiyorlar.
+- **g_yonetim_2_1**: Başkan bir gala yemeğine davet etti. Kameralar orada olacak.
+- **g_yonetim_2_2**: Başkan bir gala yemeğine davet etti. Taraftarlar yönetime öfkeli.
+- **g_yonetim_2_3**: Başkan bir gala yemeğine davet etti. Kaptan oyuncuların adına konuşacak.
+- **g_yonetim_2_4**: Başkan bir gala yemeğine davet etti. Prim konusu da açılabilir.
+- **g_yonetim_2_5**: Başkan bir gala yemeğine davet etti. Hoca toplantıdan rahatsız.
+- **g_yonetim_2_6**: Başkan bir gala yemeğine davet etti. Bu senin için iyi bir fırsat olabilir.
+- **g_yonetim_3_0**: Kulübün yeni stadyum projesi tanıtılıyor. Senden de görüş istiyorlar.
+- **g_yonetim_3_1**: Kulübün yeni stadyum projesi tanıtılıyor. Kameralar orada olacak.
+- **g_yonetim_3_2**: Kulübün yeni stadyum projesi tanıtılıyor. Taraftarlar yönetime öfkeli.
+- **g_yonetim_3_3**: Kulübün yeni stadyum projesi tanıtılıyor. Kaptan oyuncuların adına konuşacak.
+- **g_yonetim_3_4**: Kulübün yeni stadyum projesi tanıtılıyor. Prim konusu da açılabilir.
+- **g_yonetim_3_5**: Kulübün yeni stadyum projesi tanıtılıyor. Hoca toplantıdan rahatsız.
+- **g_yonetim_3_6**: Kulübün yeni stadyum projesi tanıtılıyor. Bu senin için iyi bir fırsat olabilir.
+- **g_yonetim_4_0**: Başkan yerel televizyonda kulübün hedeflerini anlattı. Senden de görüş istiyorlar.
+- **g_yonetim_4_1**: Başkan yerel televizyonda kulübün hedeflerini anlattı. Kameralar orada olacak.
+- **g_yonetim_4_2**: Başkan yerel televizyonda kulübün hedeflerini anlattı. Taraftarlar yönetime öfkeli.
+- **g_yonetim_4_3**: Başkan yerel televizyonda kulübün hedeflerini anlattı. Kaptan oyuncuların adına konuşacak.
+- **g_yonetim_4_4**: Başkan yerel televizyonda kulübün hedeflerini anlattı. Prim konusu da açılabilir.
+- **g_yonetim_4_5**: Başkan yerel televizyonda kulübün hedeflerini anlattı. Hoca toplantıdan rahatsız.
+- **g_yonetim_4_6**: Başkan yerel televizyonda kulübün hedeflerini anlattı. Bu senin için iyi bir fırsat olabilir.
+- **g_yonetim_5_0**: Kulüp bir yardım maçı organize ediyor. Senden de görüş istiyorlar.
+- **g_yonetim_5_1**: Kulüp bir yardım maçı organize ediyor. Kameralar orada olacak.
+- **g_yonetim_5_2**: Kulüp bir yardım maçı organize ediyor. Taraftarlar yönetime öfkeli.
+- **g_yonetim_5_3**: Kulüp bir yardım maçı organize ediyor. Kaptan oyuncuların adına konuşacak.
+- **g_yonetim_5_4**: Kulüp bir yardım maçı organize ediyor. Prim konusu da açılabilir.
+- **g_yonetim_5_5**: Kulüp bir yardım maçı organize ediyor. Hoca toplantıdan rahatsız.
+- **g_yonetim_5_6**: Kulüp bir yardım maçı organize ediyor. Bu senin için iyi bir fırsat olabilir.
+- **g_yonetim_6_0**: Kulüp yönetiminde seçim tartışmaları var. Senden de görüş istiyorlar.
+- **g_yonetim_6_1**: Kulüp yönetiminde seçim tartışmaları var. Kameralar orada olacak.
+- **g_yonetim_6_2**: Kulüp yönetiminde seçim tartışmaları var. Taraftarlar yönetime öfkeli.
+- **g_yonetim_6_3**: Kulüp yönetiminde seçim tartışmaları var. Kaptan oyuncuların adına konuşacak.
+- **g_yonetim_6_4**: Kulüp yönetiminde seçim tartışmaları var. Prim konusu da açılabilir.
+- **g_yonetim_6_5**: Kulüp yönetiminde seçim tartışmaları var. Hoca toplantıdan rahatsız.
+- **g_yonetim_6_6**: Kulüp yönetiminde seçim tartışmaları var. Bu senin için iyi bir fırsat olabilir.
+- **g_yonetim_7_0**: Başkan oyunculara bir mektup yazdı. Senden de görüş istiyorlar.
+- **g_yonetim_7_1**: Başkan oyunculara bir mektup yazdı. Kameralar orada olacak.
+- **g_yonetim_7_2**: Başkan oyunculara bir mektup yazdı. Taraftarlar yönetime öfkeli.
+- **g_yonetim_7_3**: Başkan oyunculara bir mektup yazdı. Kaptan oyuncuların adına konuşacak.
+- **g_yonetim_7_4**: Başkan oyunculara bir mektup yazdı. Prim konusu da açılabilir.
+- **g_yonetim_7_5**: Başkan oyunculara bir mektup yazdı. Hoca toplantıdan rahatsız.
+- **g_yonetim_7_6**: Başkan oyunculara bir mektup yazdı. Bu senin için iyi bir fırsat olabilir.
+- **g_tatil_0_0**: Sezon arası tatil planı yapıyorsun. Kulüp kilonun artmamasını istiyor.
+- **g_tatil_0_1**: Sezon arası tatil planı yapıyorsun. Gazeteciler tatil fotoğraflarını bekliyor.
+- **g_tatil_0_2**: Sezon arası tatil planı yapıyorsun. Bütçe biraz yüksek.
+- **g_tatil_0_3**: Sezon arası tatil planı yapıyorsun. Dinlenmeye gerçekten ihtiyacın var.
+- **g_tatil_0_4**: Sezon arası tatil planı yapıyorsun. Yeni sezon için hazırlık önemli.
+- **g_tatil_0_5**: Sezon arası tatil planı yapıyorsun. Annen bu yaz seni görmek istiyor.
+- **g_tatil_0_6**: Sezon arası tatil planı yapıyorsun. Menajerin transfer görüşmeleri yapıyor.
+- **g_tatil_1_0**: Tatil için memlekete gitmeyi düşünüyorsun. Kulüp kilonun artmamasını istiyor.
+- **g_tatil_1_1**: Tatil için memlekete gitmeyi düşünüyorsun. Gazeteciler tatil fotoğraflarını bekliyor.
+- **g_tatil_1_2**: Tatil için memlekete gitmeyi düşünüyorsun. Bütçe biraz yüksek.
+- **g_tatil_1_3**: Tatil için memlekete gitmeyi düşünüyorsun. Dinlenmeye gerçekten ihtiyacın var.
+- **g_tatil_1_4**: Tatil için memlekete gitmeyi düşünüyorsun. Yeni sezon için hazırlık önemli.
+- **g_tatil_1_5**: Tatil için memlekete gitmeyi düşünüyorsun. Annen bu yaz seni görmek istiyor.
+- **g_tatil_1_6**: Tatil için memlekete gitmeyi düşünüyorsun. Menajerin transfer görüşmeleri yapıyor.
+- **g_tatil_2_0**: Arkadaşların seni yurt dışına bir geziye çağırdı. Kulüp kilonun artmamasını istiyor.
+- **g_tatil_2_1**: Arkadaşların seni yurt dışına bir geziye çağırdı. Gazeteciler tatil fotoğraflarını bekliyor.
+- **g_tatil_2_2**: Arkadaşların seni yurt dışına bir geziye çağırdı. Bütçe biraz yüksek.
+- **g_tatil_2_3**: Arkadaşların seni yurt dışına bir geziye çağırdı. Dinlenmeye gerçekten ihtiyacın var.
+- **g_tatil_2_4**: Arkadaşların seni yurt dışına bir geziye çağırdı. Yeni sezon için hazırlık önemli.
+- **g_tatil_2_5**: Arkadaşların seni yurt dışına bir geziye çağırdı. Annen bu yaz seni görmek istiyor.
+- **g_tatil_2_6**: Arkadaşların seni yurt dışına bir geziye çağırdı. Menajerin transfer görüşmeleri yapıyor.
+- **g_tatil_3_0**: Kulüp kişisel bir yaz programı gönderdi. Kulüp kilonun artmamasını istiyor.
+- **g_tatil_3_1**: Kulüp kişisel bir yaz programı gönderdi. Gazeteciler tatil fotoğraflarını bekliyor.
+- **g_tatil_3_2**: Kulüp kişisel bir yaz programı gönderdi. Bütçe biraz yüksek.
+- **g_tatil_3_3**: Kulüp kişisel bir yaz programı gönderdi. Dinlenmeye gerçekten ihtiyacın var.
+- **g_tatil_3_4**: Kulüp kişisel bir yaz programı gönderdi. Yeni sezon için hazırlık önemli.
+- **g_tatil_3_5**: Kulüp kişisel bir yaz programı gönderdi. Annen bu yaz seni görmek istiyor.
+- **g_tatil_3_6**: Kulüp kişisel bir yaz programı gönderdi. Menajerin transfer görüşmeleri yapıyor.
+- **g_tatil_4_0**: Ailen seninle bir yazlıkta buluşmak istiyor. Kulüp kilonun artmamasını istiyor.
+- **g_tatil_4_1**: Ailen seninle bir yazlıkta buluşmak istiyor. Gazeteciler tatil fotoğraflarını bekliyor.
+- **g_tatil_4_2**: Ailen seninle bir yazlıkta buluşmak istiyor. Bütçe biraz yüksek.
+- **g_tatil_4_3**: Ailen seninle bir yazlıkta buluşmak istiyor. Dinlenmeye gerçekten ihtiyacın var.
+- **g_tatil_4_4**: Ailen seninle bir yazlıkta buluşmak istiyor. Yeni sezon için hazırlık önemli.
+- **g_tatil_4_5**: Ailen seninle bir yazlıkta buluşmak istiyor. Annen bu yaz seni görmek istiyor.
+- **g_tatil_4_6**: Ailen seninle bir yazlıkta buluşmak istiyor. Menajerin transfer görüşmeleri yapıyor.
+- **g_tatil_5_0**: Bir futbol kampı seni konuk olarak çağırdı. Kulüp kilonun artmamasını istiyor.
+- **g_tatil_5_1**: Bir futbol kampı seni konuk olarak çağırdı. Gazeteciler tatil fotoğraflarını bekliyor.
+- **g_tatil_5_2**: Bir futbol kampı seni konuk olarak çağırdı. Bütçe biraz yüksek.
+- **g_tatil_5_3**: Bir futbol kampı seni konuk olarak çağırdı. Dinlenmeye gerçekten ihtiyacın var.
+- **g_tatil_5_4**: Bir futbol kampı seni konuk olarak çağırdı. Yeni sezon için hazırlık önemli.
+- **g_tatil_5_5**: Bir futbol kampı seni konuk olarak çağırdı. Annen bu yaz seni görmek istiyor.
+- **g_tatil_5_6**: Bir futbol kampı seni konuk olarak çağırdı. Menajerin transfer görüşmeleri yapıyor.
+- **g_tatil_6_0**: Partnerin romantik bir tatil öneriyor. Kulüp kilonun artmamasını istiyor.
+- **g_tatil_6_1**: Partnerin romantik bir tatil öneriyor. Gazeteciler tatil fotoğraflarını bekliyor.
+- **g_tatil_6_2**: Partnerin romantik bir tatil öneriyor. Bütçe biraz yüksek.
+- **g_tatil_6_3**: Partnerin romantik bir tatil öneriyor. Dinlenmeye gerçekten ihtiyacın var.
+- **g_tatil_6_4**: Partnerin romantik bir tatil öneriyor. Yeni sezon için hazırlık önemli.
+- **g_tatil_6_5**: Partnerin romantik bir tatil öneriyor. Annen bu yaz seni görmek istiyor.
+- **g_tatil_6_6**: Partnerin romantik bir tatil öneriyor. Menajerin transfer görüşmeleri yapıyor.
+- **g_tatil_7_0**: Yaz okulu seni çocuklara ders vermeye davet etti. Kulüp kilonun artmamasını istiyor.
+- **g_tatil_7_1**: Yaz okulu seni çocuklara ders vermeye davet etti. Gazeteciler tatil fotoğraflarını bekliyor.
+- **g_tatil_7_2**: Yaz okulu seni çocuklara ders vermeye davet etti. Bütçe biraz yüksek.
+- **g_tatil_7_3**: Yaz okulu seni çocuklara ders vermeye davet etti. Dinlenmeye gerçekten ihtiyacın var.
+- **g_tatil_7_4**: Yaz okulu seni çocuklara ders vermeye davet etti. Yeni sezon için hazırlık önemli.
+- **g_tatil_7_5**: Yaz okulu seni çocuklara ders vermeye davet etti. Annen bu yaz seni görmek istiyor.
+- **g_tatil_7_6**: Yaz okulu seni çocuklara ders vermeye davet etti. Menajerin transfer görüşmeleri yapıyor.
 

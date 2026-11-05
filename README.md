@@ -81,7 +81,7 @@ On top of these there are six personal skills (sociability, speaking, charisma, 
 - **47 position-specific moments** plus **15 build-up situations**, each with an easy low-risk option.
 - Defenders tackle and intercept, goalkeepers dive, and penalties and free kicks come up.
 
-### 424 story events
+### 2,100+ story events
 Every event only happens when it makes sense: league level, age, fame, money, family, partner, nationality and recent results all matter. An unknown 17-year-old won't get magazine covers, and a Süper Lig star won't have unpaid wages.
 
 - **Origin stories** for each of the 13 backgrounds.
@@ -98,6 +98,8 @@ Every event only happens when it makes sense: league level, age, fame, money, fa
   - a bee swarm stopping the match
 - **Rare absurd moments:** the "body double" conspiracy theory, the club cat giving birth in your boots, your aunt throwing slippers at the referee.
 - **Chained events** that come back weeks later with different outcomes.
+- **Story families:** 30 news-inspired themes (transfer rumours, fan requests, referee rows, sponsor deals, life abroad and more), each combining 8 openings with 7 twists, so the same situation rarely plays out the same way twice. Each one appears at most once per career.
+- **Calmer inbox:** the same message never arrives twice in a year, at most 3 direct messages land per week and the rest wait in a queue.
 - **39 press conference questions** and post-match interviews with tones (humble, bold, emotional, funny, evasive, harsh).
 
 ### Phone: your life hub

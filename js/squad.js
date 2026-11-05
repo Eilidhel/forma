@@ -90,4 +90,72 @@
     } catch (e) { /* kadro hatası oyunu durdurmasın */ }
     return origBegin.apply(this, arguments);
   };
+
+  /* Kaptanlık: bant ancak düzenli ilk 11 oynayan, tecrübeli oyuncuya verilir.
+     Son maçların çoğunda oynamazsan bant başkasına geçer; kulüp değişince bant eski kulüpte kalır. */
+  const capHist = () => { const S = F.S; S.capHist = S.capHist || []; return S.capHist; };
+  F.isRegularStarter = function (minN) {
+    const h = capHist();
+    if (h.length < (minN || 5)) return false;
+    const last = h.slice(-8);
+    return last.filter(Boolean).length / last.length >= 0.6;
+  };
+  const origCond = F.cond;
+  F.cond = function (c) {
+    if (c && c.starter != null) {
+      if (F.isRegularStarter() !== !!c.starter) return false;
+      const rest = Object.assign({}, c); delete rest.starter;
+      return origCond.call(this, rest);
+    }
+    return origCond.apply(this, arguments);
+  };
+  const capEv = F.DATA.events.find((e) => e.id === 'kaptanlik');
+  if (capEv) { capEv.if = Object.assign({}, capEv.if, { minAge: 24, starter: true }); }
+  const dropCaptain = (why) => {
+    const S = F.S;
+    if (!S.flags.kaptan) return;
+    delete S.flags.kaptan;
+    const h = F.npc('hoca');
+    if (why) { if (h) F.addDM(h.name, why); F.addAlbum('Kaptanlık bandını bıraktın.', 'kaptan'); }
+  };
+  const origFinish = F.matchFinish;
+  F.matchFinish = function () {
+    const S = F.S;
+    const step = S.queue && S.queue[0];
+    const m = step && step.m;
+    const was = m && m.done;
+    const r = origFinish.apply(this, arguments);
+    try {
+      if (m && !was && m.done && !m.nat) {
+        const h = capHist();
+        h.push(m.status === 'ilk11' ? 1 : 0);
+        if (h.length > 12) h.splice(0, h.length - 12);
+        if (S.flags.kaptan) {
+          const last = h.slice(-6);
+          if (last.length >= 6 && last.filter(Boolean).length <= 2 && !S.P.injury) {
+            const k = F.npc('kaptan');
+            dropCaptain('Son haftalarda sahada pek yoksun. Bandı şimdilik ' + (k ? k.name.split(' ')[0] : 'başka birine') + ' veriyorum. Formayı geri kazanınca yeniden konuşuruz.');
+          }
+        }
+      }
+    } catch (e) { /* yoksay */ }
+    return r;
+  };
+  const origTransfer = F.transfer;
+  F.transfer = function () {
+    const S = F.S;
+    if (S.flags.kaptan) delete S.flags.kaptan; // bant eski kulüpte kalır
+    S.capHist = [];
+    return origTransfer.apply(this, arguments);
+  };
+  // eski kayıtlar: oynamayan genç kaptanlar bandı bırakır
+  const origMig = F.migrate;
+  if (origMig) F.migrate = function (S) {
+    const out = origMig.apply(this, arguments);
+    try {
+      const st = S || F.S;
+      if (st && st.flags && st.flags.kaptan && st.P && st.P.age < 24 && st.P.contract.role !== 'ilk11' && !st.P.contract.guarantee) delete st.flags.kaptan;
+    } catch (e) { /* yoksay */ }
+    return out;
+  };
 })(typeof window !== 'undefined' ? window : globalThis);
