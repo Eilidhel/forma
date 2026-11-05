@@ -1,8 +1,9 @@
 {
-  "version": "1.19.1",
+  "version": "1.19.2",
   "date": "2026-11-05",
   "notes": [
     "Vefat eden deden artık mesaj ve tavsiye göndermiyor",
+    "Basın toplantısında kaybedilen maçtan sonra galibiyet sorusu sorulmuyor",
     "Bazı olaylar maç sonucunu önceden söylemiyor"
   ]
 }

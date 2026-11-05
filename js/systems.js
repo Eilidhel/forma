@@ -340,7 +340,7 @@
       const pressP = m.nat || m.big ? 0.75 : P.life.sohret > 30 ? 0.45 : 0.22;
       if (F.chance(pressP)) {
         const ctx = m.status === 'kadrodisi' || m.status === 'yedek' ? 'bench' : m.goals ? 'goal' : res;
-        const qs = F.pickPress(ctx, 2);
+        const qs = F.pickPress(ctx, 2, res);
         if (qs.length) after.push({ type: 'press', qs, i: 0, log: [] });
       }
     }
@@ -385,9 +385,11 @@
   /* =========================================================
      BASIN
      ========================================================= */
-  F.pickPress = function (ctx, n) {
+  F.pickPress = function (ctx, n, res) {
     const S = F.S;
-    const pool = D.press.filter((q) => (q.ctx.includes(ctx) || q.ctx.includes('any')) && F.cond(q.if) && (S.seen['pq_' + q.id] == null || S.t - S.seen['pq_' + q.id] > 12));
+    // sonuca bağlı sorular (galibiyet, yenilgi, beraberlik) sadece o sonuç geldiyse sorulur
+    const resOk = (q) => { const r = q.ctx.filter((c) => ['win', 'loss', 'draw'].includes(c)); return !r.length || !res || r.includes(res); };
+    const pool = D.press.filter((q) => (q.ctx.includes(ctx) || q.ctx.includes('any')) && resOk(q) && F.cond(q.if) && (S.seen['pq_' + q.id] == null || S.t - S.seen['pq_' + q.id] > 12));
     const out = [];
     F.shuffle(pool).sort((a, b) => (b.ctx.includes(ctx) ? 1 : 0) - (a.ctx.includes(ctx) ? 1 : 0)).slice(0, n).forEach((q) => { S.seen['pq_' + q.id] = S.t; out.push(q.id); });
     return out;
