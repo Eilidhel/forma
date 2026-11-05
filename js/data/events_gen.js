@@ -744,4 +744,16 @@
     }));
   });
   D.genEventCount = n;
+
+  /* Sahada olan olaylar: ancak son maçta oynadıysan çıkar */
+  ['koy_scout', 'cay_ustalar', 'nadir_yagmur', 'alt_amator_hakem', 'ust_var_karari', 'yd_dil_hatasi', 'yd_irkci_tezahurat', 'aile_whatsapp',
+    'abs_martı', 'abs_kopek_saha', 'tk_penalti_kavgasi', 'fan_sahaya_giren', 'mac_buyu', 'mac_ari', 'mac_hayalet_gol', 'mac_sort_yirtik',
+    'mac_kulak_pamuk', 'mac_sis', 'mac_kar', 'mac_lazer', 'mac_top_patladi', 'mac_hakem_sakat', 'mac_cizgi_kurtaris', 'nesil_sikeci', 'abs_sevinc_sakatligi']
+    .forEach((id) => {
+      const ev = E.find((e) => e.id === id);
+      if (!ev) return;
+      const lm = Object.assign({ played: true, nat: false }, (ev.if && ev.if.lm) || {});
+      if (id === 'abs_sevinc_sakatligi') lm.minGoals = 1;
+      ev.if = Object.assign({}, ev.if, { lm });
+    });
 })(typeof window !== 'undefined' ? window : globalThis);
