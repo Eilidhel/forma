@@ -1,13 +1,8 @@
 {
-  "version": "1.19.0",
+  "version": "1.19.1",
   "date": "2026-11-05",
   "notes": [
-    "Pazarlıkta maaştan feragat ederek forma garantisi alabilirsin",
-    "Sözleşme primleri: maç başı, gol başı, asist başı",
-    "Sezon ortasında iki haftalık devre arası",
-    "Memleket seçimi bölgelere ayrılmış listeden",
-    "Mesajlar: daha az tekrar, doğru sayaç, sohbete girince son mesaja kayar",
-    "Mağazada haftalık bonusun ne olduğu yazıyor; çift ürünler kaldırıldı",
-    "Düzeltmeler: berabere maçta 'derbi sizin' yazmıyor, yurt dışındayken memleket derneği çağırmıyor"
+    "Vefat eden deden artık mesaj ve tavsiye göndermiyor",
+    "Bazı olaylar maç sonucunu önceden söylemiyor"
   ]
 }

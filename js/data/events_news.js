@@ -116,7 +116,7 @@
   /* ---------- Taraftar ---------- */
   add(
     card('fan_kuzu', { tier: LOW }, 'Stadyum', 'Bir taraftar uğur getirsin diye kuzusuyla maça geldi. Güvenlik içeri almadı. Taraftar senin adını bağırıyor.', [
-      O('Güvenliği ikna et, kuzu saha kenarında izlesin', 'esprili', { 'r.taraftar': 5, 'takipci%': 3 }, 'Kuzu maçı kale arkasından izledi. 2-0 kazandınız. Uğur gerçek.'),
+      O('Güvenliği ikna et, kuzu saha kenarında izlesin', 'esprili', { 'r.taraftar': 5, 'takipci%': 3 }, 'Kuzu maçı kale arkasından izledi. Tribün onu takımın uğuru ilan etti.'),
       O('Maç sonu kuzuyla fotoğraf çektir', 'mutevazi', { 'r.taraftar': 3 }, 'Kuzunun adı artık senin adın.')]),
     card('fan_durum', { stat: { sohret: ['>', 15] } }, 'Deplasman', 'Korner kullanırken rakip tribünden üstüne bir dürüm atıldı. Hakem oyunu durdurdu.', [
       O('Dürümü ye', 'esprili', { 'takipci%': 5, 'r.taraftar': 3, 'r.hoca': -1 }, 'Videon haftanın en çok izleneni. Dürümcü sana sponsor olmak istiyor.'),
@@ -197,7 +197,7 @@
   add(
     card('mac_buyu', { tier: LOW }, 'Maç', 'Rakip takımın oyuncuları maç öncesi orta yuvarlakta tuhaf bir ritüel yaptı: tuz serptiler, dua okudular.', [
       O('Tuzu süpür', 'esprili', { 'takipci%': 3, 'r.taraftar': 3 }, 'Hakem ikinize de sarı kart gösterdi. Olay viral.'),
-      O('Umursama', 'sessiz', { 's.sogukkanlilik': 1 }, 'Maçı kazandınız. Tuz işe yaramadı.')]),
+      O('Umursama', 'sessiz', { 's.sogukkanlilik': 1 }, 'Tuzu umursamadın, oyununa odaklandın. Rakip ritüelden daha çok kendini germiş.')]),
     card('mac_ari', {}, 'Maç', 'Maç ortasında bir arı sürüsü sahaya indi. Oyuncular yere yattı, hakem oyunu durdurdu.', [
       O('Yere yat', 'saygili', {}, 'Arılar on dakika sonra gitti. Kimse sokulmadı.'),
       O('Koşarak kaç', 'esprili', { 'takipci%': 3, saglik: -1 }, 'İki yerinden sokuldun. Video uzun süre konuşulacak.')]),
@@ -372,4 +372,17 @@
   E.filter((e) => e.pre || e.post).forEach((e) => { e.rep = Math.max(e.rep || 0, 24); });
   ['pre_taraftar_otel', 'post_yedek_sinir', 'post_rakip_ozur', 'post_takim_toplanti', 'post_rakip_aglama', 'post_tunel_kavga', 'post_hakem', 'pre_rakip_dm', 'pre_tunel_bakisma'].forEach((id) => { const e = E.find((x) => x.id === id); if (e) e.rep = 34; });
   ['kadrodisi_tribun', 'yedek_hazir_ol', 'yedek_kanka_teselli'].forEach((id) => { const e = E.find((x) => x.id === id); if (e) e.rep = 20; });
+})(typeof window !== 'undefined' ? window : globalThis);
+(function (root) {
+  // Vefat eden aile büyükleri: vefat olayı kaydedilir, o kişiyle ilgili sonraki olaylar çıkmaz
+  const E = root.F.DATA.events;
+  const byId = (id) => E.find((e) => e.id === id);
+  const vefat = byId('aile_dede_vefat');
+  if (vefat) vefat.o.forEach((o) => { o.fx = Object.assign({}, o.fx, { flag: [].concat((o.fx && o.fx.flag) || [], 'dede_vefat') }); });
+  const tavsiye = byId('ai_dede_tavsiye');
+  if (tavsiye) {
+    tavsiye.if = Object.assign({}, tavsiye.if, { noflag: 'dede_vefat' });
+    // olay maçtan önce gelir, sonucu bilemez
+    tavsiye.o.forEach((o) => { if (/Kazandınız/.test(o.r || '')) o.r = 'Balı yedin, sağ ayakla girdin. Deden maçtan sonra arayıp "Gördün mü?" diyecek, biliyorsun.'; });
+  }
 })(typeof window !== 'undefined' ? window : globalThis);
