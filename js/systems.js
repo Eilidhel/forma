@@ -1022,22 +1022,35 @@
     if (o.tension == null) o.tension = Math.round(8 + F.rand() * 12);
     return o.limit;
   };
+  // Gerginlik arttıkça kulüp yumuşar: tavanı esner (maaş +%18, imza parası, prim bütçesi), garanti için istediği feragat azalır.
+  // Ama gerginlik 100'e ulaşırsa masadan kalkar: yumuşama ile risk birlikte büyür.
+  F.negEff = function (o) {
+    const L = F.negLimit(o);
+    const t = F.clamp((o.tension || 0) / 100, 0, 1);
+    return Object.assign({}, L, {
+      wageMul: Math.round(L.wageMul * (1 + 0.18 * t) * 100) / 100,
+      signing: Math.round((L.signing + 0.2 * t) * 100) / 100,
+      maxYears: L.maxYears + (t >= 0.6 ? 1 : 0),
+      guarantee: L.guarantee || (t >= 0.65 && o.role !== 'yedek'),
+      soft: t
+    });
+  };
   // Kulüp garantiyi normalde vermiyorsa: maaştan feragat edersen verir (yedek teklifte %25, rotasyonda %15 daha az)
   F.negGuaranteeWage = function (o) {
-    const L = F.negLimit(o);
+    const L = F.negEff(o);
     if (L.guarantee) return L.wageMul;
     const pw = F.negPower(o);
     if (pw < -1.3) return null; // takımın çok altındaysa hiçbir maaşla garanti yok
     // zayıfsan daha çok feragat etmen gerekir
-    const cut = (o.role === 'yedek' ? 0.25 : 0.15) + (pw < -0.6 ? 0.12 : 0);
+    const cut = ((o.role === 'yedek' ? 0.25 : 0.15) + (pw < -0.6 ? 0.12 : 0)) * (1 - 0.5 * L.soft);
     const w = Math.round((L.wageMul - cut) * 100) / 100;
     return w >= 0.6 ? w : null;
   };
   // primler maaşın katı olarak: maç başı, gol başı, asist başı
   F.bonusCost = (t) => (t.appB || 0) * 3 + (t.goalB || 0) * 1.5 + (t.assistB || 0) * 1;
-  F.bonusFree = (o) => F.clamp(0.3 + F.negPower(o) * 0.5, 0, 1.2);
+  F.bonusFree = (o) => F.clamp(0.3 + F.negPower(o) * 0.5, 0, 1.2) + 0.6 * F.clamp((o.tension || 0) / 100, 0, 1);
   F.negGap = function (o, terms) {
-    const L = F.negLimit(o);
+    const L = F.negEff(o);
     const gw = terms.guarantee && !L.guarantee ? F.negGuaranteeWage(o) : null;
     const gOk = !terms.guarantee || L.guarantee || (gw != null && terms.wageMul <= gw + 1e-9 && terms.signing <= L.signing * 0.5 + 1e-9);
     return Math.max(0, terms.wageMul - L.wageMul) / 0.1 + Math.max(0, terms.signing - L.signing) / 0.1 * 0.6 +
@@ -1047,7 +1060,7 @@
     const S = F.S, P = S.P;
     const o = S.offers[idx];
     if (!o) return null;
-    const L = F.negLimit(o);
+    F.negLimit(o);
     const c = o.counter;
     const sameAsCounter = c && terms.wageMul <= c.wageMul + 1e-9 && terms.signing <= c.signing + 1e-9 && terms.years <= c.years && (!terms.guarantee || c.guarantee) && F.bonusCost(terms) <= F.bonusCost(c) + 1e-9;
     let gap = F.negGap(o, terms);
@@ -1066,8 +1079,9 @@
       if (o.renew) F.fx({ 'r.baskan': -6 });
       return { status: 'walk', msg: F.team(o.team).name + ' masadan kalktı: "Bu kadarı fazla. Görüşme bitti."' };
     }
-    // karşı teklif: istediğinle kulübün tavanı arasında; gerginlik arttıkça tavana yaklaşırlar
-    const k = F.clamp(0.55 + o.tension / 200, 0.55, 1);
+    // karşı teklif: istediğinle kulübün (gerginlikle esneyen) tavanı arasında; gerginlik arttıkça tavana yaklaşırlar
+    const L = F.negEff(o);
+    const k = F.clamp(0.55 + o.tension / 100 * 0.45, 0.55, 1);
     const prev = c || { wageMul: 1, signing: 0 };
     const counter = {
       wageMul: Math.round(Math.max(prev.wageMul, Math.min(terms.wageMul, 1 + (L.wageMul - 1) * k)) * 100) / 100,
