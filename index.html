@@ -230,6 +230,30 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 @keyframes kick { from { transform: translate(var(--dx), var(--dy)); } to { transform: none; } }
 .pitch .pflash { animation: flash 1.4s ease-out both; }
 @keyframes flash { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: .85; } }
+.pitch .drift { animation: drift 3s ease-in-out infinite alternate; }
+@keyframes drift { from { transform: translate(-1.6px, -1px); } to { transform: translate(1.6px, 1.2px); } }
+.pitch .subin { animation: subin 1.8s cubic-bezier(.3,.6,.3,1) both; }
+@keyframes subin { from { transform: translate(var(--sx), var(--sy)); } to { transform: none; } }
+/* maç anı animasyonları: gol/asist topu, kurtarışta eldiven, müdahalede duvar, pas yazısı */
+.mfx { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 60; }
+.mfx-card { display: flex; flex-direction: column; align-items: center; gap: 6px; animation: mfxIn 2s ease-out both; }
+.mfx-card svg { width: 132px; height: 132px; filter: drop-shadow(0 6px 18px rgba(0,0,0,.45)); }
+.mfx-lbl { font-family: 'Big Shoulders Display', 'Arial Narrow', sans-serif; font-weight: 900; font-size: 40px; letter-spacing: 1px; color: #fff; background: rgba(0,0,0,.55); padding: 2px 16px; border-radius: 12px; line-height: 1.1; }
+.mfx-bad .mfx-lbl { background: rgba(170,30,20,.8); }
+.mfx-good .mfx-lbl { background: rgba(13,107,67,.85); }
+.mfx-pass { align-items: center; }
+.mfx-pass .mfx-card { animation-duration: 1s; }
+.mfx-pass .mfx-lbl { font-size: 24px; }
+@keyframes mfxIn { 0% { opacity: 0; transform: scale(.4); } 14% { opacity: 1; transform: scale(1.12); } 24% { transform: scale(1); } 78% { opacity: 1; } 100% { opacity: 0; transform: scale(1.04); } }
+.mfx .ballin { animation: ballin .8s cubic-bezier(.2,.8,.3,1) both; transform-box: fill-box; transform-origin: center; }
+@keyframes ballin { from { transform: translate(-70px, 40px) rotate(-320deg); } to { transform: none; } }
+.mfx .ballout { animation: ballout 1s cubic-bezier(.2,.8,.3,1) both; transform-box: fill-box; transform-origin: center; }
+@keyframes ballout { 0% { transform: translate(-60px, 30px); } 60% { transform: translate(10px, -30px) rotate(200deg); } 100% { transform: translate(60px, -70px) rotate(400deg); opacity: 0; } }
+.mfx .bounce { animation: bounce .9s cubic-bezier(.2,.8,.3,1) both; transform-box: fill-box; transform-origin: center; }
+@keyframes bounce { 0% { transform: translate(70px, -10px); } 45% { transform: translate(6px, 0); } 100% { transform: translate(60px, 24px) rotate(-180deg); } }
+.mfx .grab { animation: grab .7s ease-out both; transform-box: fill-box; transform-origin: center; }
+@keyframes grab { from { transform: translate(70px, -40px) scale(.7); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .mfx-card, .mfx .ballin, .mfx .ballout, .mfx .bounce, .mfx .grab, .pitch .drift, .pitch .subin { animation-duration: .01s; } .mfx-card { animation: mfxFade 1.6s both; } @keyframes mfxFade { 0%,80% { opacity: 1; } 100% { opacity: 0; } } }
 .achs { display: grid; grid-template-columns: 1fr; gap: 8px; }
 /* Karakter düzenleyici */
 .av.xl { width: 128px; height: 128px; border-radius: 28px; box-shadow: var(--shadow); }
@@ -333,5 +357,6 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 <script src="js/social3.js"></script>
 <script src="js/life3.js"></script>
 <script src="js/matchday.js"></script>
+<script src="js/sound.js"></script>
 <script src="js/ui.js"></script>
 

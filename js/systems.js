@@ -176,7 +176,7 @@
     if (out === 'fkwon' || out === 'penwon') {
       const st = out === 'fkwon' ? 'fk' : 'pk';
       const txtF = F.tpl(opt.winT);
-      m.log.push({ minute: mo.minute, t: txtF, ok: true, kind: 'pass' });
+      m.log.push({ minute: mo.minute, t: txtF, ok: true, kind: 'pass', setPiece: st });
       m.rating += out === 'penwon' ? 0.2 : 0.1;
       mo.ref = 'chain:' + st + ':' + F.ri(0, D.attackStages[st].length - 1);
       return { minute: mo.minute, t: txtF, ok: true, kind: 'pass', chain: true, setPiece: st };
@@ -206,7 +206,8 @@
     }
     // beceri oyunundan gelen anlatım varsa, kazanınca sonucun devamını da ekle (ör. asistin golle bitmesi)
     const txt = note ? (ok && opt.win === 'assist' ? note + ' ' + F.tpl(opt.winT) : note) : F.tpl(ok ? opt.winT : opt.loseT);
-    const res = { minute: mo.minute, t: txt, ok, kind: out };
+    // kritik an: gol ya da asist olabilecek bir hamle (kaçarsa ekranda animasyon girer)
+    const res = { minute: mo.minute, t: txt, ok, kind: out, key: opt.win === 'goal' || opt.win === 'assist' };
     const R = { goal: 1.25, assist: 0.9, save: 0.85, block: 0.65, chance: 0.35, keep: 0.25, miss: -0.3, lost: -0.25, concede: -0.7, yellow: -0.25, red: -1.6, foul: -0.15 };
     m.rating += R[out] || 0;
     if (out === 'goal') { m.goals++; m.gf++; }

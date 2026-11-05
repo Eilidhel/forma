@@ -132,34 +132,66 @@
       <text x="60" y="96" text-anchor="middle" font-family="Big Shoulders Display, Arial Narrow, sans-serif" font-weight="900" font-size="48" fill="${ink}">${num}</text></svg>`;
   };
 
-  // Saha: maç anında oyuncunun ve topun yeri; son hamle animasyonla gösterilir
-  const SPOT = { FV: [236, 80], OS: [170, 92], DF: [96, 70], KL: [26, 85] };
+  // Saha: iki takımın 22 oyuncusu kendi dizilişinde. Atak aşamasına göre takımlar ileri-geri kayar, oyuncular hafifçe hareket eder.
+  // Yedekteysen kenardaki kulübede oturursun; oyuna girince kulübeden mevkine yürürsün. Top son hamlenin sonucuna gider.
+  const clampX = (x) => Math.min(312, Math.max(8, x));
+  const clampY = (y) => Math.min(162, Math.max(8, y));
+  const spotXY = (sp, mine, shift) => {
+    const base = 8 + (100 - sp[1]) * 1.75;
+    const x = mine ? base + shift : 320 - base + Math.max(0, shift) * 0.25 - Math.max(0, -shift) * 0.6;
+    return [clampX(x), clampY(10 + (sp[0] / 100) * 150)];
+  };
   ART.pitch = function (m, kind, idx, myCols, oppCols, animate) {
-    const P = F.S.P;
-    const [px, py0] = SPOT[P.pos] || [170, 85];
-    const jit = ((idx * 37) % 30) - 15;
-    const py = py0 + jit;
+    const S = F.S, P = S.P;
+    const D = F.DATA;
+    const fm = (m.nat ? D.formations[0] : F.teamFormation()) || D.formations[0];
+    const ofm = (m.nat || !m.opp ? D.formations[1] || D.formations[0] : F.teamFormation(m.opp)) || D.formations[0];
+    // atak aşaması: kurulum / son üçte bir / bitiriş / duran top
+    const mo = m.moments && m.moments[m.i];
+    const stage = mo && mo.ref && mo.ref.startsWith('chain:') ? mo.ref.split(':')[1] : null;
+    let shift = { build: 6, mid: 42, final: 72, fk: 70, pk: 80 }[stage] || 22;
+    if (kind === 'goal' || kind === 'assist') shift = 80;
+    if (kind === 'concede') shift = -30;
+    if (P.pos === 'KL' || P.pos === 'DF') shift = Math.min(shift, kind === 'concede' ? -30 : 10);
+    const bench = m.status === 'yedek' && !m.log.length;
+    const justIn = m.status === 'yedek' && m.log.length === 1 && animate;
+    // benim mevkim: dizilişte rolümle eşleşen nokta
+    const cr = F.curRole ? F.curRole() : null;
+    let mi = fm.spots.findIndex((sp) => sp[2] === cr);
+    if (mi < 0) mi = P.pos === 'KL' ? 0 : P.pos === 'DF' ? 2 : P.pos === 'FV' ? fm.spots.length - 1 : 6;
+    const wob = (i) => ((i * 53 + idx * 17) % 9) - 4;
+    const mates = fm.spots.map((sp, i) => { const [x, y] = spotXY(sp, true, i === 0 ? Math.min(shift, 14) * 0.4 : shift); return [x + wob(i), y + wob(i + 3)]; });
+    const opps = ofm.spots.map((sp, i) => { const [x, y] = spotXY(sp, false, i === 0 ? 0 : shift); return [x + wob(i + 5), y + wob(i + 1)]; });
+    const BENCH_Y = 184;
+    const benchXY = [44, BENCH_Y];
+    const [px, py] = bench ? benchXY : mates[mi];
     let bx = px + 8, by = py + 4;
-    const end = {
+    if (bench) { const c = mates[Math.min(mates.length - 1, 7)]; bx = c[0] + 7; by = c[1] + 3; }
+    const end = bench ? null : {
       goal: [313, 85 + (idx % 3 - 1) * 8], assist: [300, 78], miss: [318, 30 + (idx % 2) * 110], chance: [292, 96], keep: [px - 30, py + 18],
-      lost: [px + 26, py - 22], save: [P.pos === 'KL' ? 40 : px - 10, P.pos === 'KL' ? 40 : py + 30], block: [px + 40, py - 30], concede: [7, 85], yellow: [px + 6, py - 4],
+      lost: [px + 26, py - 22], save: [P.pos === 'KL' ? 22 : px - 10, P.pos === 'KL' ? 82 : py + 30], block: [px + 22, py - 16], concede: [7, 85], yellow: [px + 6, py - 4],
       red: [px + 6, py - 4], foul: [px + 10, py + 6], pass: [Math.min(300, px + 60), py - 12]
     }[kind];
     const start = P.pos === 'KL' ? [px + 46, py - 8] : [px + 8, py + 4];
-    if (end) { bx = end[0]; by = end[1]; }
-    const opp = [[px + 22, py - 18], [px + 40, py + 14], [px - 30, py + 34], [270, 60], [298, 85]].map(([x, y]) => [Math.min(312, Math.max(8, x)), Math.min(162, Math.max(8, y))]);
-    const mates = [[px - 50, py - 30], [px + 52, py + 40], [P.pos === 'KL' ? 90 : 26, P.pos === 'KL' ? 50 : 85]].map(([x, y]) => [Math.min(312, Math.max(8, x)), Math.min(162, Math.max(8, y))]);
+    if (end) { bx = clampX(end[0]); by = clampY(end[1]); }
     const stripes = Array.from({ length: 8 }, (_, i) => `<rect x="${i * 40}" y="0" width="40" height="170" fill="${i % 2 ? '#2f8a4f' : '#2a7f48'}"/>`).join('');
     const dx = start[0] - bx, dy = start[1] - by;
-    const flash = kind === 'goal' ? `<text x="270" y="40" text-anchor="middle" class="pflash" font-family="Big Shoulders Display, sans-serif" font-weight="900" font-size="34" fill="#fff">GOL!</text>` : kind === 'concede' ? `<text x="60" y="40" text-anchor="middle" class="pflash" font-family="Big Shoulders Display, sans-serif" font-weight="900" font-size="22" fill="#ffd2cc">GOL YEDİK</text>` : kind === 'save' || kind === 'block' ? `<text x="${Math.min(280, px + 40)}" y="30" text-anchor="middle" class="pflash" font-family="Big Shoulders Display, sans-serif" font-weight="900" font-size="20" fill="#fff">KURTARDI!</text>` : kind === 'red' ? `<rect x="${px + 14}" y="${py - 30}" width="12" height="16" rx="2" fill="#e32" class="pflash"/>` : kind === 'yellow' ? `<rect x="${px + 14}" y="${py - 30}" width="12" height="16" rx="2" fill="#f2c200" class="pflash"/>` : '';
-    return `<svg viewBox="0 0 320 170" class="pitch" role="img" aria-label="Saha görünümü">${stripes}
+    const dot = (x, y, cols, i, op) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.6" fill="${cols[0]}" stroke="${cols[1]}" stroke-width="1.8" class="drift" style="animation-delay:-${(i * 0.37) % 3}s;animation-duration:${2.6 + (i % 4) * 0.5}s"${op ? ` opacity="${op}"` : ''}/>`;
+    const flash = kind === 'goal' ? `<text x="270" y="40" text-anchor="middle" class="pflash" font-family="Big Shoulders Display, sans-serif" font-weight="900" font-size="34" fill="#fff">GOL!</text>` : kind === 'concede' ? `<text x="60" y="40" text-anchor="middle" class="pflash" font-family="Big Shoulders Display, sans-serif" font-weight="900" font-size="22" fill="#ffd2cc">GOL YEDİK</text>` : kind === 'red' ? `<rect x="${px + 14}" y="${py - 30}" width="12" height="16" rx="2" fill="#e32" class="pflash"/>` : kind === 'yellow' ? `<rect x="${px + 14}" y="${py - 30}" width="12" height="16" rx="2" fill="#f2c200" class="pflash"/>` : '';
+    // kulübe: yedekler ve (yedekteysen) sen
+    const subs = [0, 1, 2, 3].map((i) => `<circle cx="${70 + i * 16}" cy="${BENCH_Y}" r="4.4" fill="${myCols[0]}" stroke="${myCols[1]}" stroke-width="1.6" opacity=".8"/>`).join('');
+    const me = `<g class="${justIn ? 'subin' : bench ? '' : 'drift'}" style="--sx:${benchXY[0] - px}px;--sy:${benchXY[1] - py}px"><circle cx="${px}" cy="${py}" r="8.5" fill="${myCols[0]}" stroke="#fff" stroke-width="2.4"/><text x="${px}" y="${py + 3.3}" text-anchor="middle" font-size="8.5" font-weight="800" fill="${myCols[1]}" font-family="Figtree, sans-serif">${P.number || ''}</text></g>`;
+    return `<svg viewBox="0 0 320 196" class="pitch" role="img" aria-label="${bench ? 'Saha görünümü: yedek kulübesindesin' : 'Saha görünümü'}">${stripes}
       <g fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"><rect x="4" y="4" width="312" height="162" rx="2"/><path d="M160 4V166"/><circle cx="160" cy="85" r="22"/>
       <rect x="4" y="45" width="40" height="80"/><rect x="4" y="66" width="14" height="38"/><rect x="276" y="45" width="40" height="80"/><rect x="302" y="66" width="14" height="38"/></g>
       <rect x="0" y="70" width="4" height="30" fill="#fff" opacity=".8"/><rect x="316" y="70" width="4" height="30" fill="#fff" opacity=".8"/>
-      ${opp.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="${oppCols[0]}" stroke="${oppCols[1]}" stroke-width="2"/>`).join('')}
-      ${mates.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="5" fill="${myCols[0]}" stroke="${myCols[1]}" stroke-width="2" opacity=".85"/>`).join('')}
-      <circle cx="${px}" cy="${py}" r="9" fill="${myCols[0]}" stroke="#fff" stroke-width="2.5"/><text x="${px}" y="${py + 3.5}" text-anchor="middle" font-size="9" font-weight="800" fill="${myCols[1]}" font-family="Figtree, sans-serif">${P.number || ''}</text>
-      <circle cx="${bx}" cy="${by}" r="4.2" fill="#fff" stroke="#111" stroke-width="1.2" class="${animate && end ? 'kick' : ''}" style="--dx:${dx}px;--dy:${dy}px"/>
+      <rect x="0" y="170" width="320" height="26" fill="#1c2a22"/><rect x="26" y="176" width="124" height="16" rx="4" fill="#2b3b31" stroke="#46604f"/>
+      <text x="160" y="187" font-size="8" font-weight="700" fill="#9fb8a8" font-family="Figtree, sans-serif" letter-spacing="1">${bench ? 'YEDEK KULÜBESİNDESİN' : 'YEDEK KULÜBESİ'}</text>
+      ${subs}
+      ${opps.map(([x, y], i) => dot(x, y, oppCols, i + 20)).join('')}
+      ${mates.map(([x, y], i) => (i === mi && !bench ? '' : dot(x, y, myCols, i, 0.9))).join('')}
+      ${me}
+      <circle cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="4" fill="#fff" stroke="#111" stroke-width="1.2" class="${animate && end ? 'kick' : ''}" style="--dx:${dx}px;--dy:${dy}px"/>
       ${animate ? flash : ''}</svg>`;
   };
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -1,13 +1,12 @@
 {
-  "version": "1.22.0",
+  "version": "1.23.0",
   "date": "2026-11-05",
   "notes": [
-    "Avrupa'da üç kademe kulüp kupası: Yıldızlar Ligi (32), Kıta Kupası (16) ve Gelecek Ligi (16).",
-    "Milli takım takvimi: iki sezon Milletler Kupası elemesi, 2028 yazında Avrupa Milletler Kupası; ardından Küresel Kupa elemeleri ve 2030 Küresel Kupa. Her milli arada 1-2 eleme maçı.",
-    "Milli ara artık açıkça görünüyor: ana ekranda kaç hafta kaldığı ve rakipler, aranın başında kadro ve grup durumu ekranı.",
-    "Sosyal medya: birini kötüleyen gönderiyi beğenmek o kişiyle ilişkini düşürür; beğeniden gelen takipçi gönderinin beğenisine göre artar; gönderilere yorum yazabilirsin ve yorumuna göre tepki gelir.",
-    "İsteklerin fiyat aralığı sabit; belediye başkanı, yardımcısı ve sözcüsünden yeni istekler.",
-    "Gece hayatına ailen, hocan (tipine ve ruh haline göre) ve partnerin tepki verir.",
-    "Kulüp değişince değişmeyen yakın arkadaş: başını belaya da sokar, seni beladan da kurtarır."
+    "Maç haftası sırası: plan, plandan doğan olaylar, hocanın taktik toplantısı, maç, basın toplantısı, sonra haftanın diğer olayları ve haberler.",
+    "Taktik toplantısı: hoca rakibe ve kendi tarzına göre plan anlatır; planı uygularsan, soru sorarsan ya da kendi bildiğini oynarsan maçta farklı hareketler kolaylaşır.",
+    "Sahada artık 22 oyuncu kendi dizilişinde; yedekken kulübede oturursun, oyuna girince mevkine yürürsün.",
+    "Maç animasyonları: gol ve asistte top ağlarda, kurtarışta eldiven, müdahalede duvar, pasta PAS yazısı, kaçan kritik pozisyonda top auta gider.",
+    "Sesler: gol, düdük, kurtarış, kaçan pozisyon ve tribün. Ayarlar'dan açıp kapatabilir, sesini ayarlayabilirsin.",
+    "Yeni maç senaryoları: savunma arkasına koşu, sahte koşu, duvar pası, uzaktan şut, uzun pas, geri dönüş. Kazandığın faulün frikiğini, kazandığın penaltıyı sen kullanırsın."
   ]
 }

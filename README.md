@@ -81,6 +81,11 @@ On top of these there are six personal skills (sociability, speaking, charisma, 
 - **Help requests have fixed price ranges** and come from family, friends, your hometown and the mayor's office of the city you play in.
 
 ### Matches with a live commentator
+- **Match week order**: plan your week, then live any events your plans trigger, hear the coach's **tactics talk** (when you are in the squad), play the match, face the press, then the week's other events and news.
+- **Tactics talk**: the coach picks a plan (counter-attack, possession, high press, wing play, direct play, deep defence) from the opponent and their own style. Follow it, ask about it or ignore it; it changes which actions come easier in the match.
+- **22 players on the pitch** in both teams' formations, shifting with the attack. On the bench you sit by the touchline and walk on to your position when you come on.
+- **Animations and sound**: goals and assists show the ball hitting the net, saves a glove, tackles a wall, passes a short label, and a missed key chance shows the ball flying wide. Goals, whistles, saves and near misses have crowd sounds, with an on/off switch and volume in Settings.
+- **More ways to play**: runs in behind, decoy runs, one-twos, long shots, long switches and playing it back. Winning a foul gives you a free kick to take, and winning a penalty lets you take it.
 - A commentator narrates the whole match line by line: kick-off, both teams' goals, chances, cards, half-time and the final whistle. The scoreboard updates live.
 - When the ball comes to you, play stops and you choose.
 - Every outcome is chance-based and depends on your attributes, form, energy, the opponent and the coach's plan.

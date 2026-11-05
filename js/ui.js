@@ -659,6 +659,26 @@
   }
 
   /* ---------- Maç ---------- */
+  // maç anı animasyonu: gol/asistte top ağlara, kurtarışta eldiven, müdahalede duvar, pasta küçük yazı, kaçan kritik anda top auta
+  const FX_BALL = (cls) => `<g class="${cls}"><circle cx="66" cy="66" r="26" fill="#fff" stroke="#111" stroke-width="3"/><path d="M66 52l12 9-4.6 14h-14.8L54 61z" fill="#111"/><path d="M66 40v12M78 61l12-4M73.4 75l7 10M58.6 75l-7 10M54 61l-12-4" stroke="#111" stroke-width="2.4"/></g>`;
+  const FX_NET = '<g stroke="#fff" stroke-opacity=".7" stroke-width="2" fill="none"><rect x="8" y="18" width="116" height="96" rx="4" stroke-width="5"/>' + [30, 52, 74, 96].map((x) => `<path d="M${x} 18V114"/>`).join('') + [40, 62, 84].map((y) => `<path d="M8 ${y}H124"/>`).join('') + '</g>';
+  const FX_GLOVE = '<g class="grab"><path d="M40 112V62c0-6 9-6 9 0v-22c0-7 10-7 10 0v-6c0-7 10-7 10 0v8c0-7 10-7 10 0v28c4-8 13-6 11 2l-8 22c-3 10-10 18-22 18H52c-7 0-12-5-12-12z" fill="#f2c200" stroke="#111" stroke-width="3"/><path d="M46 96h40" stroke="#111" stroke-width="3"/></g>';
+  const FX_WALL = '<g stroke="#5a2e1a" stroke-width="2">' + [0, 1, 2, 3].map((r) => [0, 1, 2].map((c) => `<rect x="${18 + c * 32 + (r % 2 ? 16 : 0) - (r % 2 && c === 2 ? 0 : 0)}" y="${30 + r * 20}" width="30" height="18" rx="2" fill="#b5532c"/>`).join('')).join('') + '</g>';
+  const fxCard = (col) => `<rect x="44" y="26" width="44" height="64" rx="6" fill="${col}" stroke="#111" stroke-width="3" transform="rotate(-10 66 58)"/>`;
+  function momentFx(l) {
+    let svg = '', lbl = '', cls = 'mfx-good', wrap = '';
+    if (l.kind === 'goal' || l.kind === 'assist') { svg = FX_NET + FX_BALL('ballin'); lbl = l.kind === 'goal' ? 'GOL!' : 'ASİST!'; }
+    else if (l.kind === 'save') { svg = FX_BALL('grab') + FX_GLOVE; lbl = 'KURTARIŞ!'; }
+    else if (l.kind === 'block') { svg = FX_WALL + FX_BALL('bounce'); lbl = 'MÜDAHALE!'; }
+    else if (l.kind === 'pass' && l.setPiece) { lbl = l.setPiece === 'pk' ? 'PENALTI!' : 'SERBEST VURUŞ!'; cls = ''; svg = FX_BALL(''); }
+    else if (l.kind === 'pass') { lbl = 'PAS'; cls = ''; wrap = 'mfx-pass'; }
+    else if (l.kind === 'concede') { svg = FX_NET + FX_BALL('ballin'); lbl = 'GOL YEDİK'; cls = 'mfx-bad'; }
+    else if ((l.kind === 'miss' || l.kind === 'lost' || l.kind === 'chance') && l.key) { svg = FX_BALL('ballout'); lbl = l.kind === 'chance' ? 'KALECİDE!' : 'KAÇTI!'; cls = 'mfx-bad'; }
+    else if (l.kind === 'yellow' || l.kind === 'red') { svg = fxCard(l.kind === 'red' ? '#e32' : '#f2c200'); lbl = l.kind === 'red' ? 'KIRMIZI KART' : 'SARI KART'; cls = 'mfx-bad'; }
+    if (!lbl) return '';
+    return `<div class="mfx ${wrap}" aria-hidden="true"><div class="mfx-card ${cls}">${svg ? `<svg viewBox="0 0 132 132">${svg}</svg>` : ''}<div class="mfx-lbl">${esc(lbl)}</div></div></div>`;
+  }
+  const momentSnd = (l) => (l.kind === 'pass' && l.setPiece ? 'setpiece' : l.kind === 'yellow' || l.kind === 'red' ? 'card' : l.kind === 'lost' && !l.key ? 'lost' : l.kind === 'lost' ? 'miss' : l.kind);
   function matchView(st) {
     const S = F.S, P = S.P;
     const m = F.matchStart();
@@ -677,7 +697,19 @@
     const last = m.log[m.log.length - 1];
     const anim = U.animN !== m.log.length + '|' + S.t;
     U.animN = m.log.length + '|' + S.t;
-    const pitch = m.played && !m.done ? `<div class="pitchwrap">${F.ART.pitch(m, last ? last.kind : null, m.log.length, me.colors, op.colors, anim && !!last)}</div>` : '';
+    // senin anının animasyonu ve sesi (yalnızca yeni hamlede bir kez)
+    const mfx = anim && last ? momentFx(last) : '';
+    if (anim && last && F.SND) F.SND.play(momentSnd(last));
+    // spikerin yeni satırı: gol, düdük, devre, maç sonu sesleri
+    if (F.SND && m.feed) {
+      const fk = S.t + '|' + (m.done ? m.feed.length : m.fi);
+      if (U.sndFeed && U.sndFeed.t === S.t && U.sndFeed.k !== fk) {
+        const f = m.done ? null : m.feed[m.fi - 1];
+        if (f) F.SND.play(f.kind === 'goal' ? (f.side === 'me' ? 'goal' : 'concede') : f.kind === 'half' ? 'half' : f.kind === 'end' ? 'end' : f.kind === 'whistle' ? 'whistle' : '');
+      }
+      U.sndFeed = { t: S.t, k: fk };
+    }
+    const pitch = (m.played || m.status === 'yedek') && !m.done ? `<div class="pitchwrap">${F.ART.pitch(m, last ? last.kind : null, m.log.length, me.colors, op.colors, anim && !!last)}</div>` : '';
     // Spiker: açılan akış satırları ve senin anların; en yenisi üstte
     const shown = m.done ? m.feed.length : m.fi;
     // devre ve maç sonu satırında o ana kadarki skor
@@ -707,13 +739,13 @@
       U.flowSkip = false;
       const def = F.momentDef(mo.ref);
       return {
-        main: `<div class="stack fade">${board}${pitch}<div class="card stack moment" style="gap:6px"><div class="row"><div class="minute num grow">${mo.minute}'</div><span class="chip acc">Top sende</span></div>${mo.ref.startsWith('chain:') ? (() => { const st = mo.ref.split(':')[1]; if (!D.attackOrder.includes(st)) return `<div class="row" style="gap:6px"><span class="chip warn">${esc(D.attackStageNames[st] || st)}</span></div>`; return `<div class="row" style="gap:6px">${D.attackOrder.map((x) => `<span class="chip ${x === st ? 'on' : D.attackOrder.indexOf(x) < D.attackOrder.indexOf(st) ? 'good' : ''}">${D.attackStageNames[x]}</span>`).join('<span class="tiny muted">→</span>')}</div>`; })() : ''}<p class="ev-text">${esc(F.tpl(def.t))}</p></div>${cmt}</div>`,
+        main: `${mfx}<div class="stack fade">${board}${pitch}<div class="card stack moment" style="gap:6px"><div class="row"><div class="minute num grow">${mo.minute}'</div><span class="chip acc">Top sende</span></div>${mo.ref.startsWith('chain:') ? (() => { const st = mo.ref.split(':')[1]; if (!D.attackOrder.includes(st)) return `<div class="row" style="gap:6px"><span class="chip warn">${esc(D.attackStageNames[st] || st)}</span></div>`; return `<div class="row" style="gap:6px">${D.attackOrder.map((x) => `<span class="chip ${x === st ? 'on' : D.attackOrder.indexOf(x) < D.attackOrder.indexOf(st) ? 'good' : ''}">${D.attackStageNames[x]}</span>`).join('<span class="tiny muted">→</span>')}</div>`; })() : ''}<p class="ev-text">${esc(F.tpl(def.t))}</p></div>${cmt}</div>`,
         dock: `<div class="stack" style="width:100%;gap:8px">${def.o.map((o, i) => `<button class="opt" data-a="m-opt" data-v="${i}"><div class="row"><b class="grow">${esc(o.t)}</b>${probTag(F.momentProb(o, m))}</div><div class="tiny muted" style="margin-top:3px">${esc(D.attrs[o.a] || D.softs[o.a] || o.a)}${o.a2 && D.attrs[o.a2] ? ' + ' + esc(D.attrs[o.a2]) : ''}${o.easy ? ' · kolay seçenek' : ''}</div></button>`).join('')}</div>`
       };
     }
     if (nextF) {
       return {
-        main: `<div class="stack fade">${board}${head}${pitch}${cmt}</div>`,
+        main: `${mfx}<div class="stack fade">${board}${head}${pitch}${cmt}</div>`,
         dock: `<button class="btn alt" data-a="m-skip">${mo ? 'Sıradaki anına geç' : 'Maçı hızlı geç'}</button>`,
         after: () => {
           // spiker bir sonraki satırı okur; hızlı geçişte bekleme yok
@@ -732,7 +764,7 @@
       };
     }
     U.flowSkip = false;
-    return { main: `<div class="stack fade">${board}${head}${pitch}${cmt}</div>`, dock: `<button class="btn" data-a="m-finish">Son düdük</button>` };
+    return { main: `${mfx}<div class="stack fade">${board}${head}${pitch}${cmt}</div>`, dock: `<button class="btn" data-a="m-finish">Son düdük</button>` };
   }
 
   /* ---------- Basın ---------- */
@@ -1473,7 +1505,11 @@
     const teams = q.length >= 2 ? Object.values(S.world.teams).filter((t) => t.name.toLocaleLowerCase('tr').includes(q)).slice(0, 12) : [];
     const keyCard = `<div class="card stack" style="gap:8px"><div class="row"><div class="grow"><div class="label">Anahtar ve bulut kaydı</div><span class="small">${cloud.key ? 'Anahtar: <b>' + esc(maskKey(cloud.key)) + '</b>' : 'Anahtar bağlı değil'}</span><span id="cloudst" class="tiny muted" style="display:block">${esc(cloud.key ? (cloud.ready ? cloud.status || 'Bulut hazır' : 'Bulut bu ortamda kapalı') : 'Cihazlar arası devam için bir anahtar bağla')}</span></div><button class="btn alt sm" data-a="key-open">${cloud.key ? 'Yönet' : 'Anahtar bağla'}</button></div>${cloud.key && cloud.ready ? '<button class="btn alt sm" data-a="cloud-now" style="align-self:flex-start">Şimdi buluta kaydet</button>' : ''}</div>`;
     const devCard = `<div class="card stack" style="gap:8px"><div class="row"><div class="grow"><div class="label">Geliştirici modu</div><span class="small muted">Para, mevki, yetenekler, ilişkiler ve oyunun tüm durumu için konsol.</span></div><button class="btn ${devOn() ? '' : 'alt'} sm" data-a="dev-toggle">${devOn() ? 'Açık' : 'Kapalı'}</button></div>${devOn() ? '<button class="btn sm" data-a="open" data-v="dev" style="align-self:flex-start">Konsolu aç</button><p class="tiny muted">Konsola üst çubuktaki &lt;/&gt; düğmesinden de ulaşırsın.</p>' : ''}</div>`;
-    return appShell('Ayarlar', `${keyCard}${devCard}${updateCard()}<div class="card stack"><div class="label">Tema</div><div class="seg">${[['system', 'Sistem'], ['light', 'Açık'], ['dark', 'Koyu']].map(([k, n]) => `<button class="${theme === k ? 'on' : ''}" data-a="theme" data-v="${k}">${n}</button>`).join('')}</div></div>
+    const snd = F.SND ? F.SND.get() : { on: false, vol: 0 };
+    const soundCard = `<div class="card stack" style="gap:8px"><div class="row"><div class="grow"><div class="label">Ses</div><span class="small muted">Gol, düdük, kurtarış ve tribün sesleri.</span></div><button class="btn ${snd.on ? '' : 'alt'} sm" data-a="snd-toggle" style="width:auto">${snd.on ? 'Açık' : 'Kapalı'}</button></div>
+      <div class="row" style="gap:10px"><span class="tiny muted">Seviye</span><input type="range" id="snd-vol" min="0" max="100" step="5" value="${snd.vol}" aria-label="Ses seviyesi" class="grow" ${snd.on ? '' : 'disabled'}><b class="num small" id="snd-vol-v">${snd.vol}</b></div>
+      <button class="btn alt sm" data-a="snd-test" ${snd.on ? '' : 'disabled'}>Gol sesini dene</button></div>`;
+    return appShell('Ayarlar', `${soundCard}${keyCard}${devCard}${updateCard()}<div class="card stack"><div class="label">Tema</div><div class="seg">${[['system', 'Sistem'], ['light', 'Açık'], ['dark', 'Koyu']].map(([k, n]) => `<button class="${theme === k ? 'on' : ''}" data-a="theme" data-v="${k}">${n}</button>`).join('')}</div></div>
       <div class="card stack"><div class="label">Takım isimlerini düzenle (PES usulü)</div><input type="text" id="rn-q" placeholder="Takım ara (en az 2 harf)" value="${esc(U.renameQ)}" aria-label="Takım ara">
         ${teams.map((t) => `<div class="row">${badge(t, 18)}<input type="text" data-team="${t.id}" value="${esc(t.name)}" maxlength="32" aria-label="${esc(t.name)} yeni adı"></div>`).join('')}<p class="tiny muted">Değişiklik yazmayı bitirince kaydedilir ve kayıt koduyla birlikte taşınır.</p></div>
       <div class="card stack"><div class="label">Kayıt kodu</div><p class="small muted">Oyun bu cihazda otomatik kaydedilir. Başka cihaza taşımak için kodu kopyala, orada yapıştır.</p>
@@ -1682,6 +1718,8 @@
     },
     'cmt-open': (v) => { U.cmt = v; U.cmtText = ''; setTimeout(() => { const ta = document.getElementById('cmt-text'); if (ta) ta.focus(); }, 30); },
     'cmt-cancel': () => { U.cmt = null; },
+    'snd-toggle': () => { const c = F.SND.get(); F.SND.set({ on: !c.on }); if (!c.on) { F.SND.unlock(); F.SND.play('whistle'); } },
+    'snd-test': () => { F.SND.unlock(); F.SND.play('goal'); },
     'tac-choose': (v) => { F.tacticChoose(+v); },
     'cmt-send': () => {
       const ta = document.getElementById('cmt-text');
@@ -1925,6 +1963,7 @@
   // oyun açılınca günde bir kez sessizce yeni sürüm var mı bakılır
   setTimeout(() => { try { if (store.get('forma.updCheck') !== new Date().toDateString()) checkUpdate(true); } catch (e) { /* çevrimdışı */ } }, 2500);
   app.addEventListener('click', (e) => {
+    if (F.SND) F.SND.unlock(); // tarayıcılar sesi ancak bir dokunuştan sonra açar
     const b = e.target.closest('[data-a]');
     if (!b || b.disabled) return;
     const a = b.dataset.a;
@@ -1963,6 +2002,7 @@
   app.addEventListener('input', (e) => {
     const t = e.target;
     if (t.id === 'cmt-text') { U.cmtText = t.value; return; }
+    if (t.id === 'snd-vol') { F.SND.set({ vol: +t.value }); const v = document.getElementById('snd-vol-v'); if (v) v.textContent = t.value; return; }
     if (t.id === 'c-numin' || t.id === 'p-numin') {
       const n = Math.max(1, Math.min(99, parseInt(t.value, 10) || 0));
       if (!t.value) return;
