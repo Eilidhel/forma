@@ -296,11 +296,12 @@
           <p style="max-width:30ch">Bir köy sahasından ya da büyük bir akademiden başla. Her seçimin kariyerinde ve hayatında iz bırakır. Hiçbir hayat bir diğerine benzemez.</p>
         </div>
         <div class="grid2 small">
-          <div class="flat"><div class="display" style="font-size:26px">8</div><span class="muted">farklı başlangıç</span></div>
-          <div class="flat"><div class="display" style="font-size:26px">5</div><span class="muted">Türkiye ligi, BAL'a kadar</span></div>
-          <div class="flat"><div class="display" style="font-size:26px">150+</div><span class="muted">olay ve diyalog</span></div>
+          <div class="flat"><div class="display" style="font-size:26px">${D.origins.length}</div><span class="muted">farklı başlangıç</span></div>
+          <div class="flat"><div class="display" style="font-size:26px">${Object.values(D.leagues).reduce((a, l) => a + l.tiers.length, 0)}</div><span class="muted">lig, ${Object.keys(D.leagues).length} ülke</span></div>
+          <div class="flat"><div class="display" style="font-size:26px">${F.num(Math.floor((D.events.length + (D.convos || []).length) / 100) * 100)}+</div><span class="muted">olay ve diyalog</span></div>
           <div class="flat"><div class="display" style="font-size:26px">∞</div><span class="muted">nesil: çocuğunla devam et</span></div>
         </div>
+        ${titleUpdate()}
         ${U.howto ? howtoHtml() : ''}
         <button class="keycard" data-a="key-open">
           <span class="keyic">${ICON.key}</span>
@@ -1458,11 +1459,11 @@
       try { const pr = await fetch('/__ping', { cache: 'no-store' }); local = pr.ok && (await pr.json()).git; } catch (e) { local = false; }
       U.upd = { status: newer(remote.version, F.VERSION) ? 'new' : 'latest', remote, local, web: !!window.FORMA_WEB };
       store.set('forma.updCheck', new Date().toDateString());
-      if (silent && U.upd.status === 'new') toast('Yeni sürüm var: ' + remote.version + '. Ayarlar > Güncellemeyi denetle');
+      if (silent && U.upd.status === 'new' && U.view !== 'start') toast('Yeni sürüm var: ' + remote.version + '. Ayarlar > Güncellemeyi denetle');
     } catch (e) {
       U.upd = { status: 'error', err: e.message };
     }
-    if (!silent || U.upd.status === 'new') render(true);
+    if (!silent || U.upd.status === 'new' || U.view === 'start') render(true);
   }
   async function runUpdate() {
     U.upd = Object.assign({}, U.upd, { status: 'updating' });
@@ -1488,6 +1489,17 @@
       U.upd = Object.assign({}, U.upd, { status: 'error', err: e.message });
       render(true);
     }
+  }
+  // giriş ekranı: GitHub'da daha yeni sürüm varsa hemen görünsün
+  const PAGES_URL = 'https://eilidhel.github.io/forma/';
+  function titleUpdate() {
+    const u = U.upd || {};
+    if (u.status === 'new' && u.remote) {
+      const can = u.local || u.web;
+      return `<div class="card stack" style="gap:6px;box-shadow:inset 0 0 0 2px var(--accent)"><b>Yeni sürüm var: ${esc(u.remote.version)}</b><span class="tiny muted">Şu an açık olan: ${esc(F.VERSION)}. Kariyerin kaybolmaz.</span>${can ? '<button class="btn sm" data-a="upd-run">Şimdi güncelle</button>' : `<a class="btn sm" href="${PAGES_URL}" target="_blank" rel="noopener">En güncel sürümü aç</a><span class="tiny muted">Bu kopya kendini güncelleyemiyor. Oyunun güncel adresi: ${PAGES_URL}</span>`}</div>`;
+    }
+    if (u.status === 'updating' || u.status === 'done') return '<div class="card small muted">Yeni sürüm yükleniyor…</div>';
+    return `<div class="tiny muted" style="text-align:center">Sürüm ${esc(F.VERSION)}${u.status === 'latest' ? ' · en güncel' : ''}</div>`;
   }
   function updateCard() {
     const u = U.upd || {};
@@ -1966,7 +1978,8 @@
     e.preventDefault();
   }, { passive: false });
   // oyun açılınca günde bir kez sessizce yeni sürüm var mı bakılır
-  setTimeout(() => { try { if (store.get('forma.updCheck') !== new Date().toDateString()) checkUpdate(true); } catch (e) { /* çevrimdışı */ } }, 2500);
+  // her açılışta GitHub'daki sürüme bak: eskiyse giriş ekranında güncelleme butonu çıkar
+  setTimeout(() => { try { checkUpdate(true); } catch (e) { /* çevrimdışı */ } }, 1200);
   app.addEventListener('click', (e) => {
     if (F.SND) F.SND.unlock(); // tarayıcılar sesi ancak bir dokunuştan sonra açar
     const b = e.target.closest('[data-a]');

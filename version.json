@@ -1,9 +1,8 @@
 {
-  "version": "1.23.1",
+  "version": "1.23.2",
   "date": "2026-11-05",
   "notes": [
-    "Saha artık maç boyunca canlı: spikerin her satırında top ve iki takım olayın olduğu yere gider (bizim fırsat, rakip atak, goller).",
-    "Senin dışındaki goller de ekranda gol animasyonu ve sesiyle görünür; yenen gollerde GOL YEDİK çıkar.",
-    "Formaları benzer takımlar sahada artık birbirinden ayırt edilir."
+    "Giriş ekranı artık gerçek sayıları gösteriyor (13 başlangıç, 23 lig, 2.100+ olay) ve hangi sürümde olduğunu yazıyor.",
+    "Oyun her açılışta GitHub'daki sürüme bakar; eski bir kopyadaysan giriş ekranında 'Şimdi güncelle' butonu çıkar."
   ]
 }
