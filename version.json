@@ -1,9 +1,13 @@
 {
-  "version": "1.21.0",
+  "version": "1.22.0",
   "date": "2026-11-05",
   "notes": [
-    "Avrupa'da artık kademeli ligler var: İngiltere, İspanya, Almanya ve İtalya'da 3, yeni eklenen Fransa, Hollanda ve Portekiz'de 2 lig. Her lig 18 takım, yükselme ve düşme var (toplam 324 Avrupa kulübü).",
-    "Yeni turnuva: Avrupa Yıldızlar Ligi. Her sezon 32 kulüp (Türkiye'den 3), 8 grup, Son 16'dan finale tek maç eleme, hafta ortası maçları. Kulübün katılırsa sen de oynarsın.",
-    "Yeni turnuva: Küresel Kupa. 4 yılda bir yazın oynanır; öncesindeki sezon milli aralarda eleme grubu var. A milli takım kadrosundaysan turnuvada maç maç oynarsın. Lig ekranından tüm tabloları ve eleme ağacını izleyebilirsin."
+    "Avrupa'da üç kademe kulüp kupası: Yıldızlar Ligi (32), Kıta Kupası (16) ve Gelecek Ligi (16).",
+    "Milli takım takvimi: iki sezon Milletler Kupası elemesi, 2028 yazında Avrupa Milletler Kupası; ardından Küresel Kupa elemeleri ve 2030 Küresel Kupa. Her milli arada 1-2 eleme maçı.",
+    "Milli ara artık açıkça görünüyor: ana ekranda kaç hafta kaldığı ve rakipler, aranın başında kadro ve grup durumu ekranı.",
+    "Sosyal medya: birini kötüleyen gönderiyi beğenmek o kişiyle ilişkini düşürür; beğeniden gelen takipçi gönderinin beğenisine göre artar; gönderilere yorum yazabilirsin ve yorumuna göre tepki gelir.",
+    "İsteklerin fiyat aralığı sabit; belediye başkanı, yardımcısı ve sözcüsünden yeni istekler.",
+    "Gece hayatına ailen, hocan (tipine ve ruh haline göre) ve partnerin tepki verir.",
+    "Kulüp değişince değişmeyen yakın arkadaş: başını belaya da sokar, seni beladan da kurtarır."
   ]
 }

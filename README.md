@@ -45,9 +45,9 @@ Each origin has its own story, starting league, strengths, burdens, family backg
 - **Realistic offers.** Clubs come in at most two tiers above you, an exceptional player can jump three, and foreign clubs only call players from the top two tiers.
 - **236 clubs** in Turkey's 5 tiers (Süper Lig down to the Regional Amateur League), named after **205 real towns and cities**.
 - **324 European clubs in 18 leagues.** England, Spain, Germany and Italy have three tiers each; France, the Netherlands and Portugal have two. Every league has 18 teams with promotion and relegation. Top flights use PES-style fictional names with real club colours, and lower tiers are filled from real towns using the same system as Turkey.
-- **Avrupa Yıldızlar Ligi** (fictional European club cup): 32 clubs qualify from last season's top-flight standings (Turkey gets 3 spots). Eight groups of four, then round of 16, quarter-finals, semi-finals and final, played as midweek matches. Knockout ties are single matches with penalties.
-- **Küresel Kupa** (fictional world cup): every four years in the summer. In the season before it, international breaks become qualifiers in a five-team group. Group winners qualify, runners-up go to a play-off. If you make the senior squad, you play the tournament match by match.
-- Foreign clubs use PES-style fictional names with real club colours.
+- **Three European club cups** (fictional names): Avrupa Yıldızlar Ligi (32 clubs), Avrupa Kıta Kupası (16) and Avrupa Gelecek Ligi (16). Places go down each top flight's table from last season: Turkey sends 3 + 2 + 2 clubs. Group stage, then single-match knockouts with penalties, played midweek.
+- **A four-year national team cycle**: two seasons of qualifiers for the Avrupa Milletler Kupası (a 16-team summer tournament in 2028), then two seasons of qualifiers for the Küresel Kupa (32 teams, 2030), and so on. Qualifying groups have six teams, with one or two matches in every international break.
+- **International breaks you can see coming**: the home screen shows how many weeks are left and who your country plays, and each break opens with a screen showing whether you were called up, your fixtures and the group table.
 - Full league tables, promotion and relegation, winter and summer transfer windows, loans, national team call-ups (U21 and senior) and **international breaks** where the league pauses.
 
 ### Positions, formations and the coach
@@ -73,6 +73,12 @@ On top of these there are six personal skills (sociability, speaking, charisma, 
 - **XP-based growth.** Fast when you're young, much harder past 70 and especially past 80.
 - Training in one skill also slightly improves the others in its group.
 - Playing matches gives XP too, and good performances give more.
+
+### People and social media
+- **A childhood best friend** stays with you when you change clubs. Meet up to keep the bond. Depending on their type, they drag you into trouble or get you out of it.
+- **Night life has consequences**: your family and coach may hear about it. The coach's reaction depends on their type, how much they trust you and recent results, and a strict coach can fine and bench you. A partner may confront you over a photo.
+- **Likes and comments matter**: liking a post that runs someone down hurts that relationship, and they often message you about it. Followers from a like grow with the post's popularity. You can comment on posts, and defending someone, agreeing, joking, thanking or insulting each get a reply and their own effects.
+- **Help requests have fixed price ranges** and come from family, friends, your hometown and the mayor's office of the city you play in.
 
 ### Matches with a live commentator
 - A commentator narrates the whole match line by line: kick-off, both teams' goals, chances, cards, half-time and the final whistle. The scoreboard updates live.
